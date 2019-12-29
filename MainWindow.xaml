@@ -9,8 +9,13 @@
     <Grid x:Name="layoutRoot">
         
         <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Center">
-            <TextBox x:Name="tbUrl" Width="300"></TextBox>
-            <Button x:Name="butLoad" Content="Load" Click="butLoad_Click"></Button>
+            <TextBlock x:Name="tbUrl" Width="300"></TextBlock>
+            <ComboBox x:Name="cbMediaType" Width="80">
+                <ComboBoxItem IsSelected="True">mp4</ComboBoxItem>
+                <ComboBoxItem>mp3</ComboBoxItem>
+            </ComboBox>
+            <ComboBox x:Name="cbFormats" Width="120"></ComboBox>
+            <Button x:Name="butLoad" Content="Download Media" Click="butLoad_Click"></Button>
         </StackPanel>
     </Grid>
 </Window>

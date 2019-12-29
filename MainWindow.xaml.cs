@@ -26,7 +26,6 @@ namespace YouTubeWatcher
         private IYoutubeClientHelper clientHelper;
         private string webRootPath = "d:\\deleteme";
         private string installLocation = System.AppDomain.CurrentDomain.BaseDirectory;
-        private string mediaType = "mp4";
         private WebView wvMain;
 
         public MainWindow()
@@ -39,40 +38,73 @@ namespace YouTubeWatcher
             //process.ProcessExited += Process_ProcessExited;
             wvMain = new WebView(process);
             wvMain.Margin = new Thickness(0, 0, 0, 30);
-            wvMain.FrameNavigationCompleted += WvMain_FrameNavigationCompleted;
+            wvMain.ContentLoading += WvMain_ContentLoading;
             layoutRoot.Children.Add(wvMain);
             wvMain.Source = new Uri("https://www.youtube.com");
         }
 
-        private async void WvMain_FrameNavigationCompleted(object sender, Microsoft.Toolkit.Win32.UI.Controls.Interop.WinRT.WebViewControlNavigationCompletedEventArgs e)
+        private async void WvMain_ContentLoading(object sender, Microsoft.Toolkit.Win32.UI.Controls.Interop.WinRT.WebViewControlContentLoadingEventArgs e)
         {
             var url = await wvMain.InvokeScriptAsync("eval", new String[] { "document.location.href;" });
             tbUrl.Text = url;
+            VideoChanging();
+            await GetVideoDetails();
         }
 
+        private void VideoChanging() {
+            cbFormats.Items.Clear();
+            butLoad.IsEnabled = false;
+        }
+
+        private void VideoChanged() {
+            butLoad.IsEnabled = true;
+        }
+
+        private async Task GetVideoDetails() {
+            if (!IsValidUrl()) return;
+            try {
+                var details = await clientHelper.GetVideoMetadata(clientHelper.GetVideoID(tbUrl.Text));
+                if (details != null)
+                {
+                    foreach (var mt in details.qualities)
+                    {
+                        cbFormats.Items.Add(new ComboBoxItem() { Content = mt });
+                    }
+                }
+                VideoChanged();
+            }
+            catch (Exception ex) { 
+                // todo: handle error
+            }
+            
+        }
+        private bool IsValidUrl() {
+            if (tbUrl.Text == "https://www.youtube.com/") return false;
+            if (string.IsNullOrEmpty(tbUrl.Text)) return false;
+            return true;
+        }
         private async void butLoad_Click(object sender, RoutedEventArgs e)
         {
-            //wvMain.Navigate(new Uri(tbUrl.Text));
+            if (!IsValidUrl()) return;
 
-            VideoDetails details = await clientHelper.GetVideoMetadata(clientHelper.GetVideoID(tbUrl.Text));
-            MediaStream stream = new MediaStream();
-
-            string mediaPath = webRootPath + $"\\DownloadedVideos\\{details.id}.{mediaType}";
+            var details = await clientHelper.GetVideoMetadata(clientHelper.GetVideoID(tbUrl.Text));
+            var stream = new MediaStream();
+            var mediaType = (string)((ComboBoxItem)cbMediaType.SelectedValue).Content;
+            var quality = (string)((ComboBoxItem)cbFormats.SelectedValue).Content;
+            var mediaPath = webRootPath + $"\\DownloadedVideos\\{details.id}.{mediaType}";
 
             try
             {
                 if (File.Exists(mediaPath)) File.Delete(mediaPath);
-
-                string quality = details.qualities.Last();
                 await clientHelper.DownloadMedia(details.id, quality, mediaPath, mediaType);
             }
             catch (Exception ex)
             {
-                // do something
+                // todo: handle error
             }
 
             var video = await clientHelper.GetVideoMetadata(details.id);
-            MemoryStream videoStream = await stream.prepareMediaStream(mediaPath); // No need to dispose MemoryStream, GC will take care of this
+            var videoStream = await stream.prepareMediaStream(mediaPath); // No need to dispose MemoryStream, GC will take care of this
             //CleanDirectory.DeleteFile(videoDir, id + ".mp4");
 
             //if (videoStream == null)
@@ -104,8 +136,8 @@ namespace YouTubeWatcher
         public async Task<VideoDetails> GetVideoMetadata(string videoId)
         {
             var video = await client.GetVideoAsync(videoId);
-            MediaStreamInfoSet streamInfoSet = await client.GetVideoMediaStreamInfosAsync(videoId);
-            IEnumerable<string> qualities = SortQualities(streamInfoSet.GetAllVideoQualityLabels());
+            var streamInfoSet = await client.GetVideoMediaStreamInfosAsync(videoId);
+            var qualities = SortQualities(streamInfoSet.GetAllVideoQualityLabels());
 
             return new VideoDetails() { id = videoId, ChannelName = video.Author, Title = video.Title, qualities = qualities, thumbnails = video.Thumbnails };
         }
@@ -134,7 +166,7 @@ namespace YouTubeWatcher
 
         IEnumerable<string> SortQualities(IEnumerable<string> qualities)
         {
-            List<string> sortedStrings = qualities.ToList();
+            var sortedStrings = qualities.ToList();
             return sortedStrings
                 .Select(s => new { str = s, split = s.Split('p') })
                 .OrderBy(x => int.Parse(x.split[0]))
