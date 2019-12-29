@@ -28,6 +28,7 @@ namespace YouTubeWatcher
         private string installLocation = System.AppDomain.CurrentDomain.BaseDirectory;
         private string mediaType = "mp4";
         private WebView wvMain;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -35,15 +36,23 @@ namespace YouTubeWatcher
             clientHelper = new YoutubeClientHelper(new YoutubeClient(), installLocation);
 
             Microsoft.Toolkit.Win32.UI.Controls.Interop.WinRT.WebViewControlProcess process = new Microsoft.Toolkit.Win32.UI.Controls.Interop.WinRT.WebViewControlProcess();
+            //process.ProcessExited += Process_ProcessExited;
             wvMain = new WebView(process);
             wvMain.Margin = new Thickness(0, 0, 0, 30);
+            wvMain.FrameNavigationCompleted += WvMain_FrameNavigationCompleted;
             layoutRoot.Children.Add(wvMain);
+            wvMain.Source = new Uri("https://www.youtube.com");
+        }
 
+        private async void WvMain_FrameNavigationCompleted(object sender, Microsoft.Toolkit.Win32.UI.Controls.Interop.WinRT.WebViewControlNavigationCompletedEventArgs e)
+        {
+            var url = await wvMain.InvokeScriptAsync("eval", new String[] { "document.location.href;" });
+            tbUrl.Text = url;
         }
 
         private async void butLoad_Click(object sender, RoutedEventArgs e)
         {
-            wvMain.Navigate(new Uri(tbUrl.Text));
+            //wvMain.Navigate(new Uri(tbUrl.Text));
 
             VideoDetails details = await clientHelper.GetVideoMetadata(clientHelper.GetVideoID(tbUrl.Text));
             MediaStream stream = new MediaStream();

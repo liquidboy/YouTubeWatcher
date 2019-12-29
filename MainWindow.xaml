@@ -9,7 +9,7 @@
     <Grid x:Name="layoutRoot">
         
         <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Center">
-            <TextBox x:Name="tbUrl" Width="300" Text="https://www.youtube.com/watch?v=6vebbDZxoKE"></TextBox>
+            <TextBox x:Name="tbUrl" Width="300"></TextBox>
             <Button x:Name="butLoad" Content="Load" Click="butLoad_Click"></Button>
         </StackPanel>
     </Grid>
