@@ -22,14 +22,14 @@ namespace YouTubeWatcher.SQLite
             }
         }
 
-        public static AppDatabase Current(string dbLocation)
+        public static AppDatabase Current(string dbLocation, string dbname)
         {
             AppDatabase result;
             lock (lockobj)
             {
                 if (_database == null)
                 {
-                    _database = new AppDatabase(dbLocation);
+                    _database = new AppDatabase(dbLocation, dbname);
                 }
                 result = _database;
             }
@@ -40,7 +40,7 @@ namespace YouTubeWatcher.SQLite
 
         public Dictionary<string, TableSameDatabase> Tables;
 
-        private AppDatabase(string dbLocation) : base("xapp.db", dbLocation) { }
+        private AppDatabase(string dbLocation, string dbname) : base($"{dbname}.db", dbLocation) { }
 
         public void Init()
         {

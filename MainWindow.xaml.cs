@@ -21,7 +21,8 @@ namespace YouTubeWatcher
     public partial class MainWindow : Window
     {
         private IYoutubeClientHelper clientHelper;
-        private string workingPath = "d:\\deleteme\\downloadedMedia";
+        private const string workingPath = "d:\\deleteme\\downloadedMedia";
+        private const string dbName = "youtubewatcher";
         private string installLocation = System.AppDomain.CurrentDomain.BaseDirectory;
         private WebView wvMain;
         private VideoDetails selectedVideoDetail;
@@ -30,7 +31,7 @@ namespace YouTubeWatcher
         {
             InitializeComponent();
             
-            AppDatabase.Current(workingPath).Init();
+            AppDatabase.Current(workingPath, dbName).Init();  // initialize the sqlite db
 
             clientHelper = new YoutubeClientHelper(new YoutubeClient(), installLocation);
 
