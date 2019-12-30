@@ -25,12 +25,12 @@ namespace YouTubeWatcher
         private const string dbName = "youtubewatcher";
         private string installLocation = System.AppDomain.CurrentDomain.BaseDirectory;
         private WebView wvMain;
-        private VideoDetails selectedVideoDetail;
-
+        private Queue<MediaJob> jobQueue = new Queue<MediaJob>();
+        
         public MainWindow()
         {
             InitializeComponent();
-            
+
             AppDatabase.Current(workingPath, dbName).Init();  // initialize the sqlite db
 
             clientHelper = new YoutubeClientHelper(new YoutubeClient(), installLocation);
@@ -44,7 +44,7 @@ namespace YouTubeWatcher
             wvMain.Source = new Uri("https://www.youtube.com");
 
             //TestSqliteBits();
-            LoadMetadata();
+            UpdateStatistics();
         }
 
         private void TestSqliteBits() {
@@ -85,8 +85,17 @@ namespace YouTubeWatcher
         {
             var url = await wvMain.InvokeScriptAsync("eval", new String[] { "document.location.href;" });
             tbUrl.Text = url;
-            VideoChanging();
-            await GetVideoDetails();
+
+            var videoDetail = await GetVideoDetails(url);
+            if (videoDetail != null)
+            {
+                VideoChanging();
+                foreach (var mt in videoDetail.qualities)
+                {
+                    cbFormats.Items.Add(new ComboBoxItem() { Content = mt });
+                }
+                VideoChanged();
+            }
         }
 
         private void VideoChanging() {
@@ -98,102 +107,109 @@ namespace YouTubeWatcher
             butLoad.IsEnabled = true;
         }
 
-        private async Task GetVideoDetails() {
-            if (!IsValidUrl()) return;
-            selectedVideoDetail = null;
+        private async Task<VideoDetails> GetVideoDetails(string ytUrl) {
+            if (!IsValidUrl(ytUrl)) return null;
             try {
-                selectedVideoDetail = await clientHelper.GetVideoMetadata(clientHelper.GetVideoID(tbUrl.Text));
-                if (selectedVideoDetail != null)
-                {
-                    foreach (var mt in selectedVideoDetail.qualities)
-                    {
-                        cbFormats.Items.Add(new ComboBoxItem() { Content = mt });
-                    }
-                }
-                VideoChanged();
+                return await clientHelper.GetVideoMetadata(clientHelper.GetVideoID(ytUrl));
             }
             catch (Exception ex) {
                 // todo: handle error
             }
+            return null;
         }
 
-        bool isDownloadingThumb = false;
-        private async Task DownloadThumbnails() {
-            if (selectedVideoDetail == null) return;
-            if (isDownloadingThumb) return;
 
-            isDownloadingThumb = true;
-
-            updateStatus();
-            await DownloadImageAsync($"{selectedVideoDetail.id}-low" , new Uri(selectedVideoDetail.thumbnails.LowResUrl));
-            await DownloadImageAsync($"{selectedVideoDetail.id}-medium", new Uri(selectedVideoDetail.thumbnails.MediumResUrl));
-            await DownloadImageAsync($"{selectedVideoDetail.id}-standard", new Uri(selectedVideoDetail.thumbnails.StandardResUrl));
-            await DownloadImageAsync($"{selectedVideoDetail.id}-high", new Uri(selectedVideoDetail.thumbnails.HighResUrl));
-            await DownloadImageAsync($"{selectedVideoDetail.id}-max", new Uri(selectedVideoDetail.thumbnails.MaxResUrl));
-            isDownloadingThumb = false;
-            updateStatus();
+        private async Task DownloadThumbnails(VideoDetails videoDetails) {
+            if (videoDetails == null) return;
+            await DownloadImageAsync($"{videoDetails.id}-low", new Uri(videoDetails.thumbnails.LowResUrl));
+            await DownloadImageAsync($"{videoDetails.id}-medium", new Uri(videoDetails.thumbnails.MediumResUrl));
+            await DownloadImageAsync($"{videoDetails.id}-standard", new Uri(videoDetails.thumbnails.StandardResUrl));
+            await DownloadImageAsync($"{videoDetails.id}-high", new Uri(videoDetails.thumbnails.HighResUrl));
+            await DownloadImageAsync($"{videoDetails.id}-max", new Uri(videoDetails.thumbnails.MaxResUrl));
         }
 
         private async Task DownloadImageAsync(string fileName, Uri uri)
         {
-            using var httpClient = new System.Net.Http.HttpClient();
+            try
+            {
+                using var httpClient = new System.Net.Http.HttpClient();
 
-            // Get the file extension
-            var uriWithoutQuery = uri.GetLeftPart(UriPartial.Path);
-            var fileExtension = System.IO.Path.GetExtension(uriWithoutQuery);
+                // Get the file extension
+                var uriWithoutQuery = uri.GetLeftPart(UriPartial.Path);
+                var fileExtension = System.IO.Path.GetExtension(uriWithoutQuery);
 
-            // Download the image and write to the file
-            var path = System.IO.Path.Combine(workingPath, $"{fileName}{fileExtension}");
-            var imageBytes = await httpClient.GetByteArrayAsync(uri);
-            await File.WriteAllBytesAsync(path, imageBytes);
+                // Download the image and write to the file
+                var path = System.IO.Path.Combine(workingPath, $"{fileName}{fileExtension}");
+                var imageBytes = await httpClient.GetByteArrayAsync(uri);
+                await File.WriteAllBytesAsync(path, imageBytes);
+            }
+            catch { }
         }
 
-        private bool IsValidUrl() {
-            if (tbUrl.Text == "https://www.youtube.com/") return false;
-            if (string.IsNullOrEmpty(tbUrl.Text)) return false;
+        private bool IsValidUrl(string ytUrl) {
+            if (ytUrl == "https://www.youtube.com/") return false;
+            if (string.IsNullOrEmpty(ytUrl)) return false;
             return true;
         }
 
-        bool isDownloadingVideo = false;
         private async void butLoad_Click(object sender, RoutedEventArgs e)
         {
-            if (!IsValidUrl()) return;
-            if (selectedVideoDetail == null) return;
-            if (isDownloadingVideo) return;
+            if (!IsValidUrl(tbUrl.Text)) return;
+            jobQueue.Enqueue(new MediaJob() { YoutubeUrl = tbUrl.Text });
+            ProcessJobFromQueue();
+        }
 
-            await DownloadThumbnails();
+        private bool isProcessingJob = false;
+        private async void ProcessJobFromQueue() 
+        {
+            UpdateStatus();
+            UpdateStatistics();
+            if (isProcessingJob) return;
+            if (jobQueue.Count == 0) return;
+            var job = jobQueue.Dequeue();
+            isProcessingJob = true;
+            UpdateStatistics();
+            var videoDetails = await GetVideoDetails(job.YoutubeUrl);
+            await ProcessYoutubeVideo(videoDetails);
+            isProcessingJob = false;
+        }
+
+        private async Task ProcessYoutubeVideo(VideoDetails videoDetails) 
+        {
+            if (videoDetails == null) return;
+
+            await DownloadThumbnails(videoDetails);
 
             var mediaType = (string)((ComboBoxItem)cbMediaType.SelectedValue).Content;
             var quality = (mediaType != "mp3") ? (string)((ComboBoxItem)cbFormats.SelectedValue).Content : string.Empty;
-            var mediaPath = workingPath + $"\\{selectedVideoDetail.id}.{mediaType}";
+            var mediaPath = workingPath + $"\\{videoDetails.id}.{mediaType}";
 
             try
             {
-                isDownloadingVideo = true;
-                updateStatus();
                 if (File.Exists(mediaPath)) File.Delete(mediaPath);
-                await clientHelper.DownloadMedia(selectedVideoDetail.id, quality, mediaPath, mediaType);
-                RecordMetadata(selectedVideoDetail);
-                LoadMetadata();
+                await clientHelper.DownloadMedia(videoDetails.id, quality, mediaPath, mediaType);
+                RecordMetadata(videoDetails);
             }
             catch (Exception ex)
             {
                 // todo: handle error
             }
 
-            isDownloadingVideo = false;
-            updateStatus();
+            UpdateStatistics();
+            isProcessingJob = false;
+            ProcessJobFromQueue();
         }
 
-        private void updateStatus() {
-            if (isDownloadingThumb || isDownloadingVideo)
+        private void UpdateStatus() {
+
+            if (jobQueue.Count > 0)
             {
                 tbStatus.Text = " .. please wait downloading media .. ";
             }
             else
             {
                 tbStatus.Text = string.Empty;
-            }            
+            }
         }
 
         private void RecordMetadata(VideoDetails videoDetails)
@@ -208,12 +224,17 @@ namespace YouTubeWatcher
             var newid = DBContext.Current.Save(newEntity);
         }
 
-        private void LoadMetadata() {
+        private void UpdateStatistics() {
             var foundItems = DBContext.Current.RetrieveAllEntities<MediaMetadata>();
-            if (foundItems == null) return;
-            tbSavedVideos.Text = $"{foundItems.Count} media items found";
+            var libraryCount = (foundItems == null) ? 0 : foundItems.Count ;
+            tbFeedback.Text = $"library : {libraryCount}  jobs : {jobQueue.Count}";
         }
 
+    }
+
+    public struct MediaJob{
+        public VideoDetails VideoDetails;
+        public string YoutubeUrl;
     }
 
 }

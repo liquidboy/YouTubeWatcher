@@ -19,7 +19,7 @@
             <TextBlock x:Name="tbStatus" VerticalAlignment="Bottom"></TextBlock>
         </StackPanel>
         <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="3">
-            <TextBlock x:Name="tbSavedVideos" ></TextBlock>
+            <TextBlock x:Name="tbFeedback" ></TextBlock>
         </StackPanel>
     </Grid>
 </Window>
