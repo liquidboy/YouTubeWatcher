@@ -1,18 +1,11 @@
 ﻿using Microsoft.Toolkit.Wpf.UI.Controls;
-using SQLite;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.IO;
-using System.Linq;
-using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using YoutubeExplode;
-using YoutubeExplode.Converter;
-using YoutubeExplode.Models;
-using YoutubeExplode.Models.MediaStreams;
 using YouTubeWatcher.SQLite;
 using YouTubeWatcher.YT;
 
@@ -20,10 +13,12 @@ namespace YouTubeWatcher
 {
     public partial class MainWindow : Window
     {
-        private IYoutubeClientHelper clientHelper;
-        private const string workingPath = "d:\\deleteme\\downloadedMedia";
+        
+        private const string mediaPath = "d:\\deleteme\\downloadedMedia";
         private const string dbName = "youtubewatcher";
-        private string installLocation = System.AppDomain.CurrentDomain.BaseDirectory;
+        private const string youtubeHomeUrl = "https://www.youtube.com";
+        
+        private IYoutubeClientHelper clientHelper;
         private WebView wvMain;
         private Queue<MediaJob> jobQueue = new Queue<MediaJob>();
         
@@ -31,20 +26,27 @@ namespace YouTubeWatcher
         {
             InitializeComponent();
 
-            AppDatabase.Current(workingPath, dbName).Init();  // initialize the sqlite db
+            // initialize the sqlite db
+            AppDatabase.Current(mediaPath, dbName).Init();  
 
-            clientHelper = new YoutubeClientHelper(new YoutubeClient(), installLocation);
+            // initialize Youtube helpers
+            clientHelper = new YoutubeClientHelper(new YoutubeClient(), System.AppDomain.CurrentDomain.BaseDirectory);
 
-            Microsoft.Toolkit.Win32.UI.Controls.Interop.WinRT.WebViewControlProcess process = new Microsoft.Toolkit.Win32.UI.Controls.Interop.WinRT.WebViewControlProcess();
+            // setup Webview
+            SetupWebView();
+
+            //TestSqliteBits();
+            UpdateStatistics();
+        }
+
+        private void SetupWebView() {
+            var process = new Microsoft.Toolkit.Win32.UI.Controls.Interop.WinRT.WebViewControlProcess();
             //process.ProcessExited += Process_ProcessExited;
             wvMain = new WebView(process);
             wvMain.Margin = new Thickness(0, 0, 0, 30);
             wvMain.ContentLoading += WvMain_ContentLoading;
             layoutRoot.Children.Add(wvMain);
-            wvMain.Source = new Uri("https://www.youtube.com");
-
-            //TestSqliteBits();
-            UpdateStatistics();
+            wvMain.Source = new Uri(youtubeHomeUrl);
         }
 
         private void TestSqliteBits() {
@@ -83,7 +85,7 @@ namespace YouTubeWatcher
 
         private async void WvMain_ContentLoading(object sender, Microsoft.Toolkit.Win32.UI.Controls.Interop.WinRT.WebViewControlContentLoadingEventArgs e)
         {
-            var url = await wvMain.InvokeScriptAsync("eval", new String[] { "document.location.href;" });
+            var url = await wvMain.InvokeScriptAsync("eval", new string[] { "document.location.href;" });
             tbUrl.Text = url;
 
             var videoDetail = await GetVideoDetails(url);
@@ -139,7 +141,7 @@ namespace YouTubeWatcher
                 var fileExtension = System.IO.Path.GetExtension(uriWithoutQuery);
 
                 // Download the image and write to the file
-                var path = System.IO.Path.Combine(workingPath, $"{fileName}{fileExtension}");
+                var path = System.IO.Path.Combine(mediaPath, $"{fileName}{fileExtension}");
                 var imageBytes = await httpClient.GetByteArrayAsync(uri);
                 await File.WriteAllBytesAsync(path, imageBytes);
             }
@@ -182,7 +184,7 @@ namespace YouTubeWatcher
 
             var mediaType = (string)((ComboBoxItem)cbMediaType.SelectedValue).Content;
             var quality = (mediaType != "mp3") ? (string)((ComboBoxItem)cbFormats.SelectedValue).Content : string.Empty;
-            var mediaPath = workingPath + $"\\{videoDetails.id}.{mediaType}";
+            var mediaPath = MainWindow.mediaPath + $"\\{videoDetails.id}.{mediaType}";
 
             try
             {
@@ -204,7 +206,7 @@ namespace YouTubeWatcher
 
             if (jobQueue.Count > 0)
             {
-                tbStatus.Text = " .. please wait downloading media .. ";
+                tbStatus.Text = " .. processing job queue .. ";
             }
             else
             {

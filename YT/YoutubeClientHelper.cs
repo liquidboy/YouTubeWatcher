@@ -19,7 +19,7 @@ namespace YouTubeWatcher.YT
         {
             this.client = client;
 
-            string ffmpegExePath = installLocation + "\\ffmpeg.exe"; //Path to the ffmpeg.exe file used to mux audio&video stream. It should be located in wwwrooot/ffmpeg.exe
+            string ffmpegExePath = installLocation + "\\ffmpeg.exe"; //Path to the ffmpeg.exe file used to mux audio&video stream.
             converter = new YoutubeConverter(client, ffmpegExePath);
 
         }
