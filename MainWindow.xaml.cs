@@ -1,6 +1,7 @@
 ﻿using Microsoft.Toolkit.Wpf.UI.Controls;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
@@ -83,30 +84,29 @@ namespace YouTubeWatcher
             //DBContext.Current.Manager.DeleteAllDatabases();
         }
 
+        private string lastUrlProcessed;
+
         private async void WvMain_ContentLoading(object sender, Microsoft.Toolkit.Win32.UI.Controls.Interop.WinRT.WebViewControlContentLoadingEventArgs e)
         {
             var url = await wvMain.InvokeScriptAsync("eval", new string[] { "document.location.href;" });
+            if (url.Equals(lastUrlProcessed, StringComparison.CurrentCultureIgnoreCase)) return;
+
+            lastUrlProcessed = url;
             tbUrl.Text = url;
-
-            var videoDetail = await GetVideoDetails(url);
-            if (videoDetail != null)
-            {
-                VideoChanging();
-                foreach (var mt in videoDetail.qualities)
-                {
-                    cbFormats.Items.Add(new ComboBoxItem() { Content = mt });
-                }
-                VideoChanged();
-            }
-        }
-
-        private void VideoChanging() {
             cbFormats.Items.Clear();
-            butLoad.IsEnabled = false;
-        }
+            spDownloadToolbar.Visibility = Visibility.Collapsed;
 
-        private void VideoChanged() {
-            butLoad.IsEnabled = true;
+            if (IsValidUrl(url)) {
+                var videoDetail = await GetVideoDetails(url);
+                if (videoDetail != null)
+                {
+                    foreach (var mt in videoDetail.qualities)
+                    {
+                        cbFormats.Items.Add(new ComboBoxItem() { Content = mt });
+                    }
+                }
+                ShouldWeShowToolbar();
+            }
         }
 
         private async Task<VideoDetails> GetVideoDetails(string ytUrl) {
@@ -119,7 +119,6 @@ namespace YouTubeWatcher
             }
             return null;
         }
-
 
         private async Task DownloadThumbnails(VideoDetails videoDetails) {
             if (videoDetails == null) return;
@@ -148,6 +147,11 @@ namespace YouTubeWatcher
             catch { }
         }
 
+        private void ShouldWeShowToolbar() {
+            if (IsValidUrl(tbUrl.Text)) spDownloadToolbar.Visibility = Visibility.Visible;
+            else spDownloadToolbar.Visibility = Visibility.Collapsed;
+        }
+
         private bool IsValidUrl(string ytUrl) {
             if (ytUrl == "https://www.youtube.com/") return false;
             if (string.IsNullOrEmpty(ytUrl)) return false;
@@ -157,7 +161,13 @@ namespace YouTubeWatcher
         private async void butLoad_Click(object sender, RoutedEventArgs e)
         {
             if (!IsValidUrl(tbUrl.Text)) return;
-            jobQueue.Enqueue(new MediaJob() { YoutubeUrl = tbUrl.Text });
+
+            var mediaType = (string)((ComboBoxItem)cbMediaType.SelectedValue).Content;
+            var quality = (mediaType != "mp3") ? (string)((ComboBoxItem)cbFormats.SelectedValue).Content : string.Empty;
+            var mediaJob = new MediaJob() { YoutubeUrl = tbUrl.Text, MediaType = mediaType, Quality = quality };
+
+            jobQueue.Enqueue(mediaJob);
+
             ProcessJobFromQueue();
         }
 
@@ -172,18 +182,16 @@ namespace YouTubeWatcher
             isProcessingJob = true;
             UpdateStatistics();
             var videoDetails = await GetVideoDetails(job.YoutubeUrl);
-            await ProcessYoutubeVideo(videoDetails);
+            await ProcessYoutubeVideo(videoDetails, job.MediaType, job.Quality);
             isProcessingJob = false;
         }
 
-        private async Task ProcessYoutubeVideo(VideoDetails videoDetails) 
+        private async Task ProcessYoutubeVideo(VideoDetails videoDetails, string mediaType, string quality) 
         {
             if (videoDetails == null) return;
 
             await DownloadThumbnails(videoDetails);
 
-            var mediaType = (string)((ComboBoxItem)cbMediaType.SelectedValue).Content;
-            var quality = (mediaType != "mp3") ? (string)((ComboBoxItem)cbFormats.SelectedValue).Content : string.Empty;
             var mediaPath = MainWindow.mediaPath + $"\\{videoDetails.id}.{mediaType}";
 
             try
@@ -229,14 +237,24 @@ namespace YouTubeWatcher
         private void UpdateStatistics() {
             var foundItems = DBContext.Current.RetrieveAllEntities<MediaMetadata>();
             var libraryCount = (foundItems == null) ? 0 : foundItems.Count ;
-            tbFeedback.Text = $"library : {libraryCount}  jobs : {jobQueue.Count}";
+            tbLibrary.Text = $"library : {libraryCount}";
+            tbJobs.Text = $"jobs : {jobQueue.Count}";
         }
 
+        private void tbLibrary_MouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            Process process = new Process();
+            process.StartInfo.UseShellExecute = true;
+            process.StartInfo.FileName = mediaPath;
+            process.Start();
+        }
     }
 
     public struct MediaJob{
         public VideoDetails VideoDetails;
         public string YoutubeUrl;
+        public string MediaType;
+        public string Quality;
     }
 
 }

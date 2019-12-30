@@ -10,16 +10,19 @@
         
         <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="3">
             <TextBlock x:Name="tbUrl" Width="300" VerticalAlignment="Bottom"></TextBlock>
-            <ComboBox x:Name="cbMediaType" Width="80">
-                <ComboBoxItem IsSelected="True">mp4</ComboBoxItem>
-                <ComboBoxItem>mp3</ComboBoxItem>
-            </ComboBox>
-            <ComboBox x:Name="cbFormats" Width="120"></ComboBox>
-            <Button x:Name="butLoad" Content=" Download Media " Click="butLoad_Click"></Button>
+            <StackPanel x:Name="spDownloadToolbar" Orientation="Horizontal" Visibility="Collapsed">
+                <ComboBox x:Name="cbMediaType" Width="80">
+                    <ComboBoxItem IsSelected="True">mp4</ComboBoxItem>
+                    <ComboBoxItem>mp3</ComboBoxItem>
+                </ComboBox>
+                <ComboBox x:Name="cbFormats" Width="120"></ComboBox>
+                <Button x:Name="butLoad" Content=" Download Media " Click="butLoad_Click"></Button>
+            </StackPanel>
             <TextBlock x:Name="tbStatus" VerticalAlignment="Bottom"></TextBlock>
         </StackPanel>
         <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="3">
-            <TextBlock x:Name="tbFeedback" ></TextBlock>
+            <TextBlock x:Name="tbLibrary" MouseUp="tbLibrary_MouseUp" Cursor="Hand"></TextBlock>
+            <TextBlock x:Name="tbJobs" Margin="10,0,0,0"></TextBlock>
         </StackPanel>
     </Grid>
 </Window>
