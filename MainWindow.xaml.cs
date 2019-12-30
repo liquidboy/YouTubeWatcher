@@ -43,7 +43,8 @@ namespace YouTubeWatcher
             layoutRoot.Children.Add(wvMain);
             wvMain.Source = new Uri("https://www.youtube.com");
 
-            TestSqliteBits();
+            //TestSqliteBits();
+            LoadMetadata();
         }
 
         private void TestSqliteBits() {
@@ -120,13 +121,17 @@ namespace YouTubeWatcher
         private async Task DownloadThumbnails() {
             if (selectedVideoDetail == null) return;
             if (isDownloadingThumb) return;
+
             isDownloadingThumb = true;
+
+            updateStatus();
             await DownloadImageAsync($"{selectedVideoDetail.id}-low" , new Uri(selectedVideoDetail.thumbnails.LowResUrl));
             await DownloadImageAsync($"{selectedVideoDetail.id}-medium", new Uri(selectedVideoDetail.thumbnails.MediumResUrl));
             await DownloadImageAsync($"{selectedVideoDetail.id}-standard", new Uri(selectedVideoDetail.thumbnails.StandardResUrl));
             await DownloadImageAsync($"{selectedVideoDetail.id}-high", new Uri(selectedVideoDetail.thumbnails.HighResUrl));
             await DownloadImageAsync($"{selectedVideoDetail.id}-max", new Uri(selectedVideoDetail.thumbnails.MaxResUrl));
             isDownloadingThumb = false;
+            updateStatus();
         }
 
         private async Task DownloadImageAsync(string fileName, Uri uri)
@@ -165,8 +170,11 @@ namespace YouTubeWatcher
             try
             {
                 isDownloadingVideo = true;
+                updateStatus();
                 if (File.Exists(mediaPath)) File.Delete(mediaPath);
                 await clientHelper.DownloadMedia(selectedVideoDetail.id, quality, mediaPath, mediaType);
+                RecordMetadata(selectedVideoDetail);
+                LoadMetadata();
             }
             catch (Exception ex)
             {
@@ -174,7 +182,38 @@ namespace YouTubeWatcher
             }
 
             isDownloadingVideo = false;
+            updateStatus();
         }
+
+        private void updateStatus() {
+            if (isDownloadingThumb || isDownloadingVideo)
+            {
+                tbStatus.Text = " .. please wait downloading media .. ";
+            }
+            else
+            {
+                tbStatus.Text = string.Empty;
+            }            
+        }
+
+        private void RecordMetadata(VideoDetails videoDetails)
+        {
+            var newEntity = new MediaMetadata()
+            {
+                YID = videoDetails.id,
+                Title = videoDetails.Title,
+                DateStamp = DateTime.UtcNow,
+                ThumbUrl = videoDetails.thumbnails.MediumResUrl,
+            };
+            var newid = DBContext.Current.Save(newEntity);
+        }
+
+        private void LoadMetadata() {
+            var foundItems = DBContext.Current.RetrieveAllEntities<MediaMetadata>();
+            if (foundItems == null) return;
+            tbSavedVideos.Text = $"{foundItems.Count} media items found";
+        }
+
     }
 
 }
