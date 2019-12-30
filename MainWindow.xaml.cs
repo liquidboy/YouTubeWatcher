@@ -71,6 +71,7 @@ namespace YouTubeWatcher
                 // todo: handle error
             }
         }
+
         bool isDownloadingThumb = false;
         private async Task DownloadThumbnails() {
             if (selectedVideoDetail == null) return;
@@ -103,19 +104,23 @@ namespace YouTubeWatcher
             if (string.IsNullOrEmpty(tbUrl.Text)) return false;
             return true;
         }
+
+        bool isDownloadingVideo = false;
         private async void butLoad_Click(object sender, RoutedEventArgs e)
         {
             if (!IsValidUrl()) return;
             if (selectedVideoDetail == null) return;
+            if (isDownloadingVideo) return;
 
             await DownloadThumbnails();
 
             var mediaType = (string)((ComboBoxItem)cbMediaType.SelectedValue).Content;
-            var quality = (string)((ComboBoxItem)cbFormats.SelectedValue).Content;
+            var quality = (mediaType != "mp3") ? (string)((ComboBoxItem)cbFormats.SelectedValue).Content : string.Empty;
             var mediaPath = workingPath + $"\\{selectedVideoDetail.id}.{mediaType}";
 
             try
             {
+                isDownloadingVideo = true;
                 if (File.Exists(mediaPath)) File.Delete(mediaPath);
                 await clientHelper.DownloadMedia(selectedVideoDetail.id, quality, mediaPath, mediaType);
             }
@@ -124,11 +129,7 @@ namespace YouTubeWatcher
                 // todo: handle error
             }
 
-            var stream = new MediaStream();
-            var video = await clientHelper.GetVideoMetadata(selectedVideoDetail.id);
-            var videoStream = await stream.prepareMediaStream(mediaPath); // No need to dispose MemoryStream, GC will take care of this
-            //CleanDirectory.DeleteFile(videoDir, id + ".mp4");
-
+            isDownloadingVideo = false;
         }
     }
 
