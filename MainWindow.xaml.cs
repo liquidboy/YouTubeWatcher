@@ -13,8 +13,8 @@ using YoutubeExplode;
 using YoutubeExplode.Converter;
 using YoutubeExplode.Models;
 using YoutubeExplode.Models.MediaStreams;
-using YouTubeWatcher.sqlite;
-using YouTubeWatcher.yt;
+using YouTubeWatcher.SQLite;
+using YouTubeWatcher.YT;
 
 namespace YouTubeWatcher
 {

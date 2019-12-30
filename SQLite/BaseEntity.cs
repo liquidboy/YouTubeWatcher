@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace YouTubeWatcher.sqlite
+namespace YouTubeWatcher.SQLite
 {
 
     public abstract class BaseEntity
     {
-        [SQLite.PrimaryKey]
+        [global::SQLite.PrimaryKeyAttribute]
         public Guid UniqueId { get; set; }
         public int _internalRowId;
     }

@@ -7,7 +7,7 @@ using YoutubeExplode;
 using YoutubeExplode.Converter;
 using YoutubeExplode.Models.MediaStreams;
 
-namespace YouTubeWatcher.yt
+namespace YouTubeWatcher.YT
 {
 
     public class YoutubeClientHelper : IYoutubeClientHelper

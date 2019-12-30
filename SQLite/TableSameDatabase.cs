@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace YouTubeWatcher.sqlite
+namespace YouTubeWatcher.SQLite
 {
 
     public partial class TableSameDatabase
