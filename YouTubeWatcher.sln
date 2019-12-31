@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29521.150
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YouTubeWatcher", "YouTubeWatcher.csproj", "{80966B32-F1F7-416E-BBBC-EB2910FC297E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YouTubeWatcher", "Youtubewatcher/YouTubeWatcher.csproj", "{80966B32-F1F7-416E-BBBC-EB2910FC297E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
