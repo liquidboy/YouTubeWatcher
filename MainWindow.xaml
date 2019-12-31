@@ -36,9 +36,9 @@
                     </StackPanel>
                     <TextBlock x:Name="tbMediaDirectory" HorizontalAlignment="Right" Foreground="LightGray"></TextBlock>
                 </StackPanel>
-                
-                
             </Grid>
+
+            <WrapPanel x:Name="wpLibraryItems" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,70,0,0"></WrapPanel>
         </Grid>
     </Grid>
 </Window>

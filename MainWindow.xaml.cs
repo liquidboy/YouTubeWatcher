@@ -272,6 +272,30 @@ namespace YouTubeWatcher
         {
             wvMain.Visibility = show ? Visibility.Collapsed : Visibility.Visible;
             grdLibrary.Visibility = show ? Visibility.Visible : Visibility.Collapsed;
+            LoadLibraryItems(show);
+        }
+
+        private void LoadLibraryItems(bool load) {
+            //wpLibraryItems.Children.Add();
+            if (load)
+            {
+                var foundItems = DBContext.Current.RetrieveAllEntities<MediaMetadata>();
+                foreach (var foundItem in foundItems) {
+                    
+                    var uri = new Uri($"{mediaPath}\\{foundItem.YID}-medium.jpg", UriKind.Absolute);
+                    var img = new Image();
+                    img.Source = new System.Windows.Media.Imaging.BitmapImage(uri);
+                    img.Width = 140;
+                    img.Height = 90;
+                    img.Stretch = System.Windows.Media.Stretch.UniformToFill;
+                    img.Margin = new Thickness(5);
+
+                    wpLibraryItems.Children.Add(img);
+                }
+            }
+            else {
+                wpLibraryItems.Children.Clear();
+            }
         }
 
         private void OpenMediaFolder() {
