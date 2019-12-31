@@ -253,6 +253,7 @@ namespace YouTubeWatcher
                 DateStamp = DateTime.UtcNow,
                 ThumbUrl = videoDetails.thumbnails.MediumResUrl,
             };
+
             var newid = DBContext.Current.Save(newEntity);
         }
 
@@ -276,7 +277,7 @@ namespace YouTubeWatcher
         }
 
         private void LoadLibraryItems(bool load) {
-            //wpLibraryItems.Children.Add();
+
             if (load)
             {
                 var foundItems = DBContext.Current.RetrieveAllEntities<MediaMetadata>();
@@ -290,7 +291,11 @@ namespace YouTubeWatcher
                     img.Stretch = System.Windows.Media.Stretch.UniformToFill;
                     img.Margin = new Thickness(5);
 
-                    wpLibraryItems.Children.Add(img);
+                    var sp = new StackPanel() { Orientation = Orientation.Vertical };
+                    sp.Children.Add(img);
+                    sp.Children.Add(new TextBlock() { Text = foundItem.Title, TextWrapping = TextWrapping.Wrap, Width = 140, Height = 50 });
+
+                    wpLibraryItems.Children.Add(sp);
                 }
             }
             else {
