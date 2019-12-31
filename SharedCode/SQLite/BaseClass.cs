@@ -5,7 +5,6 @@ using System.Text;
 
 namespace SharedLib.SQLite
 {
-
     public class BaseClass
     {
         [PrimaryKey, AutoIncrement]
@@ -15,7 +14,4 @@ namespace SharedLib.SQLite
         public string CreatedBy { get; set; }
         public DateTime CreatedDate { get; set; }
     }
-
-
-
 }
