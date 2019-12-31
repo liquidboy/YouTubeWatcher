@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace SharedLib.SQLite
+namespace SharedCode.SQLite
 {
     public partial class AppDatabase : SqliteDatabase
     {

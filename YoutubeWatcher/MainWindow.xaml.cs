@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using YoutubeExplode;
-using SharedLib.SQLite;
-using SharedLib.YT;
+using SharedCode.SQLite;
+using SharedCode.YT;
 
 namespace YouTubeWatcher
 {

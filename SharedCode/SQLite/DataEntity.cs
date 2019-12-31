@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
 
-namespace SharedLib.SQLite
+namespace SharedCode.SQLite
 {
     public class DataEntity<T> : IDataEntity<T>
         where T : BaseEntity, new()

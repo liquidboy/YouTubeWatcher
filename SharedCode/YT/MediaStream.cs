@@ -4,7 +4,7 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SharedLib.YT
+namespace SharedCode.YT
 {
     public class MediaStream
     {

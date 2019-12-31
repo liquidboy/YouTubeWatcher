@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace SharedLib.SQLite
+namespace SharedCode.SQLite
 {
 
     public enum eTableType

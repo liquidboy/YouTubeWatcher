@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Reflection;
 using System.Text;
 
-namespace SharedLib.SQLite
+namespace SharedCode.SQLite
 {
 
     [DefaultProperty("Current")]
