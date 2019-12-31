@@ -20,9 +20,12 @@
             </StackPanel>
         </StackPanel>
         <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="3">
-            <TextBlock x:Name="tbStatus" VerticalAlignment="Bottom" Foreground="Red"></TextBlock>
-            <TextBlock x:Name="tbLibrary" MouseUp="tbLibrary_MouseUp" Cursor="Hand" Margin="30,0,0,0"></TextBlock>
-            <TextBlock x:Name="tbJobs" Margin="10,0,0,0"></TextBlock>
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom">
+                <Image x:Name="imgStatus" Stretch="UniformToFill" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="30" Width="40" ></Image>
+                <TextBlock x:Name="tbStatus" Foreground="Red" VerticalAlignment="Bottom"></TextBlock>
+            </StackPanel>
+            <TextBlock x:Name="tbLibrary" MouseUp="tbLibrary_MouseUp" Cursor="Hand" Margin="30,0,0,0" VerticalAlignment="Bottom"></TextBlock>
+            <TextBlock x:Name="tbJobs" Margin="10,0,0,0" VerticalAlignment="Bottom"></TextBlock>
         </StackPanel>
     </Grid>
 </Window>

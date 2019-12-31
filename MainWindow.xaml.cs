@@ -107,6 +107,7 @@ namespace YouTubeWatcher
                     }
                 }
                 ShouldWeShowToolbar();
+                await DownloadMediumThumbnail(videoDetail);
             }
         }
 
@@ -128,10 +129,16 @@ namespace YouTubeWatcher
         private async Task DownloadThumbnails(VideoDetails videoDetails) {
             if (videoDetails == null) return;
             await DownloadImageAsync($"{videoDetails.id}-low", new Uri(videoDetails.thumbnails.LowResUrl));
-            await DownloadImageAsync($"{videoDetails.id}-medium", new Uri(videoDetails.thumbnails.MediumResUrl));
+            //await DownloadImageAsync($"{videoDetails.id}-medium", new Uri(videoDetails.thumbnails.MediumResUrl));
             await DownloadImageAsync($"{videoDetails.id}-standard", new Uri(videoDetails.thumbnails.StandardResUrl));
             await DownloadImageAsync($"{videoDetails.id}-high", new Uri(videoDetails.thumbnails.HighResUrl));
             await DownloadImageAsync($"{videoDetails.id}-max", new Uri(videoDetails.thumbnails.MaxResUrl));
+        }
+
+        private async Task DownloadMediumThumbnail(VideoDetails videoDetails)
+        {
+            if (videoDetails == null) return;
+            await DownloadImageAsync($"{videoDetails.id}-medium", new Uri(videoDetails.thumbnails.MediumResUrl));
         }
 
         private async Task DownloadImageAsync(string fileName, Uri uri)
@@ -183,11 +190,13 @@ namespace YouTubeWatcher
             UpdateLibraryStatistics();
             UpdateJobStatistics();
             if (isProcessingJob) return;
+            UpdateStatusImage(null);
             if (jobQueue.Count == 0) return; 
             var job = jobQueue.Dequeue();
             isProcessingJob = true;
             UpdateJobStatistics();
             var videoDetails = await GetVideoDetails(job.YoutubeUrl);
+            UpdateStatusImage(videoDetails);
             await ProcessYoutubeVideo(videoDetails, job.MediaType, job.Quality);
             isProcessingJob = false;
         }
@@ -218,7 +227,18 @@ namespace YouTubeWatcher
         }
 
         private void UpdateStatus() {
-            tbStatus.Text = (jobQueue.Count > 0) ? " .. processing job .. " : string.Empty;
+            tbStatus.Text = (jobQueue.Count > 0) ? " processing job " : string.Empty;
+        }
+
+        private void UpdateStatusImage(VideoDetails videoDetails)
+        {
+            if (videoDetails == null) {
+                imgStatus.Source = null;
+                return;
+            }
+
+            var uri = new Uri($"{mediaPath}\\{videoDetails.id}-medium.jpg", UriKind.Absolute);
+            imgStatus.Source = new System.Windows.Media.Imaging.BitmapImage(uri);
         }
 
         private void RecordMetadata(VideoDetails videoDetails)
