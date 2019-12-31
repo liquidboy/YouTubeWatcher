@@ -18,6 +18,7 @@ namespace YouTubeWatcher
         private const string mediaPath = "d:\\deleteme\\downloadedMedia";
         private const string dbName = "youtubewatcher";
         private const string youtubeHomeUrl = "https://www.youtube.com";
+        private const double taskbarHeight = 40;
         
         private IYoutubeClientHelper clientHelper;
         private WebView wvMain;
@@ -35,17 +36,23 @@ namespace YouTubeWatcher
 
             // setup Webview
             SetupWebView();
+            SetupLibraryView();
 
             //TestSqliteBits();
             UpdateLibraryStatistics();
             UpdateJobStatistics();
         }
 
+        private void SetupLibraryView() {
+            ShowHideLibrary(false);
+            tbMediaDirectory.Text = mediaPath;
+        }
+
         private void SetupWebView() {
             var process = new Microsoft.Toolkit.Win32.UI.Controls.Interop.WinRT.WebViewControlProcess();
             //process.ProcessExited += Process_ProcessExited;
             wvMain = new WebView(process);
-            wvMain.Margin = new Thickness(0, 0, 0, 30);
+            wvMain.Margin = new Thickness(0, 0, 0, taskbarHeight);
             wvMain.ContentLoading += WvMain_ContentLoading;
             layoutRoot.Children.Add(wvMain);
             wvMain.Source = new Uri(youtubeHomeUrl);
@@ -111,9 +118,7 @@ namespace YouTubeWatcher
             }
         }
 
-        private bool HasUrlBeenProcessed(string urlToProcess) {
-            return urlToProcess.Equals(lastProcessedUrl, StringComparison.CurrentCultureIgnoreCase);
-        }
+        private bool HasUrlBeenProcessed(string urlToProcess) => urlToProcess.Equals(lastProcessedUrl, StringComparison.CurrentCultureIgnoreCase);
 
         private async Task<VideoDetails> GetVideoDetails(string ytUrl) {
             if (!IsValidUrl(ytUrl)) return null;
@@ -226,9 +231,7 @@ namespace YouTubeWatcher
             ProcessJobFromQueue();
         }
 
-        private void UpdateStatus() {
-            tbStatus.Text = (jobQueue.Count > 0) ? " processing job " : string.Empty;
-        }
+        private void UpdateStatus() => tbStatus.Text = (jobQueue.Count > 0) ? " processing job " : string.Empty;
 
         private void UpdateStatusImage(VideoDetails videoDetails)
         {
@@ -259,13 +262,19 @@ namespace YouTubeWatcher
             tbLibrary.Text = $"library : {libraryCount}";
         }
 
-        private void UpdateJobStatistics()
+        private void UpdateJobStatistics() => tbJobs.Text = $"queue : {jobQueue.Count}";
+
+        private void tbLibrary_MouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e) => ShowHideLibrary(true);
+        private void butCloseLibrary_Click(object sender, RoutedEventArgs e) => ShowHideLibrary(false);
+        private void butShowMediaFolder_Click(object sender, RoutedEventArgs e) => OpenMediaFolder();
+
+        private void ShowHideLibrary(bool show)
         {
-            tbJobs.Text = $"queue : {jobQueue.Count}";
+            wvMain.Visibility = show ? Visibility.Collapsed : Visibility.Visible;
+            grdLibrary.Visibility = show ? Visibility.Visible : Visibility.Collapsed;
         }
 
-        private void tbLibrary_MouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
+        private void OpenMediaFolder() {
             Process process = new Process();
             process.StartInfo.UseShellExecute = true;
             process.StartInfo.FileName = mediaPath;

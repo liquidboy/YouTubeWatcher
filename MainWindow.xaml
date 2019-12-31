@@ -7,7 +7,6 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid x:Name="layoutRoot">
-        
         <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="3">
             <TextBlock x:Name="tbUrl" Width="300" VerticalAlignment="Bottom"></TextBlock>
             <StackPanel x:Name="spDownloadToolbar" Orientation="Horizontal" Visibility="Collapsed">
@@ -19,13 +18,27 @@
                 <Button x:Name="butLoad" Content=" Download Media " Click="butLoad_Click"></Button>
             </StackPanel>
         </StackPanel>
-        <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="3">
-            <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom">
-                <Image x:Name="imgStatus" Stretch="UniformToFill" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="30" Width="40" ></Image>
-                <TextBlock x:Name="tbStatus" Foreground="Red" VerticalAlignment="Bottom"></TextBlock>
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" Margin="0,2,0,0" Background="Black">
+                <Image x:Name="imgStatus" Stretch="UniformToFill" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="40"></Image>
+                <TextBlock x:Name="tbStatus" Foreground="White" VerticalAlignment="Center"></TextBlock>
             </StackPanel>
-            <TextBlock x:Name="tbLibrary" MouseUp="tbLibrary_MouseUp" Cursor="Hand" Margin="30,0,0,0" VerticalAlignment="Bottom"></TextBlock>
-            <TextBlock x:Name="tbJobs" Margin="10,0,0,0" VerticalAlignment="Bottom"></TextBlock>
+            <TextBlock x:Name="tbLibrary" MouseUp="tbLibrary_MouseUp" Cursor="Hand" Margin="30,3,0,3" VerticalAlignment="Bottom"></TextBlock>
+            <TextBlock x:Name="tbJobs" Margin="10,3,3,3" VerticalAlignment="Bottom"></TextBlock>
         </StackPanel>
+
+        <Grid x:Name="grdLibrary" Visibility="Collapsed" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <Button x:Name="butCloseLibrary" Content=" &lt; Back " Click="butCloseLibrary_Click" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10" ></Button>
+            <Grid Margin="10" HorizontalAlignment="Right" VerticalAlignment="Top">
+                <StackPanel Orientation="Vertical">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,0,10">
+                        <Button x:Name="butShowMediaFolder" Content=" Open Media Folder " Click="butShowMediaFolder_Click" ></Button>
+                    </StackPanel>
+                    <TextBlock x:Name="tbMediaDirectory" HorizontalAlignment="Right" Foreground="LightGray"></TextBlock>
+                </StackPanel>
+                
+                
+            </Grid>
+        </Grid>
     </Grid>
 </Window>
