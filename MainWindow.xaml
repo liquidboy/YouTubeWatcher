@@ -3,10 +3,12 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:YouTubeWatcher" xmlns:controls="clr-namespace:Microsoft.Toolkit.Wpf.UI.Controls;assembly=Microsoft.Toolkit.Wpf.UI.Controls.WebView"
+        xmlns:local="clr-namespace:YouTubeWatcher" xmlns:controls="clr-namespace:Microsoft.Toolkit.Wpf.UI.Controls;assembly=Microsoft.Toolkit.Wpf.UI.Controls.WebView" 
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid x:Name="layoutRoot">
+        
+        <!-- FOOTER -->
         <Rectangle Fill="WhiteSmoke" Height="40" HorizontalAlignment="Stretch" VerticalAlignment="Bottom"></Rectangle>
         <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="3">
             <TextBlock x:Name="tbUrl" Width="300" VerticalAlignment="Bottom"></TextBlock>
@@ -28,6 +30,7 @@
             <TextBlock x:Name="tbJobs" Margin="10,3,3,3" VerticalAlignment="Bottom"></TextBlock>
         </StackPanel>
 
+        <!-- LIBRARY -->
         <Grid x:Name="grdLibrary" Visibility="Collapsed" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <Button x:Name="butCloseLibrary" Content=" &lt; Back " Click="butCloseLibrary_Click" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10" ></Button>
             <Grid Margin="10" HorizontalAlignment="Right" VerticalAlignment="Top">
@@ -52,7 +55,7 @@
                                 <Image Width="140" Height="90" Stretch="UniformToFill" Margin="5" Tag="{Binding YID}" Source="{Binding ThumbUri}" ></Image>
                                 <TextBlock TextWrapping="WrapWithOverflow" Width="140" Height="50" Text="{Binding Title}" FontWeight="SemiBold"></TextBlock>
                                 <StackPanel Orientation="Horizontal" Margin="5,10,0,0">
-                                    <Button Content=" Play "></Button>
+                                    <Button Content=" Play " Click="PlayMedia"></Button>
                                     <Button Content=" Delete " Margin="3,0,0,0"></Button>
                                 </StackPanel>
                             </StackPanel>
@@ -60,7 +63,14 @@
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
             </ScrollViewer>
-            
         </Grid>
+
+        <!-- MEDIA -->
+        <Grid x:Name="grdMediaPlayer" Width="600" Height="400" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,30,40" Visibility="Collapsed" MouseUp="grdMediaPlayer_MouseUp" Background="Black" >
+            <MediaElement x:Name="mePlayer" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" LoadedBehavior="Manual" Stretch="Uniform" MediaOpened="mePlayer_MediaOpened"></MediaElement>
+            <Button Content=" close " FontSize="18" Click="CloseMediaPlayer" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="10"></Button>
+            <Slider x:Name="mePlayerSlider" Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="5" Interval="1" SmallChange="1" LargeChange="1" ValueChanged="ScrubMedia" ></Slider>
+        </Grid>
+        
     </Grid>
 </Window>

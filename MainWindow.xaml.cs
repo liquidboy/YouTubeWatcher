@@ -275,6 +275,7 @@ namespace YouTubeWatcher
             wvMain.Visibility = show ? Visibility.Collapsed : Visibility.Visible;
             grdLibrary.Visibility = show ? Visibility.Visible : Visibility.Collapsed;
             LoadLibraryItems(show);
+            ShowHideMediaPlayer(false);
         }
 
         private void LoadLibraryItems(bool load)
@@ -309,6 +310,63 @@ namespace YouTubeWatcher
             process.StartInfo.FileName = mediaPath;
             process.Start();
         }
+
+        private void PlayMedia(object sender, RoutedEventArgs e)
+        {
+            var but = sender as Button;
+            if (but.DataContext is ViewMediaMetadata) {
+                var vmd = but.DataContext as ViewMediaMetadata;
+
+                mePlayer.Source = new Uri($"{mediaPath}\\{vmd.YID}.mp4", UriKind.Absolute);
+                ShowHideMediaPlayer(true);
+            }
+        }
+
+        private void ShowHideMediaPlayer(bool show) {
+            if (show)
+            {
+                grdMediaPlayer.Visibility = Visibility.Visible;
+                isPlaying = true;
+                mePlayer.Play();
+            }
+            else {
+                mePlayer.Stop();
+                isPlaying = false;
+                mePlayer.Source = null;
+                mePlayerSlider.Value = 0;
+                grdMediaPlayer.Visibility = Visibility.Collapsed;
+            }
+        }
+
+        bool isPlaying = false;
+        private void TogglePausePlay() {
+            if (isPlaying) mePlayer.Pause();
+            else mePlayer.Play();
+            isPlaying = !isPlaying;
+        }
+
+        private void grdMediaPlayer_MouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            TogglePausePlay();
+        }
+
+        private void CloseMediaPlayer(object sender, RoutedEventArgs e)
+        {
+            ShowHideMediaPlayer(false);
+        }
+
+        private void ScrubMedia(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            TimeSpan ts = new TimeSpan(0, 0, 0, (int)mePlayerSlider.Value, 0);
+            mePlayer.Position = ts;
+        }
+
+        private void mePlayer_MediaOpened(object sender, RoutedEventArgs e)
+        {
+            mePlayerSlider.Minimum = 0;
+            mePlayerSlider.Maximum = mePlayer.NaturalDuration.TimeSpan.TotalSeconds;
+
+        }
     }
 
     public struct MediaJob{
@@ -318,7 +376,7 @@ namespace YouTubeWatcher
         public string Quality;
     }
 
-    public struct ViewMediaMetadata {
+    public class ViewMediaMetadata {
         public string YID { get; set;  }
         public string Title { get; set; }
         public Uri ThumbUri { get; set; }
