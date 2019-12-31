@@ -1,6 +1,7 @@
 ﻿using Microsoft.Toolkit.Wpf.UI.Controls;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
@@ -276,30 +277,29 @@ namespace YouTubeWatcher
             LoadLibraryItems(show);
         }
 
-        private void LoadLibraryItems(bool load) {
+        private void LoadLibraryItems(bool load)
+        {
 
             if (load)
             {
+                var MediaItems = new ObservableCollection<ViewMediaMetadata>();
                 var foundItems = DBContext.Current.RetrieveAllEntities<MediaMetadata>();
-                foreach (var foundItem in foundItems) {
-                    
-                    var uri = new Uri($"{mediaPath}\\{foundItem.YID}-medium.jpg", UriKind.Absolute);
-                    var img = new Image();
-                    img.Source = new System.Windows.Media.Imaging.BitmapImage(uri);
-                    img.Width = 140;
-                    img.Height = 90;
-                    img.Stretch = System.Windows.Media.Stretch.UniformToFill;
-                    img.Margin = new Thickness(5);
+                foreach (var foundItem in foundItems)
+                {
+                    MediaItems.Add(new ViewMediaMetadata()
+                    {
+                        Title = foundItem.Title,
+                        YID = foundItem.YID,
+                        ThumbUri = new Uri($"{mediaPath}\\{foundItem.YID}-medium.jpg", UriKind.Absolute)
+                    });
 
-                    var sp = new StackPanel() { Orientation = Orientation.Vertical };
-                    sp.Children.Add(img);
-                    sp.Children.Add(new TextBlock() { Text = foundItem.Title, TextWrapping = TextWrapping.Wrap, Width = 140, Height = 50 });
-
-                    wpLibraryItems.Children.Add(sp);
                 }
+                icLibraryItems.ItemsSource = MediaItems;
             }
-            else {
-                wpLibraryItems.Children.Clear();
+            else
+            {
+                //icLibraryItems.Items.Clear();
+                icLibraryItems.ItemsSource = null;
             }
         }
 
@@ -318,4 +318,9 @@ namespace YouTubeWatcher
         public string Quality;
     }
 
+    public struct ViewMediaMetadata {
+        public string YID { get; set;  }
+        public string Title { get; set; }
+        public Uri ThumbUri { get; set; }
+    }
 }
