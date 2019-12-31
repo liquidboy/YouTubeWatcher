@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using YoutubeExplode.Models;
 
-namespace YouTubeWatcher.YT
+namespace SharedLib.YT
 {
     public class VideoDetails
     {

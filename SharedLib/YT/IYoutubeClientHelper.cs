@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace YouTubeWatcher.YT
+namespace SharedLib.YT
 {
 
     public interface IYoutubeClientHelper

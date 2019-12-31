@@ -4,7 +4,7 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace YouTubeWatcher.YT
+namespace SharedLib.YT
 {
     public class MediaStream
     {

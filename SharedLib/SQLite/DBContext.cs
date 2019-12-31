@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Reflection;
 using System.Text;
 
-namespace YouTubeWatcher.SQLite
+namespace SharedLib.SQLite
 {
 
     [DefaultProperty("Current")]

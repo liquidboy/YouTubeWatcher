@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace YouTubeWatcher.SQLite
+namespace SharedLib.SQLite
 {
 
     public class Table : BaseClass

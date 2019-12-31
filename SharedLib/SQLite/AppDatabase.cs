@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace YouTubeWatcher.SQLite
+namespace SharedLib.SQLite
 {
     public partial class AppDatabase : SqliteDatabase
     {
