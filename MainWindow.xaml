@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:YouTubeWatcher" xmlns:controls="clr-namespace:Microsoft.Toolkit.Wpf.UI.Controls;assembly=Microsoft.Toolkit.Wpf.UI.Controls.WebView" 
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="800" Width="1240">
     <Grid x:Name="layoutRoot">
         
         <!-- FOOTER -->
@@ -13,12 +13,12 @@
         <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="3">
             <TextBlock x:Name="tbUrl" Width="300" VerticalAlignment="Bottom"></TextBlock>
             <StackPanel x:Name="spDownloadToolbar" Orientation="Horizontal" Visibility="Collapsed">
-                <ComboBox x:Name="cbMediaType" Width="80">
+                <ComboBox x:Name="cbMediaType" Width="80" FontSize="18" >
                     <ComboBoxItem IsSelected="True">mp4</ComboBoxItem>
                     <ComboBoxItem>mp3</ComboBoxItem>
                 </ComboBox>
-                <ComboBox x:Name="cbFormats" Width="120"></ComboBox>
-                <Button x:Name="butLoad" Content=" Download Media " Click="butLoad_Click"></Button>
+                <ComboBox x:Name="cbFormats" Width="120" FontSize="18"></ComboBox>
+                <Button x:Name="butLoad" Content=" Download Media " Click="butLoad_Click" FontSize="18" ></Button>
             </StackPanel>
         </StackPanel>
         <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right">
@@ -26,17 +26,17 @@
                 <Image x:Name="imgStatus" Stretch="UniformToFill" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="40"></Image>
                 <TextBlock x:Name="tbStatus" Foreground="White" VerticalAlignment="Center"></TextBlock>
             </StackPanel>
-            <TextBlock x:Name="tbLibrary" MouseUp="tbLibrary_MouseUp" Cursor="Hand" Margin="30,3,0,3" VerticalAlignment="Bottom"></TextBlock>
-            <TextBlock x:Name="tbJobs" Margin="10,3,3,3" VerticalAlignment="Bottom"></TextBlock>
+            <Button x:Name="butLibrary" Margin="30,3,0,3" VerticalAlignment="Bottom" FontSize="18" Click="ShowLibrary"></Button>
+            <TextBlock x:Name="tbJobs" Margin="10,3,3,3" VerticalAlignment="Bottom" FontSize="18"></TextBlock>
         </StackPanel>
 
         <!-- LIBRARY -->
         <Grid x:Name="grdLibrary" Visibility="Collapsed" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-            <Button x:Name="butCloseLibrary" Content=" &lt; Back " Click="butCloseLibrary_Click" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10" ></Button>
+            <Button x:Name="butCloseLibrary" Content=" &lt; Back " Click="butCloseLibrary_Click" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10" FontSize="16"></Button>
             <Grid Margin="10" HorizontalAlignment="Right" VerticalAlignment="Top">
                 <StackPanel Orientation="Vertical">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,0,10">
-                        <Button x:Name="butShowMediaFolder" Content=" Open Media Folder " Click="butShowMediaFolder_Click" ></Button>
+                        <Button x:Name="butShowMediaFolder" Content=" Open Media Folder " Click="butShowMediaFolder_Click"  FontSize="16"></Button>
                     </StackPanel>
                     <TextBlock x:Name="tbMediaDirectory" HorizontalAlignment="Right" Foreground="LightGray"></TextBlock>
                 </StackPanel>
@@ -55,8 +55,8 @@
                                 <Image Width="140" Height="90" Stretch="UniformToFill" Margin="5" Tag="{Binding YID}" Source="{Binding ThumbUri}" ></Image>
                                 <TextBlock TextWrapping="WrapWithOverflow" Width="140" Height="50" Text="{Binding Title}" FontWeight="SemiBold"></TextBlock>
                                 <StackPanel Orientation="Horizontal" Margin="5,10,0,0">
-                                    <Button Content=" Play " Click="PlayMedia"></Button>
-                                    <Button Content=" Delete " Margin="3,0,0,0"></Button>
+                                    <Button Content=" Play " Click="PlayMedia" FontSize="16"></Button>
+                                    <Button Content=" Delete " Margin="3,0,0,0" FontSize="16"></Button>
                                 </StackPanel>
                             </StackPanel>
                         </DataTemplate>

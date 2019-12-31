@@ -15,7 +15,6 @@ namespace YouTubeWatcher
 {
     public partial class MainWindow : Window
     {
-        
         private const string mediaPath = "d:\\deleteme\\downloadedMedia";
         private const string dbName = "youtubewatcher";
         private const string youtubeHomeUrl = "https://www.youtube.com";
@@ -261,12 +260,11 @@ namespace YouTubeWatcher
         private void UpdateLibraryStatistics() {
             var foundItems = DBContext.Current.RetrieveAllEntities<MediaMetadata>();
             var libraryCount = (foundItems == null) ? 0 : foundItems.Count ;
-            tbLibrary.Text = $"library : {libraryCount}";
+            butLibrary.Content = $" library : {libraryCount} ";
         }
 
-        private void UpdateJobStatistics() => tbJobs.Text = $"queue : {jobQueue.Count}";
-
-        private void tbLibrary_MouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e) => ShowHideLibrary(true);
+        private void UpdateJobStatistics() => tbJobs.Text = $"jobs : {jobQueue.Count}";
+        private void ShowLibrary(object sender, RoutedEventArgs e) => ShowHideLibrary(true);
         private void butCloseLibrary_Click(object sender, RoutedEventArgs e) => ShowHideLibrary(false);
         private void butShowMediaFolder_Click(object sender, RoutedEventArgs e) => OpenMediaFolder();
 
@@ -280,11 +278,11 @@ namespace YouTubeWatcher
 
         private void LoadLibraryItems(bool load)
         {
-
             if (load)
             {
                 var MediaItems = new ObservableCollection<ViewMediaMetadata>();
                 var foundItems = DBContext.Current.RetrieveAllEntities<MediaMetadata>();
+                foundItems.Reverse();
                 foreach (var foundItem in foundItems)
                 {
                     MediaItems.Add(new ViewMediaMetadata()
@@ -315,7 +313,7 @@ namespace YouTubeWatcher
         {
             var but = sender as Button;
             if (but.DataContext is ViewMediaMetadata) {
-                var vmd = but.DataContext as ViewMediaMetadata;
+                var vmd = (ViewMediaMetadata)but.DataContext;
 
                 mePlayer.Source = new Uri($"{mediaPath}\\{vmd.YID}.mp4", UriKind.Absolute);
                 ShowHideMediaPlayer(true);
@@ -345,28 +343,19 @@ namespace YouTubeWatcher
             isPlaying = !isPlaying;
         }
 
-        private void grdMediaPlayer_MouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-            TogglePausePlay();
-        }
+        private void grdMediaPlayer_MouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e) => TogglePausePlay();
 
-        private void CloseMediaPlayer(object sender, RoutedEventArgs e)
-        {
-            ShowHideMediaPlayer(false);
-        }
+        private void CloseMediaPlayer(object sender, RoutedEventArgs e) => ShowHideMediaPlayer(false);
 
-        private void ScrubMedia(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            TimeSpan ts = new TimeSpan(0, 0, 0, (int)mePlayerSlider.Value, 0);
-            mePlayer.Position = ts;
-        }
+        private void ScrubMedia(object sender, RoutedPropertyChangedEventArgs<double> e) => mePlayer.Position = new TimeSpan(0, 0, 0, (int)mePlayerSlider.Value, 0);
 
         private void mePlayer_MediaOpened(object sender, RoutedEventArgs e)
         {
             mePlayerSlider.Minimum = 0;
             mePlayerSlider.Maximum = mePlayer.NaturalDuration.TimeSpan.TotalSeconds;
-
         }
+
+        
     }
 
     public struct MediaJob{
@@ -376,7 +365,7 @@ namespace YouTubeWatcher
         public string Quality;
     }
 
-    public class ViewMediaMetadata {
+    public struct ViewMediaMetadata {
         public string YID { get; set;  }
         public string Title { get; set; }
         public Uri ThumbUri { get; set; }
