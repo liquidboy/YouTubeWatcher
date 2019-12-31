@@ -18,10 +18,10 @@
                 <ComboBox x:Name="cbFormats" Width="120"></ComboBox>
                 <Button x:Name="butLoad" Content=" Download Media " Click="butLoad_Click"></Button>
             </StackPanel>
-            <TextBlock x:Name="tbStatus" VerticalAlignment="Bottom"></TextBlock>
         </StackPanel>
         <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="3">
-            <TextBlock x:Name="tbLibrary" MouseUp="tbLibrary_MouseUp" Cursor="Hand"></TextBlock>
+            <TextBlock x:Name="tbStatus" VerticalAlignment="Bottom" Foreground="Red"></TextBlock>
+            <TextBlock x:Name="tbLibrary" MouseUp="tbLibrary_MouseUp" Cursor="Hand" Margin="30,0,0,0"></TextBlock>
             <TextBlock x:Name="tbJobs" Margin="10,0,0,0"></TextBlock>
         </StackPanel>
     </Grid>

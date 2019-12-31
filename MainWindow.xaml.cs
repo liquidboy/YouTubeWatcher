@@ -37,7 +37,8 @@ namespace YouTubeWatcher
             SetupWebView();
 
             //TestSqliteBits();
-            UpdateStatistics();
+            UpdateLibraryStatistics();
+            UpdateJobStatistics();
         }
 
         private void SetupWebView() {
@@ -84,14 +85,14 @@ namespace YouTubeWatcher
             //DBContext.Current.Manager.DeleteAllDatabases();
         }
 
-        private string lastUrlProcessed;
+        private string lastProcessedUrl;
 
         private async void WvMain_ContentLoading(object sender, Microsoft.Toolkit.Win32.UI.Controls.Interop.WinRT.WebViewControlContentLoadingEventArgs e)
         {
             var url = await wvMain.InvokeScriptAsync("eval", new string[] { "document.location.href;" });
-            if (url.Equals(lastUrlProcessed, StringComparison.CurrentCultureIgnoreCase)) return;
+            if (HasUrlBeenProcessed(url)) return;
 
-            lastUrlProcessed = url;
+            lastProcessedUrl = url;
             tbUrl.Text = url;
             cbFormats.Items.Clear();
             spDownloadToolbar.Visibility = Visibility.Collapsed;
@@ -107,6 +108,10 @@ namespace YouTubeWatcher
                 }
                 ShouldWeShowToolbar();
             }
+        }
+
+        private bool HasUrlBeenProcessed(string urlToProcess) {
+            return urlToProcess.Equals(lastProcessedUrl, StringComparison.CurrentCultureIgnoreCase);
         }
 
         private async Task<VideoDetails> GetVideoDetails(string ytUrl) {
@@ -175,12 +180,13 @@ namespace YouTubeWatcher
         private async void ProcessJobFromQueue() 
         {
             UpdateStatus();
-            UpdateStatistics();
+            UpdateLibraryStatistics();
+            UpdateJobStatistics();
             if (isProcessingJob) return;
-            if (jobQueue.Count == 0) return;
+            if (jobQueue.Count == 0) return; 
             var job = jobQueue.Dequeue();
             isProcessingJob = true;
-            UpdateStatistics();
+            UpdateJobStatistics();
             var videoDetails = await GetVideoDetails(job.YoutubeUrl);
             await ProcessYoutubeVideo(videoDetails, job.MediaType, job.Quality);
             isProcessingJob = false;
@@ -205,21 +211,14 @@ namespace YouTubeWatcher
                 // todo: handle error
             }
 
-            UpdateStatistics();
+            UpdateLibraryStatistics();
+            UpdateJobStatistics();
             isProcessingJob = false;
             ProcessJobFromQueue();
         }
 
         private void UpdateStatus() {
-
-            if (jobQueue.Count > 0)
-            {
-                tbStatus.Text = " .. processing job queue .. ";
-            }
-            else
-            {
-                tbStatus.Text = string.Empty;
-            }
+            tbStatus.Text = (jobQueue.Count > 0) ? " .. processing job .. " : string.Empty;
         }
 
         private void RecordMetadata(VideoDetails videoDetails)
@@ -234,11 +233,15 @@ namespace YouTubeWatcher
             var newid = DBContext.Current.Save(newEntity);
         }
 
-        private void UpdateStatistics() {
+        private void UpdateLibraryStatistics() {
             var foundItems = DBContext.Current.RetrieveAllEntities<MediaMetadata>();
             var libraryCount = (foundItems == null) ? 0 : foundItems.Count ;
             tbLibrary.Text = $"library : {libraryCount}";
-            tbJobs.Text = $"jobs : {jobQueue.Count}";
+        }
+
+        private void UpdateJobStatistics()
+        {
+            tbJobs.Text = $"queue : {jobQueue.Count}";
         }
 
         private void tbLibrary_MouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
