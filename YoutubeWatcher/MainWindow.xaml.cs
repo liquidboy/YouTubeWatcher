@@ -260,10 +260,10 @@ namespace YouTubeWatcher
         private void UpdateLibraryStatistics() {
             var foundItems = DBContext.Current.RetrieveAllEntities<MediaMetadata>();
             var libraryCount = (foundItems == null) ? 0 : foundItems.Count ;
-            butLibrary.Content = $" library : {libraryCount} ";
+            tbLibraryCount.Text = libraryCount.ToString();
         }
 
-        private void UpdateJobStatistics() => tbJobs.Text = $"jobs : {jobQueue.Count}";
+        private void UpdateJobStatistics() => tbJobsCount.Text = jobQueue.Count.ToString();
         private void ShowLibrary(object sender, RoutedEventArgs e) => ShowHideLibrary(true);
         private void butCloseLibrary_Click(object sender, RoutedEventArgs e) => ShowHideLibrary(false);
         private void butShowMediaFolder_Click(object sender, RoutedEventArgs e) => OpenMediaFolder();

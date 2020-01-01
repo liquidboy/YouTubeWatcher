@@ -23,12 +23,22 @@
             </StackPanel>
         </StackPanel>
         <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right">
-            <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" Margin="0,2,0,0" Background="Black">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" Margin="0,0,5,0" Background="Black">
                 <Image x:Name="imgStatus" Stretch="UniformToFill" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="40"></Image>
                 <TextBlock x:Name="tbStatus" Foreground="White" VerticalAlignment="Center"></TextBlock>
             </StackPanel>
-            <Button x:Name="butLibrary" Margin="30,3,0,3" VerticalAlignment="Bottom" FontSize="18" Click="ShowLibrary"></Button>
-            <TextBlock x:Name="tbJobs" Margin="10,3,3,3" VerticalAlignment="Bottom" FontSize="18"></TextBlock>
+            <Button x:Name="butLibrary" VerticalAlignment="Stretch" FontSize="18" Click="ShowLibrary" BorderThickness="0">
+                <Button.Content>
+                    <StackPanel Orientation="Vertical">
+                        <TextBlock Text=" Library " HorizontalAlignment="Stretch" Foreground="Gray" FontSize="10"></TextBlock>
+                        <TextBlock x:Name="tbLibraryCount" Text="0" HorizontalAlignment="Center" FontSize="14"></TextBlock>
+                    </StackPanel>
+                </Button.Content>
+            </Button>
+            <StackPanel Orientation="Vertical" VerticalAlignment="Stretch" Margin="5,4,5,0">
+                <TextBlock Text=" Jobs " HorizontalAlignment="Stretch" Foreground="Gray" FontSize="10"></TextBlock>
+                <TextBlock x:Name="tbJobsCount" Text="0" HorizontalAlignment="Center" FontSize="14"></TextBlock>
+            </StackPanel>
         </StackPanel>
 
         <!-- LIBRARY -->
