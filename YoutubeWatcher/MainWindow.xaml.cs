@@ -10,6 +10,8 @@ using System.Windows.Controls;
 using YoutubeExplode;
 using SharedCode.SQLite;
 using SharedCode.YT;
+using System.Windows.Data;
+using System.Globalization;
 
 namespace YouTubeWatcher
 {
@@ -218,7 +220,8 @@ namespace YouTubeWatcher
             {
                 if (File.Exists(mediaPath)) File.Delete(mediaPath);
                 await clientHelper.DownloadMedia(videoDetails.id, quality, mediaPath, mediaType);
-                RecordMetadata(videoDetails);
+                var fileInfo = new FileInfo(mediaPath);
+                RecordMetadata(videoDetails, mediaType, quality, fileInfo.Length);
             }
             catch (Exception ex)
             {
@@ -244,7 +247,7 @@ namespace YouTubeWatcher
             imgStatus.Source = new System.Windows.Media.Imaging.BitmapImage(uri);
         }
 
-        private void RecordMetadata(VideoDetails videoDetails)
+        private void RecordMetadata(VideoDetails videoDetails, string mediaType, string quality, long size)
         {
             var newEntity = new MediaMetadata()
             {
@@ -252,6 +255,9 @@ namespace YouTubeWatcher
                 Title = videoDetails.Title,
                 DateStamp = DateTime.UtcNow,
                 ThumbUrl = videoDetails.thumbnails.MediumResUrl,
+                MediaType = mediaType,
+                Quality = quality,
+                Size = size
             };
 
             var newid = DBContext.Current.Save(newEntity);
@@ -289,7 +295,10 @@ namespace YouTubeWatcher
                     {
                         Title = foundItem.Title,
                         YID = foundItem.YID,
-                        ThumbUri = new Uri($"{mediaPath}\\{foundItem.YID}-medium.jpg", UriKind.Absolute)
+                        ThumbUri = new Uri($"{mediaPath}\\{foundItem.YID}-medium.jpg", UriKind.Absolute),
+                        Quality = foundItem.Quality,
+                        MediaType = foundItem.MediaType,
+                        Size = foundItem.Size,
                     });
 
                 }
@@ -369,5 +378,40 @@ namespace YouTubeWatcher
         public string YID { get; set;  }
         public string Title { get; set; }
         public Uri ThumbUri { get; set; }
+        public string Quality { get; set; }
+        public string MediaType { get; set; }
+        public long Size { get; set; }
     }
+
+
+    [ValueConversion(typeof(long), typeof(string))]
+    public class FileSizeToStringConverter : IValueConverter
+    {
+        public static FileSizeToStringConverter Instance { get; } = new FileSizeToStringConverter();
+
+        private static readonly string[] Units = { "B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB" };
+
+        public object? Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value is null)
+                return default(string);
+
+            double size = (long)value;
+            var unit = 0;
+
+            while (size >= 1024)
+            {
+                size /= 1024;
+                ++unit;
+            }
+
+            return $"{size:0.#} {Units[unit]}";
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
 }

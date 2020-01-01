@@ -10,5 +10,8 @@ namespace SharedCode.SQLite
         public DateTime DateStamp { get; set; }
         public string YID { get; set; }
         public string ThumbUrl { get; set; }
+        public string Quality { get; set; }
+        public string MediaType { get; set; }
+        public long Size { get; set; }
     }
 }

@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:YouTubeWatcher" 
         xmlns:controls="clr-namespace:Microsoft.Toolkit.Wpf.UI.Controls;assembly=Microsoft.Toolkit.Wpf.UI.Controls.WebView" 
         mc:Ignorable="d"
-        Title="MainWindow" Height="800" Width="1240">
+        Title="MainWindow" Height="800" Width="1180">
     <Grid x:Name="layoutRoot">
         
         <!-- FOOTER -->
@@ -63,11 +63,15 @@
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Orientation= "Vertical" Margin ="0,0,0,20">
-                                <Image Width="140" Height="90" Stretch="UniformToFill" Margin="5" Tag="{Binding YID}" Source="{Binding ThumbUri}" ></Image>
-                                <TextBlock TextWrapping="WrapWithOverflow" Width="140" Height="50" Text="{Binding Title}" FontWeight="SemiBold"></TextBlock>
-                                <StackPanel Orientation="Horizontal" Margin="5,10,0,0">
+                                <Image Width="180" Height="120" Stretch="UniformToFill" Margin="5" Tag="{Binding YID}" Source="{Binding ThumbUri}" ></Image>
+                                <StackPanel Orientation="Horizontal" Margin="5" TextBlock.Foreground="Gray" HorizontalAlignment="Right">
+                                    <TextBlock Text="{Binding Quality}"></TextBlock>
+                                    <TextBlock Text="{Binding MediaType}" Margin="10,0,0,0"></TextBlock>
+                                    <TextBlock Text="{Binding Size, Converter={x:Static local:FileSizeToStringConverter.Instance}}" Margin="10,0,0,0"></TextBlock>
+                                </StackPanel>
+                                <TextBlock TextWrapping="WrapWithOverflow" Width="180" Height="50" Text="{Binding Title}" FontWeight="SemiBold"></TextBlock>
+                                <StackPanel Orientation="Horizontal" Margin="5,5,0,0">
                                     <Button Content=" Play " Click="PlayMedia" FontSize="16"></Button>
-                                    <Button Content=" Delete " Margin="3,0,0,0" FontSize="16"></Button>
                                 </StackPanel>
                             </StackPanel>
                         </DataTemplate>
