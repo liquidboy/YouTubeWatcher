@@ -5,8 +5,6 @@ using System.Text;
 
 namespace SharedCode.SQLite
 {
-
-
     public abstract class SqliteDatabase
     {
         protected static object lockobj = new object();

@@ -58,5 +58,6 @@
   <Capabilities>
     <Capability Name="internetClient" />
     <rescap:Capability Name="broadFileSystemAccess" />
+    <uap:Capability Name="videosLibrary"/>
   </Capabilities>
 </Package>

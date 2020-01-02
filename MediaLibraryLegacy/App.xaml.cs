@@ -3,10 +3,14 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Security.AccessControl;
+using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage;
+using Windows.Storage.Pickers;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -22,6 +26,10 @@ namespace MediaLibraryLegacy
     /// </summary>
     sealed partial class App : Application
     {
+        public static string mediaPath = "[filled in by code]";
+        public const string dbName = "youtubewatcher";
+        public const string youtubeHomeUrl = "https://www.youtube.com";
+
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
@@ -37,9 +45,12 @@ namespace MediaLibraryLegacy
         /// will be used such as when the application is launched to open a specific file.
         /// </summary>
         /// <param name="e">Details about the launch request and process.</param>
-        protected override void OnLaunched(LaunchActivatedEventArgs e)
+        protected async override void OnLaunched(LaunchActivatedEventArgs e)
         {
             Frame rootFrame = Window.Current.Content as Frame;
+
+            // Ensure Media Folder Exists
+            await EnsureMediaFolderExists();
 
             // Do not repeat app initialization when the Window already has content,
             // just ensure that the window is active
@@ -71,6 +82,39 @@ namespace MediaLibraryLegacy
                 // Ensure the current window is active
                 Window.Current.Activate();
             }
+        }
+
+        // https://docs.microsoft.com/en-us/windows/uwp/design/app-settings/store-and-retrieve-app-data
+        private async Task EnsureMediaFolderExists()
+        {
+            StorageFolder localFolder = ApplicationData.Current.LocalFolder;
+            //var myVideos = await StorageLibrary.GetLibraryAsync(Windows.Storage.KnownLibraryId.Videos);
+            var path = string.Empty;
+            try
+            {
+                //var folderExists = await KnownFolders.VideosLibrary.GetFolderAsync("MediaLibraryLegacy");
+                var folderExists = await localFolder.GetFolderAsync("MediaLibraryLegacy");
+                path = folderExists.Path;
+            }
+            catch (Exception ex) {
+                //var appFolder = await myVideos.SaveFolder.CreateFolderAsync("MediaLibraryLegacy", CreationCollisionOption.FailIfExists);
+                var appFolder = await localFolder.CreateFolderAsync("MediaLibraryLegacy");
+                path = appFolder.Path;
+            }
+            finally {
+                mediaPath = path;
+            }
+
+            // ensure it has the right permission
+            //SetFolderPermission(path);
+        }
+
+        private void SetFolderPermission(string path)
+        {
+            var directoryInfo = new System.IO.DirectoryInfo(path);
+            var directorySecurity = directoryInfo.GetAccessControl();
+            directorySecurity.AddAccessRule(new FileSystemAccessRule("ALL APPLICATION PACKAGES", FileSystemRights.FullControl, InheritanceFlags.ObjectInherit | InheritanceFlags.ContainerInherit, PropagationFlags.InheritOnly, AccessControlType.Allow));
+            directoryInfo.SetAccessControl(directorySecurity);
         }
 
         /// <summary>
