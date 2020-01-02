@@ -20,7 +20,8 @@ using Windows.System;
 
 namespace MediaLibrary
 {
-    // https://www.mr-kg.com/uwp-file-access/
+    
+
     public sealed partial class MainPage : Page
     {
         private const string mediaPath = "d:\\deleteme\\downloadedMedia";
@@ -115,3 +116,10 @@ namespace MediaLibrary
         public long Size { get; set; }
     }
 }
+
+
+// add permission to folder, for all access to files
+// https://www.mr-kg.com/uwp-file-access/
+
+// add restricted capability to allow opening folder
+// https://stackoverflow.com/questions/50559764/broadfilesystemaccess-uwp
