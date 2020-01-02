@@ -18,6 +18,7 @@ namespace MediaLibraryLegacy
         private Queue<MediaJob> jobQueue = new Queue<MediaJob>();
 
         public event EventHandler OnShowLibrary;
+        public event EventHandler OnShowPlaylist;
 
         public Taskbar()
         {
@@ -137,6 +138,8 @@ namespace MediaLibraryLegacy
         }
         private void ShowLibrary(object sender, RoutedEventArgs e) => OnShowLibrary.Invoke(null, null);
 
+        private void ShowPlaylists(object sender, RoutedEventArgs e) => OnShowPlaylist.Invoke(null, null);
+
         public async void MediaChanged(Uri media) {
             tbUrl.Text = media.OriginalString;
             cbFormats.Items.Clear();
@@ -217,5 +220,6 @@ namespace MediaLibraryLegacy
             }
             return null;
         }
+
     }
 }
