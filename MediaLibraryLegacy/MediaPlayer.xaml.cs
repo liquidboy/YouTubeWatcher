@@ -2,6 +2,7 @@
 using Windows.Media.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media.Imaging;
 
 namespace MediaLibraryLegacy
 {
@@ -27,6 +28,7 @@ namespace MediaLibraryLegacy
                 tbMediaPlayerTitle.Text = string.Empty;
                 isPlaying = false;
                 mePlayer.Source = null;
+                imgThumb.Source = null;
                 grdMediaPlayer.Visibility = Visibility.Collapsed;
             }
         }
@@ -39,8 +41,9 @@ namespace MediaLibraryLegacy
             isPlaying = !isPlaying;
         }
 
-        public void OpenMediaUri(Uri mediaUri) {
+        public void OpenMediaUri(Uri mediaUri, Uri thumbUri) {
             mePlayer.Source = MediaSource.CreateFromUri(mediaUri);
+            imgThumb.Source = new BitmapImage(thumbUri);
         }
 
         private void CloseMediaPlayer(object sender, RoutedEventArgs e) => ShowHideMediaPlayer(false);
