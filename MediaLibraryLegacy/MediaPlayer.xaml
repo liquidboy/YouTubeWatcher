@@ -1,0 +1,21 @@
+﻿<UserControl
+    x:Class="MediaLibraryLegacy.MediaPlayer"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MediaLibraryLegacy"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400">
+
+    <Grid>
+        <Grid x:Name="grdMediaPlayer" Width="600" Height="400" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,30,40" Visibility="Collapsed" Background="Black" >
+            <MediaPlayerElement x:Name="mePlayer" HorizontalAlignment="Stretch"  AreTransportControlsEnabled="True" VerticalAlignment="Stretch" Margin="0,2,0,0" ></MediaPlayerElement>
+            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="30" Background="Blue">
+                <TextBlock x:Name="tbMediaPlayerTitle" Foreground="White" FontSize="12" Margin="5"></TextBlock>
+                <Button Content="X" FontSize="14" Click="CloseMediaPlayer" HorizontalAlignment="Right" VerticalAlignment="Stretch" Background="Red" Foreground="White"></Button>
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>

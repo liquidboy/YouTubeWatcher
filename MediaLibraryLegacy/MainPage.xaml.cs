@@ -54,36 +54,9 @@ namespace MediaLibraryLegacy
             if (but.DataContext is ViewMediaMetadata)
             {
                 var vmd = (ViewMediaMetadata)but.DataContext;
-                mePlayer.Source = MediaSource.CreateFromUri(new Uri($"{mediaPath}\\{vmd.YID}.mp4", UriKind.Absolute));
-                ShowHideMediaPlayer(true, vmd.Title);
+                viewMediaPlayer.OpenMediaUri(new Uri($"{mediaPath}\\{vmd.YID}.mp4", UriKind.Absolute));
+                viewMediaPlayer.ShowHideMediaPlayer(true, vmd.Title);
             }
-        }
-
-        private void ShowHideMediaPlayer(bool show, string title = "")
-        {
-            if (show)
-            {
-                grdMediaPlayer.Visibility = Visibility.Visible;
-                tbMediaPlayerTitle.Text = title;
-                isPlaying = true;
-                mePlayer.MediaPlayer.Play();
-            }
-            else
-            {
-                mePlayer.MediaPlayer.Pause();
-                tbMediaPlayerTitle.Text = string.Empty;
-                isPlaying = false;
-                mePlayer.Source = null;
-                grdMediaPlayer.Visibility = Visibility.Collapsed;
-            }
-        }
-
-        bool isPlaying = false;
-        private void TogglePausePlay()
-        {
-            if (isPlaying) mePlayer.MediaPlayer.Pause();
-            else mePlayer.MediaPlayer.Play();
-            isPlaying = !isPlaying;
         }
 
         private void ShowHideLibrary(bool show)
@@ -134,7 +107,6 @@ namespace MediaLibraryLegacy
             }
         }
 
-        private void CloseMediaPlayer(object sender, RoutedEventArgs e) => ShowHideMediaPlayer(false);
     }
 
 
