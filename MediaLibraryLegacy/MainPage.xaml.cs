@@ -30,7 +30,7 @@ namespace MediaLibraryLegacy
 
         private void OnPlayMedia(object sender, PlayMediaEventArgs e)
         {
-            viewMediaPlayer.OpenMediaUri(new Uri($"{App.mediaPath}\\{e.ViewMediaMetadata.YID}.mp4", UriKind.Absolute));
+            viewMediaPlayer.OpenMediaUri(new Uri($"{App.mediaPath}\\{e.ViewMediaMetadata.YID}.{e.ViewMediaMetadata.MediaType}", UriKind.Absolute));
             viewMediaPlayer.ShowHideMediaPlayer(true, e.ViewMediaMetadata.Title);
         }
 
