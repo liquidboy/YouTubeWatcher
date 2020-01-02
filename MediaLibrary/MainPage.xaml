@@ -5,6 +5,7 @@
     xmlns:local="using:MediaLibrary"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:mpc="using:Windows.Media.Playback"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
@@ -47,5 +48,15 @@
                 </ItemsControl>
             </ScrollViewer>
         </Grid>
+
+        <!-- MEDIA -->
+        <Grid x:Name="grdMediaPlayer" Width="600" Height="400" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,30,40" Visibility="Collapsed" PointerReleased="grdMediaPlayer_PointerReleased" Background="Black" >
+
+            <!--<MediaPlayerElement x:Name="mePlayer" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ></MediaPlayerElement>-->
+            <!--<MediaElement x:Name="mePlayer" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" AutoPlay="True" Stretch="Uniform" MediaOpened="mePlayer_MediaOpened"></MediaElement>-->
+            <Button Content=" close " FontSize="18" Click="CloseMediaPlayer" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="10"></Button>
+            <Slider x:Name="mePlayerSlider" Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="5" SmallChange="1" LargeChange="1" ValueChanged="ScrubMedia" ></Slider>
+        </Grid>
+
     </Grid>
 </Page>

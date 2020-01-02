@@ -38,6 +38,7 @@ namespace MediaLibrary
 
             // setup views
             SetupLibraryView();
+            SetupMediaview();
         }
 
         private void SetupLibraryView()
@@ -46,15 +47,51 @@ namespace MediaLibrary
             tbMediaDirectory.Text = mediaPath;
         }
 
+        private void SetupMediaview() {
+           
+        }
+
         private void CloseLibrary(object sender, RoutedEventArgs e) => ShowHideLibrary(false);
 
         private void ShowMediaFolder(object sender, RoutedEventArgs e) => OpenMediaFolder();
 
         private void PlayMedia(object sender, RoutedEventArgs e)
         {
+            var but = sender as Button;
+            if (but.DataContext is ViewMediaMetadata)
+            {
+                var vmd = (ViewMediaMetadata)but.DataContext;
 
+                //mePlayer.Source = new Uri($"{mediaPath}\\{vmd.YID}.mp4", UriKind.Absolute);
+                ShowHideMediaPlayer(true);
+            }
         }
 
+        private void ShowHideMediaPlayer(bool show)
+        {
+            //if (show)
+            //{
+            //    grdMediaPlayer.Visibility = Visibility.Visible;
+            //    isPlaying = true;
+            //    mePlayer.Play();
+            //}
+            //else
+            //{
+            //    mePlayer.Stop();
+            //    isPlaying = false;
+            //    mePlayer.Source = null;
+            //    mePlayerSlider.Value = 0;
+            //    grdMediaPlayer.Visibility = Visibility.Collapsed;
+            //}
+        }
+        
+        //bool isPlaying = false;
+        //private void TogglePausePlay()
+        //{
+        //    if (isPlaying) mePlayer.Pause();
+        //    else mePlayer.Play();
+        //    isPlaying = !isPlaying;
+        //}
 
         private void ShowHideLibrary(bool show)
         {
@@ -102,6 +139,26 @@ namespace MediaLibrary
                 //icLibraryItems.Items.Clear();
                 icLibraryItems.ItemsSource = null;
             }
+        }
+
+        private void grdMediaPlayer_PointerReleased(object sender, PointerRoutedEventArgs e)
+        {
+
+        }
+
+        private void CloseMediaPlayer(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ScrubMedia(object sender, RangeBaseValueChangedEventArgs e)
+        {
+
+        }
+
+        private void mePlayer_MediaOpened(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+
         }
     }
 
