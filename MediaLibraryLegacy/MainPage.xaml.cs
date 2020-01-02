@@ -32,7 +32,8 @@ namespace MediaLibraryLegacy
         {
             var thumbUri = new Uri($"{App.mediaPath}\\{e.ViewMediaMetadata.YID}-medium.jpg", UriKind.Absolute);
             var mediaUri = new Uri($"{App.mediaPath}\\{e.ViewMediaMetadata.YID}.{e.ViewMediaMetadata.MediaType}", UriKind.Absolute);
-            viewMediaPlayer.OpenMediaUri(mediaUri, thumbUri);
+            var wallpaperUri = new Uri($"{App.mediaPath}\\{e.ViewMediaMetadata.YID}-high.jpg", UriKind.Absolute);
+            viewMediaPlayer.OpenMediaUri(mediaUri, thumbUri, wallpaperUri);
             viewMediaPlayer.ShowHideMediaPlayer(true, e.ViewMediaMetadata.Title);
         }
 

@@ -29,6 +29,7 @@ namespace MediaLibraryLegacy
                 isPlaying = false;
                 mePlayer.Source = null;
                 imgThumb.Source = null;
+                imgWallpaper.Source = null;
                 grdMediaPlayer.Visibility = Visibility.Collapsed;
             }
         }
@@ -41,9 +42,10 @@ namespace MediaLibraryLegacy
             isPlaying = !isPlaying;
         }
 
-        public void OpenMediaUri(Uri mediaUri, Uri thumbUri) {
+        public void OpenMediaUri(Uri mediaUri, Uri thumbUri, Uri wallpaperUri) {
             mePlayer.Source = MediaSource.CreateFromUri(mediaUri);
             imgThumb.Source = new BitmapImage(thumbUri);
+            imgWallpaper.Source = new BitmapImage(wallpaperUri);
         }
 
         private void CloseMediaPlayer(object sender, RoutedEventArgs e) => ShowHideMediaPlayer(false);
