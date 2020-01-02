@@ -11,7 +11,6 @@
     <Grid>
         <!-- LIBRARY -->
         <Grid x:Name="grdLibrary" Visibility="Collapsed" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-            <Button x:Name="butCloseLibrary" Content=" &lt; Back " Click="CloseLibrary" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10" FontSize="16"></Button>
             <Grid Margin="10" HorizontalAlignment="Right" VerticalAlignment="Top">
                 <StackPanel Orientation="Vertical">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,0,0">
@@ -49,12 +48,13 @@
         </Grid>
 
         <!-- MEDIA -->
-        <Grid x:Name="grdMediaPlayer" Width="600" Height="400" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,30,40" Visibility="Collapsed" PointerReleased="grdMediaPlayer_PointerReleased" Background="Black" >
-
-            <!--<MediaPlayerElement x:Name="mePlayer" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ></MediaPlayerElement>-->
-            <!--<MediaElement x:Name="mePlayer" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" AutoPlay="True" Stretch="Uniform" MediaOpened="mePlayer_MediaOpened"></MediaElement>-->
-            <Button Content=" close " FontSize="18" Click="CloseMediaPlayer" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="10"></Button>
-            <Slider x:Name="mePlayerSlider" Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="5" SmallChange="1" LargeChange="1" ValueChanged="ScrubMedia" ></Slider>
+        <Grid x:Name="grdMediaPlayer" Width="600" Height="400" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,30,40" Visibility="Collapsed" Background="Black" >
+            <MediaPlayerElement x:Name="mePlayer" HorizontalAlignment="Stretch"  AreTransportControlsEnabled="True" VerticalAlignment="Stretch" Margin="0,2,0,0" ></MediaPlayerElement>
+            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="30" Background="Blue">
+                <TextBlock x:Name="tbMediaPlayerTitle" Foreground="White" FontSize="12" Margin="5"></TextBlock>
+                <Button Content="X" FontSize="14" Click="CloseMediaPlayer" HorizontalAlignment="Right" VerticalAlignment="Stretch" Background="Red" Foreground="White"></Button>
+            </Grid>
+            
         </Grid>
 
     </Grid>

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Media.Core;
 using Windows.Storage;
 using Windows.System;
 using Windows.UI.Xaml;
@@ -37,7 +38,6 @@ namespace MediaLibraryLegacy
 
             // setup views
             SetupLibraryView();
-            SetupMediaview();
         }
 
         private void SetupLibraryView()
@@ -45,13 +45,6 @@ namespace MediaLibraryLegacy
             ShowHideLibrary(true);
             tbMediaDirectory.Text = mediaPath;
         }
-
-        private void SetupMediaview()
-        {
-
-        }
-
-        private void CloseLibrary(object sender, RoutedEventArgs e) => ShowHideLibrary(false);
 
         private void ShowMediaFolder(object sender, RoutedEventArgs e) => OpenMediaFolder();
 
@@ -61,37 +54,37 @@ namespace MediaLibraryLegacy
             if (but.DataContext is ViewMediaMetadata)
             {
                 var vmd = (ViewMediaMetadata)but.DataContext;
-
-                //mePlayer.Source = new Uri($"{mediaPath}\\{vmd.YID}.mp4", UriKind.Absolute);
-                ShowHideMediaPlayer(true);
+                mePlayer.Source = MediaSource.CreateFromUri(new Uri($"{mediaPath}\\{vmd.YID}.mp4", UriKind.Absolute));
+                ShowHideMediaPlayer(true, vmd.Title);
             }
         }
 
-        private void ShowHideMediaPlayer(bool show)
+        private void ShowHideMediaPlayer(bool show, string title = "")
         {
-            //if (show)
-            //{
-            //    grdMediaPlayer.Visibility = Visibility.Visible;
-            //    isPlaying = true;
-            //    mePlayer.Play();
-            //}
-            //else
-            //{
-            //    mePlayer.Stop();
-            //    isPlaying = false;
-            //    mePlayer.Source = null;
-            //    mePlayerSlider.Value = 0;
-            //    grdMediaPlayer.Visibility = Visibility.Collapsed;
-            //}
+            if (show)
+            {
+                grdMediaPlayer.Visibility = Visibility.Visible;
+                tbMediaPlayerTitle.Text = title;
+                isPlaying = true;
+                mePlayer.MediaPlayer.Play();
+            }
+            else
+            {
+                mePlayer.MediaPlayer.Pause();
+                tbMediaPlayerTitle.Text = string.Empty;
+                isPlaying = false;
+                mePlayer.Source = null;
+                grdMediaPlayer.Visibility = Visibility.Collapsed;
+            }
         }
 
-        //bool isPlaying = false;
-        //private void TogglePausePlay()
-        //{
-        //    if (isPlaying) mePlayer.Pause();
-        //    else mePlayer.Play();
-        //    isPlaying = !isPlaying;
-        //}
+        bool isPlaying = false;
+        private void TogglePausePlay()
+        {
+            if (isPlaying) mePlayer.MediaPlayer.Pause();
+            else mePlayer.MediaPlayer.Play();
+            isPlaying = !isPlaying;
+        }
 
         private void ShowHideLibrary(bool show)
         {
@@ -141,26 +134,7 @@ namespace MediaLibraryLegacy
             }
         }
 
-        private void grdMediaPlayer_PointerReleased(object sender, PointerRoutedEventArgs e)
-        {
-
-        }
-
-        private void CloseMediaPlayer(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void ScrubMedia(object sender, RangeBaseValueChangedEventArgs e)
-        {
-
-        }
-
-        private void mePlayer_MediaOpened(object sender, RoutedEventArgs e)
-        {
-
-        }
-
+        private void CloseMediaPlayer(object sender, RoutedEventArgs e) => ShowHideMediaPlayer(false);
     }
 
 
