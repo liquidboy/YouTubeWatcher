@@ -20,3 +20,6 @@ Job : closer look at the taskbar showing inprogress job, job queue count and Lib
 
 Library (clicking on library tile on taskbar) : clicking on library tile will take you to the Library (xaml view of the media you downloaded)
 ![alt text](https://github.com/liquidboy/YouTubeWatcher/raw/master/Assets/5.PNG "")
+
+MediaPlayer above Webview: playing from your library will load the UWP MediaPlayerElement which has no airspace issues with webview, so appears above it.
+![alt text](https://github.com/liquidboy/YouTubeWatcher/raw/master/Assets/6.PNG "")
