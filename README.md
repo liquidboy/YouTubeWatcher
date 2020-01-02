@@ -7,7 +7,7 @@
 
 
 Home (webview loading youtube): 
-![alt text](https://github.com/liquidboy/YouTubeWatcher/raw/master/Assets/1.PNG) {:width="400px"}
+![alt text](https://github.com/liquidboy/YouTubeWatcher/raw/master/Assets/1.PNG)
 
 Youtube Selected Video (webview loading youtube video):  This gives you the option to download the vid as mp3/4 and quality
 ![alt text](https://github.com/liquidboy/YouTubeWatcher/raw/master/Assets/2.PNG "")
