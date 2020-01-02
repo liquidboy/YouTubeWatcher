@@ -26,4 +26,4 @@ MediaPlayer above Webview: playing from your library will load the UWP MediaPlay
 ![alt text](https://github.com/liquidboy/YouTubeWatcher/raw/master/Assets/6.PNG "")
 
 Windows process : webview , Xaml UWP app (including media player), FFMpeg all run in separate processes all grouped underneath a parent process. This is mostly free, or very low amount of code required (1 line of code for webview).
-![alt text](https://github.com/liquidboy/YouTubeWatcher/raw/master/Assets/7.PNG "")
+![alt text](https://github.com/liquidboy/YouTubeWatcher/raw/master/Assets/7.png "")
