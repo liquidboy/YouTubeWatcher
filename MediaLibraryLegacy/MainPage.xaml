@@ -9,9 +9,9 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-        <local:MediaLibrary x:Name="viewMediaLibrary" PlayMedia="PlayMedia" Margin="0,0,0,40"></local:MediaLibrary>
+        <local:MediaLibrary x:Name="viewMediaLibrary" PlayMedia="PlayMedia" Margin="0,0,0,40" OnCloseLibrary="OnCloseLibrary"></local:MediaLibrary>
         <local:YoutubePlayer x:Name="viewYoutubePlayer" Margin="0,0,0,40" MediaChanged="MediaChanged"></local:YoutubePlayer>
         <local:MediaPlayer x:Name="viewMediaPlayer"></local:MediaPlayer>
-        <local:Taskbar x:Name="viewTaskbar" HorizontalAlignment="Stretch"></local:Taskbar>
+        <local:Taskbar x:Name="viewTaskbar" HorizontalAlignment="Stretch" OnShowLibrary="OnShowLibrary"></local:Taskbar>
     </Grid>
 </Page>

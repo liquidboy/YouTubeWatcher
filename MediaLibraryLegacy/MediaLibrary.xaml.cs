@@ -13,6 +13,7 @@ namespace MediaLibraryLegacy
         string mediaPath;
 
         public event EventHandler<PlayMediaEventArgs> PlayMedia;
+        public event EventHandler OnCloseLibrary;
 
         public MediaLibrary()
         {
@@ -82,6 +83,7 @@ namespace MediaLibraryLegacy
             }
         }
 
+        private void CloseLibrary(object sender, RoutedEventArgs e) => OnCloseLibrary.Invoke(null, null);
     }
 
     public class PlayMediaEventArgs : EventArgs {

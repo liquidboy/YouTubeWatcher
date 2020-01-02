@@ -26,6 +26,8 @@ namespace MediaLibraryLegacy
         private IYoutubeClientHelper clientHelper;
         private Queue<MediaJob> jobQueue = new Queue<MediaJob>();
 
+        public event EventHandler OnShowLibrary;
+
         public Taskbar()
         {
             this.InitializeComponent();
@@ -37,6 +39,9 @@ namespace MediaLibraryLegacy
 
             // initialize Youtube helpers
             clientHelper = new YoutubeClientHelper(new YoutubeClient(), System.AppDomain.CurrentDomain.BaseDirectory);
+
+            UpdateLibraryStatistics();
+            UpdateJobStatistics();
         }
 
         private void DownloadMedia(object sender, RoutedEventArgs e)
@@ -139,10 +144,7 @@ namespace MediaLibraryLegacy
 
             var newid = DBContext.Current.Save(newEntity);
         }
-        private void ShowLibrary(object sender, RoutedEventArgs e)
-        {
-
-        }
+        private void ShowLibrary(object sender, RoutedEventArgs e) => OnShowLibrary.Invoke(null, null);
 
         public async void MediaChanged(Uri media) {
             tbUrl.Text = media.OriginalString;

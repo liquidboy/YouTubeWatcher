@@ -41,5 +41,17 @@ namespace MediaLibraryLegacy
         {
             viewTaskbar.MediaChanged(e.MediaUri);
         }
+
+        private void OnShowLibrary(object sender, EventArgs e)
+        {
+            viewYoutubePlayer.Hide();
+            viewMediaLibrary.ShowHideLibrary(true);
+        }
+
+        private void OnCloseLibrary(object sender, EventArgs e)
+        {
+            viewYoutubePlayer.Show();
+            viewMediaLibrary.ShowHideLibrary(false);
+        }
     }
 }
