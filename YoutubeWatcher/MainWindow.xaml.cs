@@ -234,7 +234,12 @@ namespace YouTubeWatcher
             ProcessJobFromQueue();
         }
 
-        private void UpdateStatus() => tbStatus.Text = (jobQueue.Count > 0) ? " processing job " : string.Empty;
+        private void UpdateStatus()
+        {
+            tbStatus.Text = (jobQueue.Count > 0) ? "downloading media" : string.Empty;
+            tbStatusTitle.Text = (jobQueue.Count > 0) ? "job" : string.Empty;
+            spStatus.Visibility = (jobQueue.Count > 0) ? Visibility.Visible : Visibility.Collapsed;
+        }
 
         private void UpdateStatusImage(VideoDetails videoDetails)
         {

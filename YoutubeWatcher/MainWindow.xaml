@@ -23,9 +23,12 @@
             </StackPanel>
         </StackPanel>
         <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right">
-            <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" Margin="0,0,5,0" Background="Black">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" Background="Black">
                 <Image x:Name="imgStatus" Stretch="UniformToFill" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="40"></Image>
-                <TextBlock x:Name="tbStatus" Foreground="White" VerticalAlignment="Center"></TextBlock>
+                <StackPanel x:Name="spStatus" Orientation="Vertical" VerticalAlignment="Center" Visibility="Collapsed">
+                    <TextBlock x:Name="tbStatusTitle" Foreground="White" FontSize="10" Margin="10,0,0,0"></TextBlock>
+                    <TextBlock x:Name="tbStatus" Foreground="White" FontSize="14" Margin="10,0,10,0"></TextBlock>
+                </StackPanel>
             </StackPanel>
             <Button x:Name="butLibrary" VerticalAlignment="Stretch" FontSize="18" Click="ShowLibrary" BorderThickness="0">
                 <Button.Content>
