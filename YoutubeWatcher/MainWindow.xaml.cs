@@ -36,7 +36,7 @@ namespace YouTubeWatcher
             // initialize Youtube helpers
             clientHelper = new YoutubeClientHelper(new YoutubeClient(), System.AppDomain.CurrentDomain.BaseDirectory);
 
-            // setup Webview
+            // setup views
             SetupWebView();
             SetupLibraryView();
 
