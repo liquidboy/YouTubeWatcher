@@ -19,7 +19,7 @@ namespace MediaLibraryLegacy
             this.InitializeComponent();
         }
 
-        public void SetupLibraryView(string mediapath)
+        public void InitialSetup(string mediapath)
         {
             mediaPath = mediapath;
             ShowHideLibrary(true);

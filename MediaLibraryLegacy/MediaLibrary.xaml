@@ -20,7 +20,7 @@
                 </StackPanel>
             </Grid>
 
-            <ScrollViewer HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,70,0,40">
+            <ScrollViewer HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,70,0,0">
                 <ItemsControl x:Name="icLibraryItems" >
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
