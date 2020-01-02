@@ -9,47 +9,8 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-        <local:MediaLibrary x:Name="viewMediaLibrary"></local:MediaLibrary>
-        
-        
-        
         <!-- LIBRARY -->
-        <Grid x:Name="grdLibrary" Visibility="Collapsed" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-            <Grid Margin="10" HorizontalAlignment="Right" VerticalAlignment="Top">
-                <StackPanel Orientation="Vertical">
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,0,0">
-                        <Button x:Name="butShowMediaFolder" Content=" Open Media Folder " Click="ShowMediaFolder"  FontSize="16"></Button>
-                    </StackPanel>
-                    <TextBlock x:Name="tbMediaDirectory" HorizontalAlignment="Right" Foreground="LightGray"></TextBlock>
-                </StackPanel>
-            </Grid>
-
-            <ScrollViewer HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,70,0,40">
-                <ItemsControl x:Name="icLibraryItems" >
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <ItemsWrapGrid Orientation="Horizontal"></ItemsWrapGrid>
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel Orientation= "Vertical" Margin ="0,0,0,20">
-                                <Image Width="180" Height="120" Stretch="UniformToFill" Margin="5" Tag="{Binding YID}" Source="{Binding ThumbUri}" ></Image>
-                                <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
-                                    <TextBlock Text="{Binding Quality}" Foreground="Gray"></TextBlock>
-                                    <TextBlock Text="{Binding MediaType}" Margin="10,0,0,0" Foreground="Gray"></TextBlock>
-                                    <TextBlock Text="{Binding Size}" Margin="10,0,0,0" Foreground="Gray"></TextBlock>
-                                </StackPanel>
-                                <TextBlock TextWrapping="WrapWholeWords" Width="180" Height="60" Text="{Binding Title}" FontWeight="SemiBold"></TextBlock>
-                                <StackPanel Orientation="Horizontal" Margin="5,5,0,0">
-                                    <Button Content=" Play " Click="PlayMedia" FontSize="16"></Button>
-                                </StackPanel>
-                            </StackPanel>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-            </ScrollViewer>
-        </Grid>
+        <local:MediaLibrary x:Name="viewMediaLibrary" PlayMedia="PlayMedia"></local:MediaLibrary>
 
         <!-- MEDIA -->
         <local:MediaPlayer x:Name="viewMediaPlayer"></local:MediaPlayer>

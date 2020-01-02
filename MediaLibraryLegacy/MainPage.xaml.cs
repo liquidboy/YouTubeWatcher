@@ -1,22 +1,6 @@
 ﻿using SharedCode.SQLite;
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.Media.Core;
-using Windows.Storage;
-using Windows.System;
-using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 
 namespace MediaLibraryLegacy
 {
@@ -37,76 +21,14 @@ namespace MediaLibraryLegacy
             AppDatabase.Current(mediaPath, dbName).Init();
 
             // setup views
-            SetupLibraryView();
+            viewMediaLibrary.SetupLibraryView(mediaPath);
         }
 
-        private void SetupLibraryView()
+        private void PlayMedia(object sender, PlayMediaEventArgs e)
         {
-            ShowHideLibrary(true);
-            tbMediaDirectory.Text = mediaPath;
+            viewMediaPlayer.OpenMediaUri(new Uri($"{mediaPath}\\{e.ViewMediaMetadata.YID}.mp4", UriKind.Absolute));
+            viewMediaPlayer.ShowHideMediaPlayer(true, e.ViewMediaMetadata.Title);
         }
-
-        private void ShowMediaFolder(object sender, RoutedEventArgs e) => OpenMediaFolder();
-
-        private void PlayMedia(object sender, RoutedEventArgs e)
-        {
-            var but = sender as Button;
-            if (but.DataContext is ViewMediaMetadata)
-            {
-                var vmd = (ViewMediaMetadata)but.DataContext;
-                viewMediaPlayer.OpenMediaUri(new Uri($"{mediaPath}\\{vmd.YID}.mp4", UriKind.Absolute));
-                viewMediaPlayer.ShowHideMediaPlayer(true, vmd.Title);
-            }
-        }
-
-        private void ShowHideLibrary(bool show)
-        {
-            //wvMain.Visibility = show ? Visibility.Collapsed : Visibility.Visible;
-            grdLibrary.Visibility = show ? Visibility.Visible : Visibility.Collapsed;
-            LoadLibraryItems(show);
-            //ShowHideMediaPlayer(false);
-        }
-
-        private async void OpenMediaFolder()
-        {
-            StorageFolder folder = await StorageFolder.GetFolderFromPathAsync(mediaPath);
-            await Launcher.LaunchFolderAsync(folder);
-
-            //Process process = new Process();
-            //process.StartInfo.UseShellExecute = true;
-            //process.StartInfo.FileName = mediaPath;
-            //process.Start();
-        }
-
-        private void LoadLibraryItems(bool load)
-        {
-            if (load)
-            {
-                var MediaItems = new ObservableCollection<ViewMediaMetadata>();
-                var foundItems = DBContext.Current.RetrieveAllEntities<MediaMetadata>();
-                foundItems.Reverse();
-                foreach (var foundItem in foundItems)
-                {
-                    MediaItems.Add(new ViewMediaMetadata()
-                    {
-                        Title = foundItem.Title,
-                        YID = foundItem.YID,
-                        ThumbUri = new Uri($"{mediaPath}\\{foundItem.YID}-medium.jpg", UriKind.Absolute),
-                        Quality = foundItem.Quality,
-                        MediaType = foundItem.MediaType,
-                        Size = foundItem.Size,
-                    });
-
-                }
-                icLibraryItems.ItemsSource = MediaItems;
-            }
-            else
-            {
-                //icLibraryItems.Items.Clear();
-                icLibraryItems.ItemsSource = null;
-            }
-        }
-
     }
 
 
