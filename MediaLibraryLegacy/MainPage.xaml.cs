@@ -6,9 +6,6 @@ namespace MediaLibraryLegacy
 {
     public sealed partial class MainPage : Page
     {
-        //private const string mediaPath = "d:\\deleteme\\downloadedMedia";
-        //private const string dbName = "youtubewatcher";
-        //private const string youtubeHomeUrl = "https://www.youtube.com";
         private const double taskbarHeight = 40;
 
         public MainPage()
