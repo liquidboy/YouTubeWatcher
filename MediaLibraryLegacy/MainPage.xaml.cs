@@ -1,26 +1,24 @@
-﻿using System;
+﻿using SharedCode.SQLite;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
-using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Data;
-using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Xaml.Media;
-using Microsoft.UI.Xaml.Navigation;
-using System.Collections.ObjectModel;
-using SharedCode.SQLite;
-using System.Diagnostics;
 using Windows.Storage;
 using Windows.System;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Controls.Primitives;
+using Windows.UI.Xaml.Data;
+using Windows.UI.Xaml.Input;
+using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Navigation;
 
-namespace MediaLibrary
+namespace MediaLibraryLegacy
 {
-    
 
     public sealed partial class MainPage : Page
     {
@@ -28,6 +26,7 @@ namespace MediaLibrary
         private const string dbName = "youtubewatcher";
         private const string youtubeHomeUrl = "https://www.youtube.com";
         private const double taskbarHeight = 40;
+
 
         public MainPage()
         {
@@ -47,8 +46,9 @@ namespace MediaLibrary
             tbMediaDirectory.Text = mediaPath;
         }
 
-        private void SetupMediaview() {
-           
+        private void SetupMediaview()
+        {
+
         }
 
         private void CloseLibrary(object sender, RoutedEventArgs e) => ShowHideLibrary(false);
@@ -84,7 +84,7 @@ namespace MediaLibrary
             //    grdMediaPlayer.Visibility = Visibility.Collapsed;
             //}
         }
-        
+
         //bool isPlaying = false;
         //private void TogglePausePlay()
         //{
@@ -156,15 +156,11 @@ namespace MediaLibrary
 
         }
 
-        private void mePlayer_MediaOpened(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        private void mePlayer_MediaOpened(object sender, RoutedEventArgs e)
         {
 
         }
 
-        private void ShowMediaFolder(object sender, Windows.UI.Xaml.RoutedEventArgs e)
-        {
-
-        }
     }
 
 
@@ -178,10 +174,3 @@ namespace MediaLibrary
         public long Size { get; set; }
     }
 }
-
-
-// add permission to folder, for all access to files
-// https://www.mr-kg.com/uwp-file-access/
-
-// add restricted capability to allow opening folder
-// https://stackoverflow.com/questions/50559764/broadfilesystemaccess-uwp
