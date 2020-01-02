@@ -12,7 +12,7 @@ namespace MediaLibraryLegacy
     {
         string mediaPath;
 
-        public event EventHandler<PlayMediaEventArgs> PlayMedia;
+        public event EventHandler<PlayMediaEventArgs> OnPlayMedia;
         public event EventHandler OnCloseLibrary;
 
         public MediaLibrary()
@@ -73,13 +73,13 @@ namespace MediaLibraryLegacy
             }
         }
 
-        private void OnPlayMedia(object sender, RoutedEventArgs e)
+        private void PlayMedia(object sender, RoutedEventArgs e)
         {
             var but = sender as Button;
             if (but.DataContext is ViewMediaMetadata)
             {
                 var vmd = (ViewMediaMetadata)but.DataContext;
-                PlayMedia?.Invoke(null, new PlayMediaEventArgs() { ViewMediaMetadata = vmd });
+                OnPlayMedia?.Invoke(null, new PlayMediaEventArgs() { ViewMediaMetadata = vmd });
             }
         }
 

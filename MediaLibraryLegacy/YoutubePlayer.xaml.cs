@@ -6,7 +6,7 @@ namespace MediaLibraryLegacy
 {
     public sealed partial class YoutubePlayer : UserControl
     {
-        public event EventHandler<MediaChangedEventArgs> MediaChanged;
+        public event EventHandler<MediaChangedEventArgs> OnMediaChanged;
         WebView wvMain;
 
         public YoutubePlayer()
@@ -30,7 +30,7 @@ namespace MediaLibraryLegacy
 
             lastProcessedUrl = url;
 
-            MediaChanged?.Invoke(null, new MediaChangedEventArgs() { MediaUri = new Uri(url) });
+            OnMediaChanged?.Invoke(null, new MediaChangedEventArgs() { MediaUri = new Uri(url) });
         }
 
         private bool HasUrlBeenProcessed(string urlToProcess) => urlToProcess.Equals(lastProcessedUrl, StringComparison.CurrentCultureIgnoreCase);

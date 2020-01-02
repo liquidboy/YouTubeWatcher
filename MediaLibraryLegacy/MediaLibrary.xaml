@@ -39,7 +39,7 @@
                                 </StackPanel>
                                 <TextBlock TextWrapping="WrapWholeWords" Width="180" Height="60" Text="{Binding Title}" FontWeight="SemiBold"></TextBlock>
                                 <StackPanel Orientation="Horizontal" Margin="5,5,0,0">
-                                    <Button Content=" Play " Click="OnPlayMedia" FontSize="16"></Button>
+                                    <Button Content=" Play " Click="PlayMedia" FontSize="16"></Button>
                                 </StackPanel>
                             </StackPanel>
                         </DataTemplate>

@@ -28,13 +28,13 @@ namespace MediaLibraryLegacy
             viewYoutubePlayer.LoadUri(new Uri(App.youtubeHomeUrl));
         }
 
-        private void PlayMedia(object sender, PlayMediaEventArgs e)
+        private void OnPlayMedia(object sender, PlayMediaEventArgs e)
         {
             viewMediaPlayer.OpenMediaUri(new Uri($"{App.mediaPath}\\{e.ViewMediaMetadata.YID}.mp4", UriKind.Absolute));
             viewMediaPlayer.ShowHideMediaPlayer(true, e.ViewMediaMetadata.Title);
         }
 
-        private void MediaChanged(object sender, MediaChangedEventArgs e)
+        private void OnMediaChanged(object sender, MediaChangedEventArgs e)
         {
             viewTaskbar.MediaChanged(e.MediaUri);
         }
