@@ -24,3 +24,6 @@ Library (clicking on library tile on taskbar) : clicking on library tile will ta
 
 MediaPlayer above Webview: playing from your library will load the UWP MediaPlayerElement which has no airspace issues with webview, so appears above it.
 ![alt text](https://github.com/liquidboy/YouTubeWatcher/raw/master/Assets/6.PNG "")
+
+Windows process : webview , Xaml UWP app (including media player), FFMpeg all run in separate processes all grouped underneath a parent process. This is mostly free, or very low amount of code required (1 line of code for webview).
+![alt text](https://github.com/liquidboy/YouTubeWatcher/raw/master/Assets/7.PNG "")
