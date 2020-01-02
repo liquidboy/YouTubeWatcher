@@ -122,6 +122,7 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Entities\MediaJob.cs" />
     <Compile Include="MediaLibrary.xaml.cs">
       <DependentUpon>MediaLibrary.xaml</DependentUpon>
     </Compile>
@@ -132,7 +133,7 @@
     <Compile Include="Taskbar.xaml.cs">
       <DependentUpon>Taskbar.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewMediaMetadata.cs" />
+    <Compile Include="Entities\ViewMediaMetadata.cs" />
     <Compile Include="YoutubePlayer.xaml.cs">
       <DependentUpon>YoutubePlayer.xaml</DependentUpon>
     </Compile>
