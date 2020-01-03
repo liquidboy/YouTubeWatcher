@@ -34,13 +34,24 @@ namespace SharedCode.SQLite
         }
         public List<T> GetEntities<T>(string where) where T : new()
         {
+            if (!DoesTableExist<T>()) return new List<T>();
+
             //var resultsCount = this.Connection.Table<T>().Count();
             var name = typeof(T).Name;
             var qry = $"SELECT * FROM '{name}' WHERE {where}";
             return _connection.Query<T>(qry);
         }
+
+        private bool DoesTableExist<T>() {
+            var name = typeof(T).Name;
+            var exists =  _connection.GetTableInfo(name).Count > 0;
+            return exists;
+        }
+
         public List<T> GetAllEntities<T>() where T : new()
         {
+            if (!DoesTableExist<T>()) return new List<T>();
+
             //var resultsCount = this.Connection.Table<T>().Count();
             var name = typeof(T).Name;
             var qry = $"SELECT ROWID as _rowId, * FROM '{name}'";
