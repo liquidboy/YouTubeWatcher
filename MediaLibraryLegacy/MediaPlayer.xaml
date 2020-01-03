@@ -3,6 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:MediaLibraryLegacy"
+    xmlns:localControls="using:MediaLibraryLegacy.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
@@ -11,9 +12,8 @@
     <Grid x:Name="grdMediaPlayer" Width="600" Height="400" HorizontalAlignment="Right" VerticalAlignment="Bottom" Visibility="Collapsed" Background="Black" >
         <Image x:Name="imgWallpaper" Stretch="Fill" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></Image>
         <MediaPlayerElement x:Name="mePlayer" HorizontalAlignment="Stretch"  AreTransportControlsEnabled="True" VerticalAlignment="Stretch" Margin="0,2,0,0" Stretch="UniformToFill" ></MediaPlayerElement>
-        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="30" Background="#FF0C79FF">
+        <Grid x:Name="grdHeader" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="30" Background="#FF0C79FF">
             <Image x:Name="imgThumb" Width="45" Height="30" Stretch="UniformToFill" HorizontalAlignment="Left"></Image>
-            <TextBlock x:Name="tbMediaPlayerTitle" Foreground="White" FontSize="12" Margin="50,5,40,5"></TextBlock>
             <Button Content="X" FontSize="14" Width="35" Click="CloseMediaPlayer" HorizontalAlignment="Right" VerticalAlignment="Stretch" Background="Red" Foreground="White"></Button>
         </Grid>
     </Grid>
