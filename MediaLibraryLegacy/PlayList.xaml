@@ -61,7 +61,7 @@
                                 </StackPanel>
                                 <TextBlock TextWrapping="WrapWholeWords" Width="180" Height="60" Text="{Binding Title}" FontWeight="SemiBold"></TextBlock>
                                 <StackPanel Orientation="Horizontal" Margin="5,5,0,0">
-                                    <Button Content=" &#9654; " FontSize="16" CornerRadius="5"></Button>
+                                    <Button Content=" &#9654; " FontSize="16" CornerRadius="5" Click="PlayMedia"></Button>
                                 </StackPanel>
                             </StackPanel>
                         </DataTemplate>

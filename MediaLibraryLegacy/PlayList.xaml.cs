@@ -12,6 +12,7 @@ namespace MediaLibraryLegacy
 
         public event EventHandler OnCloseLibrary;
         public event EventHandler OnPlaylistAdded;
+        public event EventHandler<PlayMediaEventArgs> OnPlayMedia;
 
         public PlayList()
         {
@@ -101,6 +102,16 @@ namespace MediaLibraryLegacy
                     if(item is ViewPlaylistMetadata)LoadPlaylist(((ViewPlaylistMetadata)item).UniqueId);    
                 }
             }   
+        }
+
+        private void PlayMedia(object sender, RoutedEventArgs e)
+        {
+            var but = sender as Button;
+            if (but.DataContext is ViewMediaMetadata)
+            {
+                var vmd = (ViewMediaMetadata)but.DataContext;
+                OnPlayMedia?.Invoke(null, new PlayMediaEventArgs() { ViewMediaMetadata = vmd });
+            }
         }
     }
 }
