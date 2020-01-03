@@ -133,6 +133,9 @@
     <Compile Include="PlayList.xaml.cs">
       <DependentUpon>PlayList.xaml</DependentUpon>
     </Compile>
+    <Compile Include="PlaylistChooser.xaml.cs">
+      <DependentUpon>PlaylistChooser.xaml</DependentUpon>
+    </Compile>
     <Compile Include="PlaylistForm.xaml.cs">
       <DependentUpon>PlaylistForm.xaml</DependentUpon>
     </Compile>
@@ -141,6 +144,7 @@
       <DependentUpon>Taskbar.xaml</DependentUpon>
     </Compile>
     <Compile Include="Entities\ViewMediaMetadata.cs" />
+    <Compile Include="XamlHelper.cs" />
     <Compile Include="YoutubePlayer.xaml.cs">
       <DependentUpon>YoutubePlayer.xaml</DependentUpon>
     </Compile>
@@ -181,6 +185,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="PlayList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PlaylistChooser.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -4,6 +4,7 @@ namespace MediaLibraryLegacy
 {
     public struct ViewMediaMetadata
     {
+        public Guid UniqueId { get; set; }
         public string YID { get; set; }
         public string Title { get; set; }
         public Uri ThumbUri { get; set; }

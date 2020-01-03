@@ -40,6 +40,13 @@
                                 <TextBlock TextWrapping="WrapWholeWords" Width="180" Height="60" Text="{Binding Title}" FontWeight="SemiBold"></TextBlock>
                                 <StackPanel Orientation="Horizontal" Margin="5,5,0,0">
                                     <Button Content=" &#9654; " Click="PlayMedia" FontSize="16" CornerRadius="5"></Button>
+                                    <Button x:Name="butAddToPlaylist" Content=" + ≣ " FontSize="16" CornerRadius="5" Margin="10,0,0,0">
+                                        <Button.Flyout>
+                                            <Flyout x:Name="flyoutPlaylistChooser" Placement="Top">
+                                                <local:PlaylistChooser Width="250" Height="300" OnItemSelected="OnPlaylistSelected" ></local:PlaylistChooser>
+                                            </Flyout>
+                                        </Button.Flyout>
+                                    </Button>
                                 </StackPanel>
                             </StackPanel>
                         </DataTemplate>

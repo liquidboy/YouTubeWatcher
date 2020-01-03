@@ -5,6 +5,7 @@ using Windows.Storage;
 using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Controls.Primitives;
 
 namespace MediaLibraryLegacy
 {
@@ -62,6 +63,7 @@ namespace MediaLibraryLegacy
                 {
                     MediaItems.Add(new ViewMediaMetadata()
                     {
+                        UniqueId = foundItem.UniqueId,
                         Title = foundItem.Title,
                         YID = foundItem.YID,
                         ThumbUri = new Uri($"{mediaPath}\\{foundItem.YID}-medium.jpg", UriKind.Absolute),
@@ -69,7 +71,6 @@ namespace MediaLibraryLegacy
                         MediaType = foundItem.MediaType,
                         Size = foundItem.Size,
                     });
-
                 }
                 icLibraryItems.ItemsSource = MediaItems;
             }
@@ -91,6 +92,35 @@ namespace MediaLibraryLegacy
         }
 
         private void CloseLibrary(object sender, RoutedEventArgs e) => OnCloseLibrary.Invoke(null, null);
+
+        private void OnPlaylistSelected(object sender, EventArgs e)
+        {
+            XamlHelper.CloseFlyout(sender);
+            if (e is PlaylistSelectedEventArgs && sender is FrameworkElement)
+            {
+                var uie = (FrameworkElement)sender;
+                if (uie != null && uie.DataContext is ViewMediaMetadata) {
+                    var playlistSelectedEventArgs = (PlaylistSelectedEventArgs)e;
+                    var viewMediaMetadata = (ViewMediaMetadata)uie.DataContext;
+                    RecordMetadata(viewMediaMetadata.UniqueId, playlistSelectedEventArgs.SelectedPlaylist.UniqueId);
+                }
+            }
+        }
+
+        private void RecordMetadata(Guid mediaUid, Guid playlistUid)
+        {
+            var foundEntities = DBContext.Current.RetrieveEntities<PlaylistMediaMetadata>($"MediaUid='{mediaUid.ToString()}' and PlaylistUid='{playlistUid.ToString()}'");
+
+            if (foundEntities.Count == 0) {
+                var newEntity = new PlaylistMediaMetadata()
+                {
+                    MediaUid = mediaUid,
+                    PlaylistUid = playlistUid,
+                    DateStamp = DateTime.UtcNow
+                };
+                DBContext.Current.Save(newEntity);
+            }
+        }
     }
 
     public class PlayMediaEventArgs : EventArgs {
