@@ -25,7 +25,7 @@ namespace MediaLibraryLegacy
         }
 
         private void SetupInitialView() {
-            viewMediaLibrary.ShowHideLibrary(false);
+            viewMediaLibrary.Hide();
             viewPlaylist.Hide();
             viewYoutubePlayer.LoadUri(new Uri(App.youtubeHomeUrl));
         }
@@ -47,13 +47,13 @@ namespace MediaLibraryLegacy
         private void OnShowLibrary(object sender, EventArgs e)
         {
             HideAllViews();
-            viewMediaLibrary.ShowHideLibrary(true);
+            viewMediaLibrary.Show();
         }
 
         private void OnCloseLibrary(object sender, EventArgs e)
         {
             viewYoutubePlayer.Show();
-            viewMediaLibrary.ShowHideLibrary(false);
+            viewMediaLibrary.Hide();
         }
 
         private void OnShowPlaylist(object sender, EventArgs e)
@@ -64,12 +64,13 @@ namespace MediaLibraryLegacy
 
         private void OnClosePlaylist(object sender, EventArgs e)
         {
+            viewYoutubePlayer.Show();
             viewPlaylist.Hide();
         }
 
         private void HideAllViews() {
             viewYoutubePlayer.Hide();
-            viewMediaLibrary.ShowHideLibrary(false);
+            viewMediaLibrary.Hide();
             viewPlaylist.Hide();
         }
     }

@@ -23,7 +23,7 @@ namespace MediaLibraryLegacy
         public void InitialSetup(string mediapath)
         {
             mediaPath = mediapath;
-            ShowHideLibrary(true);
+            Show();
             tbMediaDirectory.Text = mediapath;
         }
 
@@ -35,12 +35,19 @@ namespace MediaLibraryLegacy
             await Launcher.LaunchFolderAsync(folder);
         }
 
-
-        public void ShowHideLibrary(bool show)
+        public void Show()
         {
             //wvMain.Visibility = show ? Visibility.Collapsed : Visibility.Visible;
-            grdLibrary.Visibility = show ? Visibility.Visible : Visibility.Collapsed;
-            LoadLibraryItems(show);
+            grdLibrary.Visibility = Visibility.Visible;
+            LoadLibraryItems(true);
+            //ShowHideMediaPlayer(false);
+        }
+
+        public void Hide()
+        {
+            //wvMain.Visibility = show ? Visibility.Collapsed : Visibility.Visible;
+            grdLibrary.Visibility = Visibility.Collapsed;
+            LoadLibraryItems(false);
             //ShowHideMediaPlayer(false);
         }
 
