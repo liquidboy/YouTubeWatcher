@@ -16,7 +16,9 @@ namespace MediaLibraryLegacy
 
         private void CreatePlaylist(object sender, RoutedEventArgs e)
         {
-            RecordMetadata(tbTitle.Text);
+            if (!string.IsNullOrEmpty(tbTitle.Text)) {
+                RecordMetadata(tbTitle.Text);
+            }
             OnPlaylistCreated?.Invoke(null, null);
         }
 
