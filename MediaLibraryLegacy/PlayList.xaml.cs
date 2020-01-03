@@ -9,10 +9,13 @@ namespace MediaLibraryLegacy
     public sealed partial class PlayList : UserControl
     {
         string mediaPath;
+        Guid lastSelectedPlaylistId = Guid.Empty;
 
         public event EventHandler OnCloseLibrary;
         public event EventHandler OnPlaylistAdded;
         public event EventHandler<PlayMediaEventArgs> OnPlayMedia;
+
+
 
         public PlayList()
         {
@@ -33,6 +36,13 @@ namespace MediaLibraryLegacy
         public void Show() { 
             grdPlaylist.Visibility = Visibility.Visible;
             LoadPlaylistItems();
+            SetupInitialView();
+        }
+
+        private void SetupInitialView() {
+            if (lastSelectedPlaylistId != Guid.Empty) {
+                LoadPlaylist(lastSelectedPlaylistId);
+            }
         }
 
         private void CloseLibrary(object sender, RoutedEventArgs e) => OnCloseLibrary.Invoke(null, null);
@@ -44,6 +54,7 @@ namespace MediaLibraryLegacy
             OnPlaylistAdded?.Invoke(null, null);
         }
 
+        
         private void LoadPlaylistItems()
         {
             var items = new ObservableCollection<ViewPlaylistMetadata>();
@@ -56,10 +67,9 @@ namespace MediaLibraryLegacy
                     UniqueId = foundItem.UniqueId,
                     Title = foundItem.Title
                 });
-
+                if(lastSelectedPlaylistId == Guid.Empty) lastSelectedPlaylistId = foundItem.UniqueId;
             }
             gvPlaylists.ItemsSource = items;
-
         }
 
         private void LoadPlaylist(Guid playlistUid)
@@ -89,8 +99,8 @@ namespace MediaLibraryLegacy
                     });
                 }
             }
-
             icMediaItems.ItemsSource = items;
+            lastSelectedPlaylistId = playlistUid;
         }
 
         private void PlaylistChanged(object sender, SelectionChangedEventArgs e)

@@ -56,13 +56,13 @@
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Orientation= "Vertical" Margin ="0,0,0,20">
-                                <Image Width="180" Height="120" Stretch="UniformToFill" Margin="5" Tag="{Binding YID}" Source="{Binding ThumbUri}" ></Image>
+                                <Image Width="220" Height="120" Stretch="UniformToFill" Margin="5" Tag="{Binding YID}" Source="{Binding ThumbUri}" ></Image>
                                 <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
                                     <TextBlock Text="{Binding Quality}" Foreground="Gray"></TextBlock>
                                     <TextBlock Text="{Binding MediaType}" Margin="10,0,0,0" Foreground="Gray"></TextBlock>
                                     <TextBlock Text="{Binding Size, Converter={StaticResource BytesToDisplaySizeConverter}}" Margin="10,0,0,0" Foreground="Gray"></TextBlock>
                                 </StackPanel>
-                                <TextBlock TextWrapping="WrapWholeWords" Width="180" Height="60" Text="{Binding Title}" FontWeight="SemiBold"></TextBlock>
+                                <TextBlock TextWrapping="WrapWholeWords" Width="220" Height="60" Text="{Binding Title}" FontWeight="SemiBold"></TextBlock>
                                 <StackPanel Orientation="Horizontal" Margin="5,5,0,0">
                                     <Button Content=" &#9654; " FontSize="16" CornerRadius="5" Click="PlayMedia"></Button>
                                 </StackPanel>
