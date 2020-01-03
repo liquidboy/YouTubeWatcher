@@ -10,7 +10,7 @@
 
     <Grid>
         <local:MediaLibrary x:Name="viewMediaLibrary" OnPlayMedia="OnPlayMedia" Margin="0,0,0,40" OnCloseLibrary="OnCloseLibrary"></local:MediaLibrary>
-        <local:PlayList x:Name="viewPlaylist" Margin="0,0,0,40" OnCloseLibrary="OnClosePlaylist"></local:PlayList>
+        <local:PlayList x:Name="viewPlaylist" Margin="0,0,0,40" OnCloseLibrary="OnClosePlaylist" OnPlaylistAdded="OnPlaylistAdded"></local:PlayList>
         <local:YoutubePlayer x:Name="viewYoutubePlayer" Margin="0,0,0,40" OnMediaChanged="OnMediaChanged"></local:YoutubePlayer>
         <local:MediaPlayer x:Name="viewMediaPlayer" Margin="0,0,30,50" ></local:MediaPlayer>
         <local:Taskbar x:Name="viewTaskbar" HorizontalAlignment="Stretch" OnShowLibrary="OnShowLibrary" OnShowPlaylist="OnShowPlaylist"></local:Taskbar>

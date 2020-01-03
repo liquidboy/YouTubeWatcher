@@ -74,5 +74,10 @@ namespace MediaLibraryLegacy
             viewMediaLibrary.Hide();
             viewPlaylist.Hide();
         }
+
+        private void OnPlaylistAdded(object sender, EventArgs e)
+        {
+            viewTaskbar.UpdateStatistics();
+        }
     }
 }

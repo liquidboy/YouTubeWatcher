@@ -32,7 +32,12 @@ namespace MediaLibraryLegacy
             // initialize Youtube helpers
             clientHelper = new YoutubeClientHelper(new YoutubeClient(), System.AppDomain.CurrentDomain.BaseDirectory);
 
+            UpdateStatistics();
+        }
+
+        public void UpdateStatistics() {
             UpdateLibraryStatistics();
+            UpdatePlaylistStatistics();
             UpdateJobStatistics();
         }
 
@@ -91,6 +96,13 @@ namespace MediaLibraryLegacy
             var foundItems = DBContext.Current.RetrieveAllEntities<MediaMetadata>();
             var libraryCount = (foundItems == null) ? 0 : foundItems.Count;
             tbLibraryCount.Text = libraryCount.ToString();
+        }
+
+        private void UpdatePlaylistStatistics()
+        {
+            var foundItems = DBContext.Current.RetrieveAllEntities<PlaylistMetadata>();
+            var libraryCount = (foundItems == null) ? 0 : foundItems.Count;
+            tbPlaylistCount.Text = libraryCount.ToString();
         }
 
         private void UpdateJobStatistics() => tbJobsCount.Text = jobQueue.Count.ToString();

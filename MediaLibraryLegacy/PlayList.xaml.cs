@@ -11,6 +11,7 @@ namespace MediaLibraryLegacy
         string mediaPath;
 
         public event EventHandler OnCloseLibrary;
+        public event EventHandler OnPlaylistAdded;
 
         public PlayList()
         {
@@ -39,6 +40,7 @@ namespace MediaLibraryLegacy
         {
             butAddPlaylist.Flyout.Hide();
             LoadPlaylistItems();
+            OnPlaylistAdded?.Invoke(null, null);
         }
 
         private void LoadPlaylistItems()
