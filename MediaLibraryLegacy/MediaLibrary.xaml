@@ -14,7 +14,6 @@
     </UserControl.Resources>
     <Grid>
         <Grid x:Name="grdLibrary" Visibility="Collapsed" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-            <Button x:Name="butCloseLibrary" Content=" 🢀 back " Click="CloseLibrary" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10" FontSize="16" CornerRadius="5"></Button>
             <Grid Margin="10" HorizontalAlignment="Right" VerticalAlignment="Top">
                 <StackPanel Orientation="Vertical">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,0,0">

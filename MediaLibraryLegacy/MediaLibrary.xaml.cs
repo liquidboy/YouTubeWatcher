@@ -14,8 +14,7 @@ namespace MediaLibraryLegacy
         string mediaPath;
 
         public event EventHandler<PlayMediaEventArgs> OnPlayMedia;
-        public event EventHandler OnCloseLibrary;
-
+        
         public MediaLibrary()
         {
             this.InitializeComponent();
@@ -90,8 +89,6 @@ namespace MediaLibraryLegacy
                 OnPlayMedia?.Invoke(null, new PlayMediaEventArgs() { ViewMediaMetadata = vmd });
             }
         }
-
-        private void CloseLibrary(object sender, RoutedEventArgs e) => OnCloseLibrary.Invoke(null, null);
 
         private void OnPlaylistSelected(object sender, EventArgs e)
         {

@@ -51,22 +51,10 @@ namespace MediaLibraryLegacy
             viewMediaLibrary.Show();
         }
 
-        private void OnCloseLibrary(object sender, EventArgs e)
-        {
-            viewYoutubePlayer.Show();
-            viewMediaLibrary.Hide();
-        }
-
         private void OnShowPlaylist(object sender, EventArgs e)
         {
             HideAllViews();
             viewPlaylist.Show();
-        }
-
-        private void OnClosePlaylist(object sender, EventArgs e)
-        {
-            viewYoutubePlayer.Show();
-            viewPlaylist.Hide();
         }
 
         private void HideAllViews() {
@@ -78,6 +66,12 @@ namespace MediaLibraryLegacy
         private void OnPlaylistAdded(object sender, EventArgs e)
         {
             viewTaskbar.UpdateStatistics();
+        }
+
+        private void OnShowYoutube(object sender, EventArgs e)
+        {
+            HideAllViews();
+            viewYoutubePlayer.Show();
         }
     }
 }

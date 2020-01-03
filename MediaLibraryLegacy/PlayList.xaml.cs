@@ -11,11 +11,8 @@ namespace MediaLibraryLegacy
         string mediaPath;
         Guid lastSelectedPlaylistId = Guid.Empty;
 
-        public event EventHandler OnCloseLibrary;
         public event EventHandler OnPlaylistAdded;
         public event EventHandler<PlayMediaEventArgs> OnPlayMedia;
-
-
 
         public PlayList()
         {
@@ -44,8 +41,6 @@ namespace MediaLibraryLegacy
                 LoadPlaylist(lastSelectedPlaylistId);
             }
         }
-
-        private void CloseLibrary(object sender, RoutedEventArgs e) => OnCloseLibrary.Invoke(null, null);
 
         private void OnPlaylistCreated(object sender, EventArgs e)
         {

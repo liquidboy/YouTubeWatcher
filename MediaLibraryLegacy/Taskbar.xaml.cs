@@ -19,6 +19,7 @@ namespace MediaLibraryLegacy
 
         public event EventHandler OnShowLibrary;
         public event EventHandler OnShowPlaylist;
+        public event EventHandler OnShowYoutube;
 
         public Taskbar()
         {
@@ -151,6 +152,7 @@ namespace MediaLibraryLegacy
         private void ShowLibrary(object sender, RoutedEventArgs e) => OnShowLibrary.Invoke(null, null);
 
         private void ShowPlaylists(object sender, RoutedEventArgs e) => OnShowPlaylist.Invoke(null, null);
+        private void ShowYoutube(object sender, RoutedEventArgs e) => OnShowYoutube.Invoke(null, null);
 
         public async void MediaChanged(Uri media) {
             tbUrl.Text = media.OriginalString;
@@ -233,5 +235,6 @@ namespace MediaLibraryLegacy
             return null;
         }
 
+  
     }
 }

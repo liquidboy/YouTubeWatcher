@@ -13,7 +13,6 @@
         <converters:BytesToDisplaySize x:Key="BytesToDisplaySizeConverter" ></converters:BytesToDisplaySize>
     </UserControl.Resources>
     <Grid x:Name="grdPlaylist" Visibility="Collapsed" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-        <Button x:Name="butCloseLibrary" Content=" 🢀 back " Click="CloseLibrary" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10" FontSize="16" CornerRadius="5"></Button>
         <Button x:Name="butAddPlaylist" Content=" ≣ new playlist " HorizontalAlignment="Right" VerticalAlignment="Top" Margin="10" FontSize="16" CornerRadius="5">
             <Button.Flyout>
                 <Flyout Placement="BottomEdgeAlignedRight">
