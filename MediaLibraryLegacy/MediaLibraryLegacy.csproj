@@ -144,6 +144,7 @@
       <DependentUpon>Taskbar.xaml</DependentUpon>
     </Compile>
     <Compile Include="Entities\ViewMediaMetadata.cs" />
+    <Compile Include="Converters.cs" />
     <Compile Include="XamlHelper.cs" />
     <Compile Include="YoutubePlayer.xaml.cs">
       <DependentUpon>YoutubePlayer.xaml</DependentUpon>
