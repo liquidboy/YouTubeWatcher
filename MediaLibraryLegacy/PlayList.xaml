@@ -11,5 +11,37 @@
 
     <Grid x:Name="grdPlaylist" Visibility="Collapsed" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
         <Button x:Name="butCloseLibrary" Content=" 🢀 back " Click="CloseLibrary" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10" FontSize="16" CornerRadius="5"></Button>
+        <Button x:Name="butAddPlaylist" Content=" ≣ new playlist " HorizontalAlignment="Right" VerticalAlignment="Top" Margin="10" FontSize="16" CornerRadius="5">
+            <Button.Flyout>
+                <Flyout Placement="BottomEdgeAlignedRight">
+                    <local:PlaylistForm Width="300" Height="120" OnPlaylistCreated="OnPlaylistCreated"></local:PlaylistForm>
+                </Flyout>
+            </Button.Flyout>
+        </Button>
+
+        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,70,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition Width="360"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Border Background="#FFFCFCFC" BorderBrush="Transparent" Grid.Column="1">
+                <GridView x:Name="gvPlaylists" Margin="10">
+                    <GridView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <ItemsWrapGrid Orientation="Horizontal"></ItemsWrapGrid>
+                        </ItemsPanelTemplate>
+                    </GridView.ItemsPanel>
+                    <GridView.ItemTemplate>
+                        <DataTemplate>
+                            <Border Width="350" Height="50" Background="LightGray">
+                                <Grid>
+                                    <TextBlock FontSize="22" Text="{Binding Title}" Margin="10" Foreground="White"></TextBlock>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </GridView.ItemTemplate>
+                </GridView>
+            </Border>
+        </Grid>
     </Grid>
 </UserControl>
