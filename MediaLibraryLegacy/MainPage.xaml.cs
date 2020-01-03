@@ -20,6 +20,7 @@ namespace MediaLibraryLegacy
             viewMediaLibrary.InitialSetup(App.mediaPath);
             viewYoutubePlayer.InitialSetup();
             viewTaskbar.InitialSetup(App.mediaPath);
+            viewPlaylist.InitialSetup(App.mediaPath);
 
             SetupInitialView();
         }

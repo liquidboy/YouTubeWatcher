@@ -25,6 +25,7 @@ namespace MediaLibraryLegacy
         public void Hide() {
             grdPlaylist.Visibility = Visibility.Collapsed;
             gvPlaylists.ItemsSource = null;
+            icMediaItems.ItemsSource = null;
         }
 
         public void Show() { 
@@ -49,12 +50,55 @@ namespace MediaLibraryLegacy
             {
                 items.Add(new ViewPlaylistMetadata()
                 {
+                    UniqueId = foundItem.UniqueId,
                     Title = foundItem.Title
                 });
 
             }
             gvPlaylists.ItemsSource = items;
 
+        }
+
+        private void LoadPlaylist(Guid playlistUid)
+        {
+            var items = new ObservableCollection<ViewMediaMetadata>();
+            var foundItems = DBContext.Current.RetrieveEntities<PlaylistMediaMetadata>($"PlaylistUid='{playlistUid.ToString()}'");
+            var sqlIn = string.Empty;
+            foreach (var foundItem in foundItems)
+            {
+                sqlIn += $"'{foundItem.MediaUid}' ,";
+            }
+
+            if (sqlIn.Length > 0) {
+                sqlIn = sqlIn.Substring(0, sqlIn.Length - 1);
+                var foundItems2 = DBContext.Current.RetrieveEntities<MediaMetadata>($"UniqueId IN ({sqlIn})");
+                foreach (var foundItem in foundItems2)
+                {
+                    items.Add(new ViewMediaMetadata()
+                    {
+                        UniqueId = foundItem.UniqueId,
+                        Title = foundItem.Title,
+                        YID = foundItem.YID,
+                        ThumbUri = new Uri($"{mediaPath}\\{foundItem.YID}-medium.jpg", UriKind.Absolute),
+                        Quality = foundItem.Quality,
+                        MediaType = foundItem.MediaType,
+                        Size = foundItem.Size,
+                    });
+                }
+            }
+
+            icMediaItems.ItemsSource = items;
+        }
+
+        private void PlaylistChanged(object sender, SelectionChangedEventArgs e)
+        {
+            icMediaItems.ItemsSource = null;
+
+            if (e.AddedItems.Count > 0) {
+                foreach (var item in e.AddedItems) {
+                    if(item is ViewPlaylistMetadata)LoadPlaylist(((ViewPlaylistMetadata)item).UniqueId);    
+                }
+            }   
         }
     }
 }
