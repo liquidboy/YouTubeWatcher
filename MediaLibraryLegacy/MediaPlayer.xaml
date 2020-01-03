@@ -12,9 +12,9 @@
         <Image x:Name="imgWallpaper" Stretch="Fill" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></Image>
         <MediaPlayerElement x:Name="mePlayer" HorizontalAlignment="Stretch"  AreTransportControlsEnabled="True" VerticalAlignment="Stretch" Margin="0,2,0,0" Stretch="UniformToFill" ></MediaPlayerElement>
         <Grid HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="30" Background="#FF0C79FF">
-            <Image x:Name="imgThumb" Width="40" Height="30" Stretch="UniformToFill" HorizontalAlignment="Left"></Image>
-            <TextBlock x:Name="tbMediaPlayerTitle" Foreground="White" FontSize="12" Margin="45,5,40,5"></TextBlock>
-            <Button Content="X" FontSize="14" Click="CloseMediaPlayer" HorizontalAlignment="Right" VerticalAlignment="Stretch" Background="Red" Foreground="White"></Button>
+            <Image x:Name="imgThumb" Width="45" Height="30" Stretch="UniformToFill" HorizontalAlignment="Left"></Image>
+            <TextBlock x:Name="tbMediaPlayerTitle" Foreground="White" FontSize="12" Margin="50,5,40,5"></TextBlock>
+            <Button Content="X" FontSize="14" Width="35" Click="CloseMediaPlayer" HorizontalAlignment="Right" VerticalAlignment="Stretch" Background="Red" Foreground="White"></Button>
         </Grid>
     </Grid>
 </UserControl>
