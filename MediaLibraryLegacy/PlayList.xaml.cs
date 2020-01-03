@@ -1,6 +1,7 @@
 ﻿using SharedCode.SQLite;
 using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -54,8 +55,8 @@ namespace MediaLibraryLegacy
         {
             var items = new ObservableCollection<ViewPlaylistMetadata>();
             var foundItems = DBContext.Current.RetrieveAllEntities<PlaylistMetadata>();
-            foundItems.Reverse();
-            foreach (var foundItem in foundItems)
+            var orderedItems = foundItems.OrderBy(x => x.Title);
+            foreach (var foundItem in orderedItems)
             {
                 items.Add(new ViewPlaylistMetadata()
                 {
@@ -71,6 +72,7 @@ namespace MediaLibraryLegacy
         {
             var items = new ObservableCollection<ViewMediaMetadata>();
             var foundItems = DBContext.Current.RetrieveEntities<PlaylistMediaMetadata>($"PlaylistUid='{playlistUid.ToString()}'");
+
             var sqlIn = string.Empty;
             foreach (var foundItem in foundItems)
             {
@@ -80,7 +82,8 @@ namespace MediaLibraryLegacy
             if (sqlIn.Length > 0) {
                 sqlIn = sqlIn.Substring(0, sqlIn.Length - 1);
                 var foundItems2 = DBContext.Current.RetrieveEntities<MediaMetadata>($"UniqueId IN ({sqlIn})");
-                foreach (var foundItem in foundItems2)
+                var orderedItems2 = foundItems2.OrderBy(x => x.Title);
+                foreach (var foundItem in orderedItems2)
                 {
                     items.Add(new ViewMediaMetadata()
                     {
