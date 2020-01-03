@@ -12,7 +12,7 @@
     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Height="40">
         <Rectangle Fill="WhiteSmoke" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></Rectangle>
         <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="3">
-            <TextBlock x:Name="tbUrl" VerticalAlignment="Bottom" Margin="0,0,0,5"></TextBlock>
+            <TextBlock x:Name="tbUrl" VerticalAlignment="Bottom" Margin="10,0,0,8"></TextBlock>
             <StackPanel x:Name="spDownloadToolbar" Orientation="Horizontal" Visibility="Collapsed" Margin="10,0,0,0">
                 <ComboBox x:Name="cbMediaType" Width="80" FontSize="18" >
                     <ComboBoxItem IsSelected="True">mp4</ComboBoxItem>

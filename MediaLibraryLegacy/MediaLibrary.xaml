@@ -17,7 +17,7 @@
             <Grid Margin="10" HorizontalAlignment="Right" VerticalAlignment="Top">
                 <StackPanel Orientation="Vertical">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,0,0">
-                        <Button x:Name="butShowMediaFolder" Content=" Your Media &#128193; " Click="ShowMediaFolder"  FontSize="16" CornerRadius="5"></Button>
+                        <Button x:Name="butShowMediaFolder" Content=" your library &#128193; " Click="ShowMediaFolder"  FontSize="16" CornerRadius="5"></Button>
                     </StackPanel>
                     <TextBlock x:Name="tbMediaDirectory" HorizontalAlignment="Right" Foreground="LightGray"></TextBlock>
                 </StackPanel>
