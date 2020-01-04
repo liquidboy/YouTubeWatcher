@@ -130,11 +130,11 @@ namespace MediaLibraryLegacy
                 var viewMediaMetadata = (ViewMediaMetadata)item.DataContext;
                 switch (item.Content)
                 {
-                    case "Delete": 
+                    case "Delete Media": 
                         await DeleteMedia(viewMediaMetadata.YID, viewMediaMetadata.MediaType);
                         OnMediaDeleted?.Invoke(null, null);
                         break;
-                    case "Tile Editor": break;
+                    case "Open Tile Editor": break;
                     case "Pin to Start": break;
                     case "Open in YouTube": break;
                     case "Copy URL to Clipboard": break;
@@ -149,17 +149,17 @@ namespace MediaLibraryLegacy
             if (mediaPathFolder != null) {
 
                 // get extra content folder if it exists & delete it
-                await TryDeleteFolder(yid, mediaPathFolder);
+                await FileFolderHelper.TryDeleteFolder(yid, mediaPathFolder);
                 
                 // delete root images
-                await TryDeleteFile($"{yid}-high.jpg", mediaPathFolder);
-                await TryDeleteFile($"{yid}-medium.jpg", mediaPathFolder);
-                await TryDeleteFile($"{yid}-low.jpg", mediaPathFolder);
-                await TryDeleteFile($"{yid}-max.jpg", mediaPathFolder);
-                await TryDeleteFile($"{yid}-standard.jpg", mediaPathFolder);
+                await FileFolderHelper.TryDeleteFile($"{yid}-high.jpg", mediaPathFolder);
+                await FileFolderHelper.TryDeleteFile($"{yid}-medium.jpg", mediaPathFolder);
+                await FileFolderHelper.TryDeleteFile($"{yid}-low.jpg", mediaPathFolder);
+                await FileFolderHelper.TryDeleteFile($"{yid}-max.jpg", mediaPathFolder);
+                await FileFolderHelper.TryDeleteFile($"{yid}-standard.jpg", mediaPathFolder);
 
                 // delete root mp3/mp4
-                await TryDeleteFile($"{yid}.{fileType}", mediaPathFolder);
+                await FileFolderHelper.TryDeleteFile($"{yid}.{fileType}", mediaPathFolder);
             }
            
             // delete DB data
@@ -181,22 +181,6 @@ namespace MediaLibraryLegacy
                     }
                 }
             }
-        }
-
-        private async Task TryDeleteFile(string fileName, StorageFolder folder) {
-            try { 
-                var foundFile = await folder.GetFileAsync(fileName);
-                if (foundFile != null) await foundFile.DeleteAsync();
-            } catch { }
-        }
-
-        private async Task TryDeleteFolder(string folderName, StorageFolder folder) {
-            try
-            {
-                var foundChildFolder = await folder.GetFolderAsync(folderName);
-                await foundChildFolder.DeleteAsync(StorageDeleteOption.PermanentDelete);
-            }
-            catch { }
         }
     }
 

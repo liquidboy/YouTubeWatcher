@@ -14,11 +14,11 @@
         <Flyout x:Key="flyoutExtraTools" Placement="Top">
             <Grid Width="180" Height="120">
                 <ListBox Background="Transparent" SelectionChanged="ExtraToolsSelected">
-                    <ListBoxItem>Delete</ListBoxItem>
-                    <ListBoxItem>Tile Editor</ListBoxItem>
-                    <ListBoxItem>Pin to Start</ListBoxItem>
-                    <ListBoxItem>Open in YouTube</ListBoxItem>
-                    <ListBoxItem>Copy URL to Clipboard</ListBoxItem>
+                    <ListBoxItem>Delete Media</ListBoxItem>
+                    <ListBoxItem IsEnabled="False">Open Tile Editor</ListBoxItem>
+                    <ListBoxItem IsEnabled="False">Pin to Start</ListBoxItem>
+                    <ListBoxItem IsEnabled="False">Open in YouTube</ListBoxItem>
+                    <ListBoxItem IsEnabled="False">Copy URL to Clipboard</ListBoxItem>
                 </ListBox>
             </Grid>
         </Flyout>
