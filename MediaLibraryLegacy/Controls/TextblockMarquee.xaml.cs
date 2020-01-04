@@ -22,6 +22,8 @@ namespace MediaLibraryLegacy.Controls
             }
         }
 
+        public string GetText() { return tbMainText.Text; }
+
         public TextblockMarquee()
         {
             this.InitializeComponent();

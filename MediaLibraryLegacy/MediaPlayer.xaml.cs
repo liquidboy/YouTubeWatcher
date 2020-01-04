@@ -10,6 +10,11 @@ namespace MediaLibraryLegacy
     public sealed partial class MediaPlayer : UserControl
     {
         TextblockMarquee marquee;
+
+        int[,] supportedDimensions = { { 600,  400}, { 300, 200 } , { 900, 600 } };
+        int currentDimension = 0;
+
+
         public MediaPlayer()
         {
             this.InitializeComponent();
@@ -54,7 +59,8 @@ namespace MediaLibraryLegacy
             }
 
             if (!string.IsNullOrEmpty(title)) {
-                marquee = new TextblockMarquee() { Margin = new Thickness(50, 3, 40, 5) };
+                spHeaderTools.UpdateLayout();
+                marquee = new TextblockMarquee() { Margin = new Thickness(imgThumb.Width + 5, 3, spHeaderTools.ActualWidth + 5, 5) };
                 grdHeader.Children.Add(marquee);
                 marquee.SetText(title);
             }
@@ -67,5 +73,15 @@ namespace MediaLibraryLegacy
         }
 
         private void CloseMediaPlayer(object sender, RoutedEventArgs e) => ShowHideMediaPlayer(false);
+
+        private void ResizeMediaPlayer(object sender, RoutedEventArgs e)
+        {
+            currentDimension++;
+            if (currentDimension >= (supportedDimensions.Length / 2)) currentDimension = 0;
+            grdMediaPlayer.Width = supportedDimensions[currentDimension, 0];
+            grdMediaPlayer.Height = supportedDimensions[currentDimension, 1];
+
+            ChangeMarquee(marquee.GetText());
+        }
     }
 }

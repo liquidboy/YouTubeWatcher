@@ -2,6 +2,7 @@
     x:Class="MediaLibraryLegacy.MediaPlayer"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:local="using:MediaLibraryLegacy"
     xmlns:localControls="using:MediaLibraryLegacy.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -9,12 +10,26 @@
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400">
-    <Grid x:Name="grdMediaPlayer" Width="600" Height="400" HorizontalAlignment="Right" VerticalAlignment="Bottom" Visibility="Collapsed" Background="Black" >
-        <Image x:Name="imgWallpaper" Stretch="Fill" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></Image>
-        <MediaPlayerElement x:Name="mePlayer" HorizontalAlignment="Stretch"  AreTransportControlsEnabled="True" VerticalAlignment="Stretch" Margin="0,2,0,0" Stretch="UniformToFill" ></MediaPlayerElement>
-        <Grid x:Name="grdHeader" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="30" Background="#FF0C79FF">
-            <Image x:Name="imgThumb" Width="45" Height="30" Stretch="UniformToFill" HorizontalAlignment="Left"></Image>
-            <Button Content="X" FontSize="14" Width="35" Click="CloseMediaPlayer" HorizontalAlignment="Right" VerticalAlignment="Stretch" Background="Red" Foreground="White"></Button>
-        </Grid>
+    <Grid x:Name="grdMediaPlayer" Width="600" Height="400" HorizontalAlignment="Right" VerticalAlignment="Bottom" Visibility="Collapsed">
+        <controls:DropShadowPanel BlurRadius="8"
+                                      ShadowOpacity="1"
+                                      OffsetX="0"
+                                      OffsetY="0"
+                                      Color="Black"
+                                      VerticalAlignment="Center"
+                                      HorizontalAlignment="Center"
+                                      IsMasked="True">
+            <Grid Background="Black">
+                <Image x:Name="imgWallpaper" Stretch="Fill" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></Image>
+                <MediaPlayerElement x:Name="mePlayer" HorizontalAlignment="Stretch"  AreTransportControlsEnabled="True" VerticalAlignment="Stretch" Margin="0,2,0,0" Stretch="UniformToFill" ></MediaPlayerElement>
+                <Grid x:Name="grdHeader" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="30" Background="#FF0C79FF">
+                    <Image x:Name="imgThumb" Width="45" Height="30" Stretch="UniformToFill" HorizontalAlignment="Left"></Image>
+                    <StackPanel x:Name="spHeaderTools" Orientation="Horizontal" HorizontalAlignment="Right" >
+                        <Button Content="☐" FontSize="14" Width="35" VerticalAlignment="Stretch" Background="Red" Foreground="White" Margin="0,0,1,0" Click="ResizeMediaPlayer"></Button>
+                        <Button Content="✕" FontSize="14" Width="35" Margin="0" Click="CloseMediaPlayer" HorizontalAlignment="Right" VerticalAlignment="Stretch" Background="Red" Foreground="White"></Button>
+                    </StackPanel>
+                </Grid>
+            </Grid>
+        </controls:DropShadowPanel>
     </Grid>
 </UserControl>
