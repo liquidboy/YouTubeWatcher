@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using VideoEffects;
 using Windows.Foundation.Collections;
 using Windows.Graphics.DirectX.Direct3D11;
@@ -18,12 +19,16 @@ namespace MediaLibraryLegacy
 {
     public sealed partial class ImagesEditor : UserControl
     {
+        private ObservableCollection<ViewImageEditorMetadata> snapshots;
+
         public ImagesEditor()
         {
             this.InitializeComponent();
         }
         public void InitialSetup() {
+            snapshots = new ObservableCollection<ViewImageEditorMetadata>();
             LoadVideo();
+            icLibraryItems.ItemsSource = snapshots;
         }
 
         private async void LoadVideo() {
@@ -51,14 +56,15 @@ namespace MediaLibraryLegacy
             {
                 bitmap = SoftwareBitmap.Convert(bitmap, BitmapPixelFormat.Bgra8, BitmapAlphaMode.Premultiplied);
             }
+
             var source = new SoftwareBitmapSource();
             await source.SetBitmapAsync(bitmap);
 
+            var newSnapshot = new ViewImageEditorMetadata();
+            newSnapshot.Source = source;
+            newSnapshot.Number = snapshots.Count + 1;
 
-            var newSnapshotImage = new Image();
-            newSnapshotImage.Source = source;
-            spImages.Children.Add(newSnapshotImage);
-            newSnapshotImage.StartBringIntoView();
+            snapshots.Add(newSnapshot);
         }
 
         private async void SaveSoftwareBitmapToFile(SoftwareBitmap softwareBitmap, StorageFile outputFile)
@@ -111,6 +117,12 @@ namespace MediaLibraryLegacy
                 }
             }
         }
+    }
+
+    public struct ViewImageEditorMetadata {
+        public SoftwareBitmapSource Source { get; set; }
+        public int Number { get; set; }
+        public long Timestamp { get; set; }
     }
 }
 
