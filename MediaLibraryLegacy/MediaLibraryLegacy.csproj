@@ -123,6 +123,9 @@
       <DependentUpon>TextblockMarquee.xaml</DependentUpon>
     </Compile>
     <Compile Include="Entities\ViewPlaylistMetadata.cs" />
+    <Compile Include="ImagesEditor.xaml.cs">
+      <DependentUpon>ImagesEditor.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -149,6 +152,7 @@
     <Compile Include="Entities\ViewMediaMetadata.cs" />
     <Compile Include="Converters.cs" />
     <Compile Include="FileFolderHelper.cs" />
+    <Compile Include="WindowHelper.cs" />
     <Compile Include="XamlHelper.cs" />
     <Compile Include="YoutubePlayer.xaml.cs">
       <DependentUpon>YoutubePlayer.xaml</DependentUpon>
@@ -180,6 +184,10 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Page Include="Controls\TextblockMarquee.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ImagesEditor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -4,9 +4,11 @@ using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.System;
+using Windows.UI.WindowManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
+using Windows.UI.Xaml.Hosting;
 using Windows.UI.Xaml.Media;
 
 namespace MediaLibraryLegacy
@@ -134,13 +136,22 @@ namespace MediaLibraryLegacy
                         await DeleteMedia(viewMediaMetadata.YID, viewMediaMetadata.MediaType);
                         OnMediaDeleted?.Invoke(null, null);
                         break;
-                    case "Open Tile Editor": break;
+                    case "Open Images Editor": OpenImagesEditor(viewMediaMetadata); break;
                     case "Pin to Start": break;
                     case "Open in YouTube": break;
                     case "Copy URL to Clipboard": break;
                 }
             }
+            if (sender is ListBox) {
+                ((ListBox)sender).SelectedIndex = -1;
+            }
             XamlHelper.CloseFlyout(sender);
+        }
+
+        private void OpenImagesEditor(object viewModel) {
+            var windowContent = new ImagesEditor();
+            windowContent.DataContext = viewModel;
+            WindowHelper.OpenWindow(windowContent, WindowHelper.DefaultEditorWindowWidth, WindowHelper.DefaultEditorWindowHeight);            
         }
 
         private async Task DeleteMedia(string yid, string fileType) {
@@ -188,3 +199,5 @@ namespace MediaLibraryLegacy
         public ViewMediaMetadata ViewMediaMetadata { get; set; }
     }
 }
+
+// https://docs.microsoft.com/en-us/windows/uwp/design/layout/app-window
