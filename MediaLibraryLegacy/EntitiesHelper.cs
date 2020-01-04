@@ -1,4 +1,5 @@
 ﻿using SharedCode.SQLite;
+using SharedCode.YT;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -53,6 +54,44 @@ namespace MediaLibraryLegacy
             }
         }
 
+        public static void AddMediaMetadata(VideoDetails videoDetails, string mediaType, string quality, long size)
+        {
+            var newEntity = new MediaMetadata()
+            {
+                YID = videoDetails.id,
+                Title = videoDetails.Title,
+                DateStamp = DateTime.UtcNow,
+                ThumbUrl = videoDetails.thumbnails.MediumResUrl,
+                MediaType = mediaType,
+                Quality = quality,
+                Size = size
+            };
+
+            DBContext.Current.Save(newEntity);
+        }
+
+        public static void AddPlaylistMetadata(string title)
+        {
+            var newEntity = new PlaylistMetadata()
+            {
+                Title = title,
+                DateStamp = DateTime.UtcNow
+            };
+            DBContext.Current.Save(newEntity);
+        }
+
+        public static int RetrievePlaylistMetadataAsCount()
+        {
+            var foundItems = DBContext.Current.RetrieveAllEntities<PlaylistMetadata>();
+            return (foundItems == null) ? 0 : foundItems.Count;
+        }
+
+        public static int RetrieveMediaMetadataAsCount()
+        {
+            var foundItems = DBContext.Current.RetrieveAllEntities<MediaMetadata>();
+            return (foundItems == null) ? 0 : foundItems.Count;
+        }
+
         public static (ObservableCollection<ViewPlaylistMetadata> source, Guid lastSelectedPlaylistId) RetrievePlaylistMetadataAsViewCollection(Guid currentLastSelectedPlaylistId)
         {
             var items = new ObservableCollection<ViewPlaylistMetadata>();
@@ -75,8 +114,9 @@ namespace MediaLibraryLegacy
         {
             var mediaItems = new ObservableCollection<ViewMediaMetadata>();
             var foundItems = DBContext.Current.RetrieveAllEntities<MediaMetadata>();
-            foundItems.Reverse();
-            foreach (var foundItem in foundItems)
+            var orderedItems = foundItems.OrderBy(x => x.Title);
+            //foundItems.Reverse();
+            foreach (var foundItem in orderedItems)
             {
                 mediaItems.Add(new ViewMediaMetadata()
                 {
@@ -123,6 +163,23 @@ namespace MediaLibraryLegacy
                 }
             }
             return (items, playlistUid);
+        }
+
+        public static ObservableCollection<ViewPlaylistMetadata> RetrievePlaylistMetadataAsViewCollection()
+        {
+            var items = new ObservableCollection<ViewPlaylistMetadata>();
+            var foundItems = DBContext.Current.RetrieveAllEntities<PlaylistMetadata>();
+            var orderedItems = foundItems.OrderBy(x => x.Title);
+            foreach (var foundItem in orderedItems)
+            {
+                items.Add(new ViewPlaylistMetadata()
+                {
+                    Title = foundItem.Title,
+                    UniqueId = foundItem.UniqueId
+                });
+
+            }
+            return items;
         }
     }
 }

@@ -28,22 +28,7 @@ namespace MediaLibraryLegacy
             LoadPlaylistItems();
         }
 
-        private void LoadPlaylistItems()
-        {
-            var items = new ObservableCollection<ViewPlaylistMetadata>();
-            var foundItems = DBContext.Current.RetrieveAllEntities<PlaylistMetadata>();
-            foundItems.Reverse();
-            foreach (var foundItem in foundItems)
-            {
-                items.Add(new ViewPlaylistMetadata()
-                {
-                    Title = foundItem.Title,
-                    UniqueId = foundItem.UniqueId
-                });
-
-            }
-            gvPlaylists.ItemsSource = items;
-        }
+        private void LoadPlaylistItems() => gvPlaylists.ItemsSource = EntitiesHelper.RetrievePlaylistMetadataAsViewCollection();
 
         private void PlaylistSelected(object sender, SelectionChangedEventArgs e)
         {

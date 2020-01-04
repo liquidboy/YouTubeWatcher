@@ -92,19 +92,9 @@ namespace MediaLibraryLegacy
             imgStatus.Source = new BitmapImage(uri);
         }
 
-        private void UpdateLibraryStatistics()
-        {
-            var foundItems = DBContext.Current.RetrieveAllEntities<MediaMetadata>();
-            var libraryCount = (foundItems == null) ? 0 : foundItems.Count;
-            tbLibraryCount.Text = libraryCount.ToString();
-        }
+        private void UpdateLibraryStatistics() => tbLibraryCount.Text = EntitiesHelper.RetrieveMediaMetadataAsCount().ToString();
 
-        private void UpdatePlaylistStatistics()
-        {
-            var foundItems = DBContext.Current.RetrieveAllEntities<PlaylistMetadata>();
-            var libraryCount = (foundItems == null) ? 0 : foundItems.Count;
-            tbPlaylistCount.Text = libraryCount.ToString();
-        }
+        private void UpdatePlaylistStatistics() => tbPlaylistCount.Text = EntitiesHelper.RetrievePlaylistMetadataAsCount().ToString();
 
         private void UpdateJobStatistics() => tbJobsCount.Text = jobQueue.Count.ToString();
 
@@ -121,7 +111,7 @@ namespace MediaLibraryLegacy
                 if (File.Exists(path)) File.Delete(path);
                 await clientHelper.DownloadMedia(videoDetails.id, quality, path, mediaType);
                 var fileInfo = new FileInfo(path);
-                RecordMetadata(videoDetails, mediaType, quality, fileInfo.Length);
+                EntitiesHelper.AddMediaMetadata(videoDetails, mediaType, quality, fileInfo.Length);
             }
             catch (Exception ex)
             {
@@ -134,21 +124,6 @@ namespace MediaLibraryLegacy
             ProcessJobFromQueue();
         }
 
-        private void RecordMetadata(VideoDetails videoDetails, string mediaType, string quality, long size)
-        {
-            var newEntity = new MediaMetadata()
-            {
-                YID = videoDetails.id,
-                Title = videoDetails.Title,
-                DateStamp = DateTime.UtcNow,
-                ThumbUrl = videoDetails.thumbnails.MediumResUrl,
-                MediaType = mediaType,
-                Quality = quality,
-                Size = size
-            };
-
-            var newid = DBContext.Current.Save(newEntity);
-        }
         private void ShowLibrary(object sender, RoutedEventArgs e) => OnShowLibrary.Invoke(null, null);
 
         private void ShowPlaylists(object sender, RoutedEventArgs e) => OnShowPlaylist.Invoke(null, null);

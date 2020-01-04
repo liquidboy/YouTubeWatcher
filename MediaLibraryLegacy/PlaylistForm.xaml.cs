@@ -17,20 +17,10 @@ namespace MediaLibraryLegacy
         private void CreatePlaylist(object sender, RoutedEventArgs e)
         {
             if (!string.IsNullOrEmpty(tbTitle.Text)) {
-                RecordMetadata(tbTitle.Text);
+                EntitiesHelper.AddPlaylistMetadata(tbTitle.Text);
                 tbTitle.Text = string.Empty;
             }
             OnPlaylistCreated?.Invoke(null, null);
-        }
-
-        private void RecordMetadata(string title)
-        {
-            var newEntity = new PlaylistMetadata()
-            {
-                Title = title,
-                DateStamp = DateTime.UtcNow
-            };
-            var newid = DBContext.Current.Save(newEntity);
         }
     }
 }
