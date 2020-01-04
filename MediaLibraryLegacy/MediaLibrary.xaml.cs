@@ -60,23 +60,7 @@ namespace MediaLibraryLegacy
         {
             if (load)
             {
-                var MediaItems = new ObservableCollection<ViewMediaMetadata>();
-                var foundItems = DBContext.Current.RetrieveAllEntities<MediaMetadata>();
-                foundItems.Reverse();
-                foreach (var foundItem in foundItems)
-                {
-                    MediaItems.Add(new ViewMediaMetadata()
-                    {
-                        UniqueId = foundItem.UniqueId,
-                        Title = foundItem.Title,
-                        YID = foundItem.YID,
-                        ThumbUri = new Uri($"{mediaPath}\\{foundItem.YID}-medium.jpg", UriKind.Absolute),
-                        Quality = foundItem.Quality,
-                        MediaType = foundItem.MediaType,
-                        Size = foundItem.Size,
-                    });
-                }
-                icLibraryItems.ItemsSource = MediaItems;
+                icLibraryItems.ItemsSource = EntitiesHelper.RetrieveMediaMetadataAsViewCollection(mediaPath);
             }
             else
             {
@@ -104,23 +88,8 @@ namespace MediaLibraryLegacy
                 if (uie != null && uie.DataContext is ViewMediaMetadata) {
                     var playlistSelectedEventArgs = (PlaylistSelectedEventArgs)e;
                     var viewMediaMetadata = (ViewMediaMetadata)uie.DataContext;
-                    RecordMetadata(viewMediaMetadata.UniqueId, playlistSelectedEventArgs.SelectedPlaylist.UniqueId);
+                    EntitiesHelper.AddPlaylistMediaMetadata(viewMediaMetadata.UniqueId, playlistSelectedEventArgs.SelectedPlaylist.UniqueId);
                 }
-            }
-        }
-
-        private void RecordMetadata(Guid mediaUid, Guid playlistUid)
-        {
-            var foundEntities = DBContext.Current.RetrieveEntities<PlaylistMediaMetadata>($"MediaUid='{mediaUid.ToString()}' and PlaylistUid='{playlistUid.ToString()}'");
-
-            if (foundEntities.Count == 0) {
-                var newEntity = new PlaylistMediaMetadata()
-                {
-                    MediaUid = mediaUid,
-                    PlaylistUid = playlistUid,
-                    DateStamp = DateTime.UtcNow
-                };
-                DBContext.Current.Save(newEntity);
             }
         }
 
@@ -172,26 +141,9 @@ namespace MediaLibraryLegacy
                 // delete root mp3/mp4
                 await FileFolderHelper.TryDeleteFile($"{yid}.{fileType}", mediaPathFolder);
             }
-           
+
             // delete DB data
-            var foundMediaMetadata = DBContext.Current.RetrieveEntities<MediaMetadata>($"YID='{yid}'");
-            if (foundMediaMetadata.Count > 0)
-            {
-                var uniqueId = foundMediaMetadata[0].UniqueId;
-
-                // - delete from MediaMetadata
-                DBContext.Current.DeleteEntity<MediaMetadata>(uniqueId);
-
-                // - delete from PlaylistMediaMetadata
-                var foundPlaylistMediaMetadata = DBContext.Current.RetrieveEntities<PlaylistMediaMetadata>($"MediaUid='{uniqueId.ToString()}'");
-
-                if (foundPlaylistMediaMetadata.Count > 0)
-                {
-                    foreach (var entity in foundPlaylistMediaMetadata) {
-                        DBContext.Current.DeleteEntity<PlaylistMediaMetadata>(entity.UniqueId);
-                    }
-                }
-            }
+            EntitiesHelper.DeleteAllByYID(yid);
         }
     }
 

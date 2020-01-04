@@ -39,7 +39,9 @@ namespace MediaLibraryLegacy
 
         private void SetupInitialView() {
             if (lastSelectedPlaylistId != Guid.Empty) {
-                LoadPlaylist(lastSelectedPlaylistId);
+                var result = EntitiesHelper.RetrievePlaylistMediaMetadataAsViewCollection(lastSelectedPlaylistId, mediaPath);
+                icMediaItems.ItemsSource = result.source;
+                lastSelectedPlaylistId = result.lastSelectedPlaylistId;
             }
         }
 
@@ -53,52 +55,10 @@ namespace MediaLibraryLegacy
         
         private void LoadPlaylistItems()
         {
-            var items = new ObservableCollection<ViewPlaylistMetadata>();
-            var foundItems = DBContext.Current.RetrieveAllEntities<PlaylistMetadata>();
-            var orderedItems = foundItems.OrderBy(x => x.Title);
-            foreach (var foundItem in orderedItems)
-            {
-                items.Add(new ViewPlaylistMetadata()
-                {
-                    UniqueId = foundItem.UniqueId,
-                    Title = foundItem.Title
-                });
-                if(lastSelectedPlaylistId == Guid.Empty) lastSelectedPlaylistId = foundItem.UniqueId;
-            }
-            gvPlaylists.ItemsSource = items;
-        }
+            var result = EntitiesHelper.RetrievePlaylistMetadataAsViewCollection(lastSelectedPlaylistId);
+            gvPlaylists.ItemsSource = result.source;
+            lastSelectedPlaylistId = result.lastSelectedPlaylistId;
 
-        private void LoadPlaylist(Guid playlistUid)
-        {
-            var items = new ObservableCollection<ViewMediaMetadata>();
-            var foundItems = DBContext.Current.RetrieveEntities<PlaylistMediaMetadata>($"PlaylistUid='{playlistUid.ToString()}'");
-
-            var sqlIn = string.Empty;
-            foreach (var foundItem in foundItems)
-            {
-                sqlIn += $"'{foundItem.MediaUid}' ,";
-            }
-
-            if (sqlIn.Length > 0) {
-                sqlIn = sqlIn.Substring(0, sqlIn.Length - 1);
-                var foundItems2 = DBContext.Current.RetrieveEntities<MediaMetadata>($"UniqueId IN ({sqlIn})");
-                var orderedItems2 = foundItems2.OrderBy(x => x.Title);
-                foreach (var foundItem in orderedItems2)
-                {
-                    items.Add(new ViewMediaMetadata()
-                    {
-                        UniqueId = foundItem.UniqueId,
-                        Title = foundItem.Title,
-                        YID = foundItem.YID,
-                        ThumbUri = new Uri($"{mediaPath}\\{foundItem.YID}-medium.jpg", UriKind.Absolute),
-                        Quality = foundItem.Quality,
-                        MediaType = foundItem.MediaType,
-                        Size = foundItem.Size,
-                    });
-                }
-            }
-            icMediaItems.ItemsSource = items;
-            lastSelectedPlaylistId = playlistUid;
         }
 
         private void PlaylistChanged(object sender, SelectionChangedEventArgs e)
@@ -107,7 +67,12 @@ namespace MediaLibraryLegacy
 
             if (e.AddedItems.Count > 0) {
                 foreach (var item in e.AddedItems) {
-                    if(item is ViewPlaylistMetadata)LoadPlaylist(((ViewPlaylistMetadata)item).UniqueId);    
+                    if (item is ViewPlaylistMetadata)
+                    {
+                        var result = EntitiesHelper.RetrievePlaylistMediaMetadataAsViewCollection(((ViewPlaylistMetadata)item).UniqueId, mediaPath);
+                        icMediaItems.ItemsSource = result.source;
+                        lastSelectedPlaylistId = result.lastSelectedPlaylistId;
+                    }
                 }
             }   
         }
