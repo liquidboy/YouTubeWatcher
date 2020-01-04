@@ -25,7 +25,7 @@
                 <Grid x:Name="grdHeader" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="30" Background="#FF0C79FF">
                     <Image x:Name="imgThumb" Width="45" Height="30" Stretch="UniformToFill" HorizontalAlignment="Left"></Image>
                     <StackPanel x:Name="spHeaderTools" Orientation="Horizontal" HorizontalAlignment="Right" >
-                        <Button Content="☐" FontSize="14" Width="35" VerticalAlignment="Stretch" Background="Red" Foreground="White" Margin="0,0,1,0" Click="ResizeMediaPlayer"></Button>
+                        <Button Content="🡙" FontSize="14" Width="35" VerticalAlignment="Stretch" Background="Red" Foreground="White" Margin="0,0,1,0" Click="ResizeMediaPlayer"></Button>
                         <Button Content="✕" FontSize="14" Width="35" Margin="0" Click="CloseMediaPlayer" HorizontalAlignment="Right" VerticalAlignment="Stretch" Background="Red" Foreground="White"></Button>
                     </StackPanel>
                 </Grid>
