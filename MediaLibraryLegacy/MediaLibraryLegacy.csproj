@@ -240,6 +240,10 @@
       <Project>{FCCACC35-4ABC-4D30-BFF4-5844E578B2F3}</Project>
       <Name>SharedCode</Name>
     </ProjectReference>
+    <ProjectReference Include="..\VideoEffects\VideoEffects.csproj">
+      <Project>{ebb57c26-cc11-47b3-9cc8-f3e73fe75b0a}</Project>
+      <Name>VideoEffects</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

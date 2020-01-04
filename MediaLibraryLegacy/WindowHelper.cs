@@ -17,18 +17,29 @@ namespace MediaLibraryLegacy
         public const double DefaultEditorWindowWidth = 1950;
         public const double DefaultEditorWindowHeight = 1350;
 
-        public static async void OpenWindow(UIElement windowContent, double width, double height) {
+        // todo: work out a huge mem leak, the windowContent is still running even when we destroy the appWindow ????
+        // i.e. the mediaPlayerElement is still running , i can here the media playing
+        public static async void OpenWindow(UIElement windowContent, double width, double height, Action finishedOpeningAction) {
             AppWindow appWindow = await AppWindow.TryCreateAsync();
             appWindow.RequestSize(new Size(width, height));
+
+            Grid appWindowRootGrid = new Grid();
+            appWindowRootGrid.Children.Add(windowContent);
+
             ElementCompositionPreview.SetAppWindowContent(appWindow, windowContent);
 
             appWindow.Closed += (a, o) =>
             {
+                appWindowRootGrid.Children.Remove(windowContent);
+                appWindowRootGrid = null;
+                
                 windowContent = null;
                 appWindow = null;
+                
             };
 
             await appWindow.TryShowAsync();
+            finishedOpeningAction?.Invoke();
         }
     }
 }

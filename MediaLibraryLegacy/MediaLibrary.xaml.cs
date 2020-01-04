@@ -151,7 +151,7 @@ namespace MediaLibraryLegacy
         private void OpenImagesEditor(object viewModel) {
             var windowContent = new ImagesEditor();
             windowContent.DataContext = viewModel;
-            WindowHelper.OpenWindow(windowContent, WindowHelper.DefaultEditorWindowWidth, WindowHelper.DefaultEditorWindowHeight);            
+            WindowHelper.OpenWindow(windowContent, WindowHelper.DefaultEditorWindowWidth, WindowHelper.DefaultEditorWindowHeight, ()=> { windowContent.InitialSetup(); });            
         }
 
         private async Task DeleteMedia(string yid, string fileType) {
