@@ -18,6 +18,7 @@ namespace MediaLibraryLegacy
         {
             if (!string.IsNullOrEmpty(tbTitle.Text)) {
                 RecordMetadata(tbTitle.Text);
+                tbTitle.Text = string.Empty;
             }
             OnPlaylistCreated?.Invoke(null, null);
         }
