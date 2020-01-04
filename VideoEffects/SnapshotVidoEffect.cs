@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Windows.Foundation.Collections;
 using Windows.Graphics.DirectX.Direct3D11;
 using Windows.Graphics.Imaging;

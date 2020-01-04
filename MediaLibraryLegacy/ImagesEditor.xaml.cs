@@ -1,14 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using VideoEffects;
-using Windows.Foundation.Collections;
-using Windows.Graphics.DirectX.Direct3D11;
 using Windows.Graphics.Imaging;
-using Windows.Media.Core;
 using Windows.Media.Editing;
 using Windows.Media.Effects;
-using Windows.Media.MediaProperties;
 using Windows.Storage;
 using Windows.Storage.Streams;
 using Windows.UI.Xaml;
@@ -26,8 +21,12 @@ namespace MediaLibraryLegacy
             this.InitializeComponent();
         }
         public void InitialSetup() {
-            snapshots = new ObservableCollection<ViewImageEditorMetadata>();
+            BindDatasources();
             LoadVideo();
+        }
+
+        private void BindDatasources() {
+            snapshots = new ObservableCollection<ViewImageEditorMetadata>();
             icLibraryItems.ItemsSource = snapshots;
         }
 
@@ -119,12 +118,6 @@ namespace MediaLibraryLegacy
                 }
             }
         }
-    }
-
-    public struct ViewImageEditorMetadata {
-        public SoftwareBitmapSource Source { get; set; }
-        public int Number { get; set; }
-        public TimeSpan Position { get; set; }
     }
 }
 

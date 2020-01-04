@@ -122,6 +122,7 @@
     <Compile Include="Controls\TextblockMarquee.xaml.cs">
       <DependentUpon>TextblockMarquee.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Entities\ViewImageEditorMetadata.cs" />
     <Compile Include="Entities\ViewPlaylistMetadata.cs" />
     <Compile Include="ImagesEditor.xaml.cs">
       <DependentUpon>ImagesEditor.xaml</DependentUpon>
