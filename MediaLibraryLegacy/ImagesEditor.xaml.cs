@@ -63,6 +63,8 @@ namespace MediaLibraryLegacy
             var newSnapshot = new ViewImageEditorMetadata();
             newSnapshot.Source = source;
             newSnapshot.Number = snapshots.Count + 1;
+            var pos = mePlayer.Position;
+            newSnapshot.Position = new TimeSpan(pos.Days, pos.Hours, pos.Minutes, pos.Seconds); ;
 
             snapshots.Add(newSnapshot);
         }
@@ -122,7 +124,7 @@ namespace MediaLibraryLegacy
     public struct ViewImageEditorMetadata {
         public SoftwareBitmapSource Source { get; set; }
         public int Number { get; set; }
-        public long Timestamp { get; set; }
+        public TimeSpan Position { get; set; }
     }
 }
 
