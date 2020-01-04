@@ -1,11 +1,13 @@
 ﻿using SharedCode.SQLite;
 using System;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
+using Windows.UI.Xaml.Media;
 
 namespace MediaLibraryLegacy
 {
@@ -14,7 +16,8 @@ namespace MediaLibraryLegacy
         string mediaPath;
 
         public event EventHandler<PlayMediaEventArgs> OnPlayMedia;
-        
+        public event EventHandler OnMediaDeleted;
+
         public MediaLibrary()
         {
             this.InitializeComponent();
@@ -117,6 +120,83 @@ namespace MediaLibraryLegacy
                 };
                 DBContext.Current.Save(newEntity);
             }
+        }
+
+        private async void ExtraToolsSelected(object sender, SelectionChangedEventArgs e)
+        {
+            if (e.AddedItems.Count > 0)
+            {
+                var item = (ListBoxItem)e.AddedItems[0];
+                var viewMediaMetadata = (ViewMediaMetadata)item.DataContext;
+                switch (item.Content)
+                {
+                    case "Delete": 
+                        await DeleteMedia(viewMediaMetadata.YID, viewMediaMetadata.MediaType);
+                        OnMediaDeleted?.Invoke(null, null);
+                        break;
+                    case "Tile Editor": break;
+                    case "Pin to Start": break;
+                    case "Open in YouTube": break;
+                    case "Copy URL to Clipboard": break;
+                }
+            }
+            XamlHelper.CloseFlyout(sender);
+        }
+
+        private async Task DeleteMedia(string yid, string fileType) {
+            // use YId as the key for deleting
+            var mediaPathFolder = await StorageFolder.GetFolderFromPathAsync(mediaPath);
+            if (mediaPathFolder != null) {
+
+                // get extra content folder if it exists & delete it
+                await TryDeleteFolder(yid, mediaPathFolder);
+                
+                // delete root images
+                await TryDeleteFile($"{yid}-high.jpg", mediaPathFolder);
+                await TryDeleteFile($"{yid}-medium.jpg", mediaPathFolder);
+                await TryDeleteFile($"{yid}-low.jpg", mediaPathFolder);
+                await TryDeleteFile($"{yid}-max.jpg", mediaPathFolder);
+                await TryDeleteFile($"{yid}-standard.jpg", mediaPathFolder);
+
+                // delete root mp3/mp4
+                await TryDeleteFile($"{yid}.{fileType}", mediaPathFolder);
+            }
+           
+            // delete DB data
+            var foundMediaMetadata = DBContext.Current.RetrieveEntities<MediaMetadata>($"YID='{yid}'");
+            if (foundMediaMetadata.Count > 0)
+            {
+                var uniqueId = foundMediaMetadata[0].UniqueId;
+
+                // - delete from MediaMetadata
+                DBContext.Current.DeleteEntity<MediaMetadata>(uniqueId);
+
+                // - delete from PlaylistMediaMetadata
+                var foundPlaylistMediaMetadata = DBContext.Current.RetrieveEntities<PlaylistMediaMetadata>($"MediaUid='{uniqueId.ToString()}'");
+
+                if (foundPlaylistMediaMetadata.Count > 0)
+                {
+                    foreach (var entity in foundPlaylistMediaMetadata) {
+                        DBContext.Current.DeleteEntity<PlaylistMediaMetadata>(entity.UniqueId);
+                    }
+                }
+            }
+        }
+
+        private async Task TryDeleteFile(string fileName, StorageFolder folder) {
+            try { 
+                var foundFile = await folder.GetFileAsync(fileName);
+                if (foundFile != null) await foundFile.DeleteAsync();
+            } catch { }
+        }
+
+        private async Task TryDeleteFolder(string folderName, StorageFolder folder) {
+            try
+            {
+                var foundChildFolder = await folder.GetFolderAsync(folderName);
+                await foundChildFolder.DeleteAsync(StorageDeleteOption.PermanentDelete);
+            }
+            catch { }
         }
     }
 

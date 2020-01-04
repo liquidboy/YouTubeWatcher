@@ -11,6 +11,17 @@
     d:DesignWidth="400">
     <UserControl.Resources>
         <converters:BytesToDisplaySize x:Key="BytesToDisplaySizeConverter" ></converters:BytesToDisplaySize>
+        <Flyout x:Key="flyoutExtraTools" Placement="Top">
+            <Grid Width="180" Height="120">
+                <ListBox Background="Transparent" SelectionChanged="ExtraToolsSelected">
+                    <ListBoxItem>Delete</ListBoxItem>
+                    <ListBoxItem>Tile Editor</ListBoxItem>
+                    <ListBoxItem>Pin to Start</ListBoxItem>
+                    <ListBoxItem>Open in YouTube</ListBoxItem>
+                    <ListBoxItem>Copy URL to Clipboard</ListBoxItem>
+                </ListBox>
+            </Grid>
+        </Flyout>
     </UserControl.Resources>
     <Grid>
         <Grid x:Name="grdLibrary" Visibility="Collapsed" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
@@ -40,16 +51,20 @@
                                     <TextBlock Text="{Binding Size, Converter={StaticResource BytesToDisplaySizeConverter}}" Margin="10,0,0,0" Foreground="Gray"></TextBlock>
                                 </StackPanel>
                                 <TextBlock TextWrapping="WrapWholeWords" Width="242" Height="60" Text="{Binding Title}" FontWeight="SemiBold"></TextBlock>
-                                <StackPanel Orientation="Horizontal" Margin="5,5,0,0">
-                                    <Button Content=" &#9654; " Click="PlayMedia" FontSize="16" CornerRadius="5"></Button>
-                                    <Button x:Name="butAddToPlaylist" Content=" + ≣ " FontSize="16" CornerRadius="5" Margin="10,0,0,0">
-                                        <Button.Flyout>
-                                            <Flyout x:Name="flyoutPlaylistChooser" Placement="Top">
-                                                <local:PlaylistChooser Width="250" Height="300" OnItemSelected="OnPlaylistSelected" ></local:PlaylistChooser>
-                                            </Flyout>
-                                        </Button.Flyout>
-                                    </Button>
-                                </StackPanel>
+                                <Grid HorizontalAlignment="Stretch" Margin="5,5,5,0">
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                                        <Button Content=" &#9654; " Click="PlayMedia" FontSize="16" CornerRadius="5"></Button>
+                                        <Button x:Name="butAddToPlaylist" Content=" + ≣ " FontSize="16" CornerRadius="5" Margin="10,0,0,0">
+                                            <Button.Flyout>
+                                                <Flyout x:Name="flyoutPlaylistChooser" Placement="Top">
+                                                    <local:PlaylistChooser Width="250" Height="300" OnItemSelected="OnPlaylistSelected" ></local:PlaylistChooser>
+                                                </Flyout>
+                                            </Button.Flyout>
+                                        </Button>
+                                        <Button Content=" … " CornerRadius="5" FontSize="16" Background="White" Flyout="{StaticResource flyoutExtraTools}" Margin="10,0,0,0">
+                                        </Button>
+                                    </StackPanel>
+                                </Grid>
                             </StackPanel>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>

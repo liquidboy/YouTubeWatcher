@@ -73,5 +73,12 @@ namespace MediaLibraryLegacy
             HideAllViews();
             viewYoutubePlayer.Show();
         }
+
+        private void OnMediaLibraryMediaDeleted(object sender, EventArgs e)
+        {
+            HideAllViews();
+            viewMediaLibrary.Show();
+            viewTaskbar.UpdateStatistics();
+        }
     }
 }
