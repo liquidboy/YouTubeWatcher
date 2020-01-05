@@ -34,6 +34,7 @@ namespace MediaLibraryLegacy
                 }
 
                 // - delete from ImageEditorMetadata
+                DeleteAllImageEditorMetadata(uniqueId);
                 var foundImageEditorMetadata = DBContext.Current.RetrieveEntities<ImageEditorMetadata>($"MediaUid='{uniqueId.ToString()}'");
                 if (foundImageEditorMetadata.Count > 0)
                 {
@@ -41,6 +42,17 @@ namespace MediaLibraryLegacy
                     {
                         DBContext.Current.DeleteEntity<ImageEditorMetadata>(entity.UniqueId);
                     }
+                }
+            }
+        }
+
+        public static void DeleteAllImageEditorMetadata(Guid mediaUid) {
+            var foundImageEditorMetadata = DBContext.Current.RetrieveEntities<ImageEditorMetadata>($"MediaUid='{mediaUid.ToString()}'");
+            if (foundImageEditorMetadata.Count > 0)
+            {
+                foreach (var entity in foundImageEditorMetadata)
+                {
+                    DBContext.Current.DeleteEntity<ImageEditorMetadata>(entity.UniqueId);
                 }
             }
         }

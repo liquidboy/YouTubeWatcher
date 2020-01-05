@@ -1,6 +1,9 @@
 ﻿using Microsoft.Toolkit.Uwp.UI.Controls;
+using SharedCode.SQLite;
 using System;
 using System.Collections.ObjectModel;
+using System.Linq;
+using System.Threading.Tasks;
 using VideoEffects;
 using Windows.Graphics.Imaging;
 using Windows.Media.Editing;
@@ -25,6 +28,7 @@ namespace MediaLibraryLegacy
         public void InitialSetup() {
             BindDatasources();
             LoadVideo();
+            LoadImageMetadata();
         }
 
         private void BindDatasources() {
@@ -49,15 +53,65 @@ namespace MediaLibraryLegacy
             }
         }
 
-        private async void TakeSnapshot(object sender, RoutedEventArgs e)
+        private async void LoadImageMetadata() 
         {
-            var bitmap = SnapshotVidoEffect.GetSnapShot();
+            if (DataContext is ViewMediaMetadata)
+            {
+                var viewMediaMetadata = (ViewMediaMetadata)DataContext;
+                var foundItems = DBContext.Current.RetrieveEntities<ImageEditorMetadata>($"MediaUid='{viewMediaMetadata.UniqueId.ToString()}'");
+                var orderedItems = foundItems.OrderBy(x => x.Number);
+
+                var mediaPathFolder = await StorageFolder.GetFolderFromPathAsync(App.mediaPath);
+                var yidFolder = await mediaPathFolder.GetFolderAsync(viewMediaMetadata.YID);
+
+                foreach (var foundItem in orderedItems)
+                {
+                    var bitmap = yidFolder != null ? await GetSoftwareBitmap(await yidFolder.GetFileAsync($"{viewMediaMetadata.YID}-{foundItem.Number}.jpg")) : null;
+
+                    var source = bitmap == null ? null : new SoftwareBitmapSource();
+                    if (source != null) await source.SetBitmapAsync(bitmap);
+
+                    snapshots.Add(new ViewImageEditorMetadata()
+                    {
+                        Bitmap  = bitmap,
+                        Source = source,
+                        Number = foundItem.Number,
+                        Position = TimeSpan.FromSeconds(foundItem.TotalSeconds)
+                    });
+                }
+            }
+        }
+
+
+        private async Task<SoftwareBitmap> GetSoftwareBitmap(StorageFile inputFile) {
+
+            SoftwareBitmap softwareBitmap;
+
+            using (IRandomAccessStream stream = await inputFile.OpenAsync(FileAccessMode.Read))
+            {
+                // Create the decoder from the stream
+                BitmapDecoder decoder = await BitmapDecoder.CreateAsync(stream);
+
+                // Get the SoftwareBitmap representation of the file
+                softwareBitmap = await decoder.GetSoftwareBitmapAsync();
+            }
+
+            return FixBitmapForBGRA8(softwareBitmap);
+        }
+
+        private SoftwareBitmap FixBitmapForBGRA8(SoftwareBitmap bitmap) {
+            // SoftwareBitmapSource::SetBitmapAsync only supports SoftwareBitmap with positive width/height, bgra8 pixel format and pre-multiplied or no alpha.'
 
             if (bitmap.BitmapPixelFormat != BitmapPixelFormat.Bgra8 || bitmap.BitmapAlphaMode == BitmapAlphaMode.Straight)
             {
-                bitmap = SoftwareBitmap.Convert(bitmap, BitmapPixelFormat.Bgra8, BitmapAlphaMode.Premultiplied);
+                return SoftwareBitmap.Convert(bitmap, BitmapPixelFormat.Bgra8, BitmapAlphaMode.Premultiplied);
             }
+            return bitmap;
+        }
 
+        private async void TakeSnapshot(object sender, RoutedEventArgs e)
+        {
+            var bitmap = FixBitmapForBGRA8(SnapshotVidoEffect.GetSnapShot());
             var source = new SoftwareBitmapSource();
             await source.SetBitmapAsync(bitmap);
 
@@ -173,6 +227,10 @@ namespace MediaLibraryLegacy
                 {
                     // if folder exists delete it 
                     await StorageHelper.TryDeleteFolder(viewMediaMetadata.YID, mediaPathFolder);
+
+                    // delete DB ImageMetadata's if they exist
+                    EntitiesHelper.DeleteAllImageEditorMetadata(viewMediaMetadata.UniqueId);
+
                     // create folder 
                     var yidFolder = await mediaPathFolder.CreateFolderAsync(viewMediaMetadata.YID);
 
@@ -186,9 +244,7 @@ namespace MediaLibraryLegacy
                         EntitiesHelper.AddImageEditorMetadata(viewMediaMetadata.UniqueId, snapshot.Number, snapshot.Position.TotalSeconds);
                     }
                 }
-
             }
-
         }
 
         private void SnapshotSelected(object sender, PointerRoutedEventArgs e)
