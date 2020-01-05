@@ -1,0 +1,44 @@
+﻿<UserControl
+    x:Class="MediaLibraryLegacy.Controls.ImageEditorTile"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MediaLibraryLegacy.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    xmlns:localConverters="using:MediaLibraryLegacy.Converters"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    d:DesignHeight="300"
+    d:DesignWidth="400">
+    <UserControl.Resources>
+        <localConverters:AbsoluteUriToImageSource x:Key="AbsoluteUriToImageSourceConverter" />
+        <DataTemplate x:Key="PhotoTemplate">
+            <Grid>
+                <Image HorizontalAlignment="Center" Stretch="UniformToFill" Source="{Binding Thumbnail, Converter={StaticResource AbsoluteUriToImageSourceConverter}}" />
+                <Border VerticalAlignment="Bottom">
+                    <Border.Background>
+                        <LinearGradientBrush EndPoint="0,1">
+                            <GradientStop Offset="0" Color="Transparent" />
+                            <GradientStop Offset="1" Color="#33000000" />
+                        </LinearGradientBrush>
+                    </Border.Background>
+                    <TextBlock Margin="5,20,5,5" VerticalAlignment="Bottom" Foreground="White" Text="{Binding Title}" />
+                </Border>
+            </Grid>
+        </DataTemplate>
+    </UserControl.Resources>
+    <Grid x:Name="layoutRoot">
+        <controls:RotatorTile 
+            x:Name="tileTest"
+            Height="150"
+            Width="250"
+            Background="Black"
+            RotationDelay="0:0:3"
+            ExtraRandomDuration="0:0:1"
+            Direction="Left"
+            HorizontalAlignment="Left" 
+            VerticalAlignment="Bottom"
+            ItemTemplate="{StaticResource PhotoTemplate}"
+            Visibility="Collapsed"/>
+    </Grid>
+</UserControl>

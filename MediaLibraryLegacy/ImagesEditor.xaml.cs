@@ -25,10 +25,12 @@ namespace MediaLibraryLegacy
         {
             this.InitializeComponent();
         }
-        public void InitialSetup() {
+        public void InitialSetup()
+        {
             BindDatasources();
             LoadVideo();
-            LoadImageMetadata();
+            LoadImageEditorMetadata();
+            tileTest.InitialSetup((ViewMediaMetadata)DataContext);
         }
 
         private void BindDatasources() {
@@ -53,7 +55,7 @@ namespace MediaLibraryLegacy
             }
         }
 
-        private async void LoadImageMetadata() 
+        private async void LoadImageEditorMetadata()
         {
             if (DataContext is ViewMediaMetadata)
             {
@@ -62,26 +64,33 @@ namespace MediaLibraryLegacy
                 var orderedItems = foundItems.OrderBy(x => x.Number);
 
                 var mediaPathFolder = await StorageFolder.GetFolderFromPathAsync(App.mediaPath);
-                var yidFolder = await mediaPathFolder.GetFolderAsync(viewMediaMetadata.YID);
 
-                foreach (var foundItem in orderedItems)
+                try
                 {
-                    var bitmap = yidFolder != null ? await GetSoftwareBitmap(await yidFolder.GetFileAsync($"{viewMediaMetadata.YID}-{foundItem.Number}.jpg")) : null;
+                    var yidFolder = await mediaPathFolder.GetFolderAsync(viewMediaMetadata.YID);
 
-                    var source = bitmap == null ? null : new SoftwareBitmapSource();
-                    if (source != null) await source.SetBitmapAsync(bitmap);
-
-                    snapshots.Add(new ViewImageEditorMetadata()
+                    foreach (var foundItem in orderedItems)
                     {
-                        Bitmap  = bitmap,
-                        Source = source,
-                        Number = foundItem.Number,
-                        Position = TimeSpan.FromSeconds(foundItem.TotalSeconds)
-                    });
+                        var bitmap = yidFolder != null ? await GetSoftwareBitmap(await yidFolder.GetFileAsync($"{viewMediaMetadata.YID}-{foundItem.Number}.jpg")) : null;
+
+                        var source = bitmap == null ? null : new SoftwareBitmapSource();
+                        if (source != null) await source.SetBitmapAsync(bitmap);
+
+                        snapshots.Add(new ViewImageEditorMetadata()
+                        {
+                            Bitmap = bitmap,
+                            Source = source,
+                            Number = foundItem.Number,
+                            Position = TimeSpan.FromSeconds(foundItem.TotalSeconds)
+                        });
+                    }
                 }
+                catch { 
+                    // todo: possibly yid folder does not exist find a nicer way to check if folder exists
+                }
+                
             }
         }
-
 
         private async Task<SoftwareBitmap> GetSoftwareBitmap(StorageFile inputFile) {
 

@@ -119,6 +119,9 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\ImageEditorTile.xaml.cs">
+      <DependentUpon>ImageEditorTile.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\TextblockMarquee.xaml.cs">
       <DependentUpon>TextblockMarquee.xaml</DependentUpon>
     </Compile>
@@ -185,6 +188,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Controls\ImageEditorTile.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\TextblockMarquee.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

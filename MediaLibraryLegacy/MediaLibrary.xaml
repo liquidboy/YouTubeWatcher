@@ -15,7 +15,7 @@
             <Grid Width="180" Height="120">
                 <ListBox Background="Transparent" SelectionChanged="ExtraToolsSelected">
                     <ListBoxItem IsEnabled="True">Delete Media</ListBoxItem>
-                    <ListBoxItem IsEnabled="False">Open Images Editor</ListBoxItem>
+                    <ListBoxItem IsEnabled="True">Open Images Editor</ListBoxItem>
                     <ListBoxItem IsEnabled="False">Pin to Start</ListBoxItem>
                     <ListBoxItem IsEnabled="False">Open in YouTube</ListBoxItem>
                     <ListBoxItem IsEnabled="False">Copy URL to Clipboard</ListBoxItem>
