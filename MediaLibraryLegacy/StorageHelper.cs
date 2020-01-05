@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using Windows.Storage;
 
@@ -22,6 +23,12 @@ namespace MediaLibraryLegacy
             try
             {
                 var foundChildFolder = await folder.GetFolderAsync(folderName);
+                var files = await foundChildFolder.GetFilesAsync();
+                foreach (var file in files)
+                {
+                    await file.DeleteAsync(StorageDeleteOption.PermanentDelete);
+                }
+
                 await foundChildFolder.DeleteAsync(StorageDeleteOption.PermanentDelete);
             }
             catch { }

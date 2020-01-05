@@ -62,6 +62,7 @@ namespace MediaLibraryLegacy
             await source.SetBitmapAsync(bitmap);
 
             var newSnapshot = new ViewImageEditorMetadata();
+            newSnapshot.Bitmap = bitmap;
             newSnapshot.Source = source;
             newSnapshot.Number = snapshots.Count + 1;
             var pos = mePlayer.Position;
@@ -93,7 +94,7 @@ namespace MediaLibraryLegacy
                 //encoder.BitmapTransform.ScaledHeight = 240;
                 //encoder.BitmapTransform.Rotation = Windows.Graphics.Imaging.BitmapRotation.Clockwise90Degrees;
                 //encoder.BitmapTransform.InterpolationMode = BitmapInterpolationMode.Fant;
-                //encoder.IsThumbnailGenerated = true;
+                encoder.IsThumbnailGenerated = true;
 
                 try
                 {
@@ -114,6 +115,7 @@ namespace MediaLibraryLegacy
                     }
                 }
 
+                //throwing error?
                 if (encoder.IsThumbnailGenerated == false)
                 {
                     await encoder.FlushAsync();
@@ -160,8 +162,32 @@ namespace MediaLibraryLegacy
             }
         }
 
-        private void SaveSnapshots(object sender, RoutedEventArgs e)
+        private async void SaveSnapshots(object sender, RoutedEventArgs e)
         {
+            if (DataContext is ViewMediaMetadata)
+            {
+                var viewMediaMetadata = (ViewMediaMetadata)DataContext;
+
+                var mediaPathFolder = await StorageFolder.GetFolderFromPathAsync(App.mediaPath);
+                if (mediaPathFolder != null)
+                {
+                    // if folder exists delete it 
+                    await StorageHelper.TryDeleteFolder(viewMediaMetadata.YID, mediaPathFolder);
+                    // create folder 
+                    var yidFolder = await mediaPathFolder.CreateFolderAsync(viewMediaMetadata.YID);
+
+                    // save each snapshot as an image into the new folder
+                    foreach (var snapshot in snapshots) {
+                        var newSnapshotFile = await yidFolder.CreateFileAsync($"{viewMediaMetadata.YID}-{snapshot.Number}.png");
+
+                        SaveSoftwareBitmapToFile(snapshot.Bitmap, newSnapshotFile);
+                    }
+
+                    // create DB record for each snapshot    
+
+                }
+
+            }
 
         }
 
