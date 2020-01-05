@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Toolkit.Uwp.UI.Controls;
+using System;
 using System.Collections.ObjectModel;
 using VideoEffects;
 using Windows.Graphics.Imaging;
@@ -8,6 +9,7 @@ using Windows.Storage;
 using Windows.Storage.Streams;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media.Imaging;
 
 namespace MediaLibraryLegacy
@@ -136,6 +138,39 @@ namespace MediaLibraryLegacy
                 snapshot.Number = i + 1;
                 snapshots[i] = snapshot;
             }
+        }
+
+        private void TabChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (e.AddedItems.Count > 0)
+            {
+                var tvi = (TabViewItem)e.AddedItems[0];
+                switch (tvi.Header)
+                {
+                    case "Image Editor":
+                        grdImageEditor.Visibility = Visibility.Visible;
+                        grdMediaEditor.Visibility = Visibility.Collapsed;
+                        mePlayer.Pause();
+                        break;
+                    case "Video Editor":
+                        grdImageEditor.Visibility = Visibility.Collapsed;
+                        grdMediaEditor.Visibility = Visibility.Visible;
+                        break;
+                }
+            }
+        }
+
+        private void SaveSnapshots(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void SnapshotSelected(object sender, PointerRoutedEventArgs e)
+        {
+            var viewImageEditorMetadata = (ViewImageEditorMetadata)((Image)sender).DataContext;
+            grdImageEditor.DataContext = viewImageEditorMetadata;
+
+            tvMain.SelectedIndex = 0;
         }
     }
 }
