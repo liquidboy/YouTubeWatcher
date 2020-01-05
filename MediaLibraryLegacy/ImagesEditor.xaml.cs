@@ -176,15 +176,15 @@ namespace MediaLibraryLegacy
                     // create folder 
                     var yidFolder = await mediaPathFolder.CreateFolderAsync(viewMediaMetadata.YID);
 
-                    // save each snapshot as an image into the new folder
                     foreach (var snapshot in snapshots) {
+
+                        // save each snapshot as an image into the new folder
                         var newSnapshotFile = await yidFolder.CreateFileAsync($"{viewMediaMetadata.YID}-{snapshot.Number}.jpg");
-
                         SaveSoftwareBitmapToFile(snapshot.Bitmap, newSnapshotFile);
+
+                        // create DB record for each snapshot    
+                        EntitiesHelper.AddImageEditorMetadata(viewMediaMetadata.UniqueId, snapshot.Number, snapshot.Position.TotalSeconds);
                     }
-
-                    // create DB record for each snapshot    
-
                 }
 
             }

@@ -25,7 +25,6 @@ namespace MediaLibraryLegacy
 
                 // - delete from PlaylistMediaMetadata
                 var foundPlaylistMediaMetadata = DBContext.Current.RetrieveEntities<PlaylistMediaMetadata>($"MediaUid='{uniqueId.ToString()}'");
-
                 if (foundPlaylistMediaMetadata.Count > 0)
                 {
                     foreach (var entity in foundPlaylistMediaMetadata)
@@ -33,13 +32,21 @@ namespace MediaLibraryLegacy
                         DBContext.Current.DeleteEntity<PlaylistMediaMetadata>(entity.UniqueId);
                     }
                 }
+
+                // - delete from ImageEditorMetadata
+                var foundImageEditorMetadata = DBContext.Current.RetrieveEntities<ImageEditorMetadata>($"MediaUid='{uniqueId.ToString()}'");
+                if (foundImageEditorMetadata.Count > 0)
+                {
+                    foreach (var entity in foundImageEditorMetadata)
+                    {
+                        DBContext.Current.DeleteEntity<ImageEditorMetadata>(entity.UniqueId);
+                    }
+                }
             }
         }
 
         public static void AddPlaylistMediaMetadata(Guid mediaUid, Guid playlistUid)
         {
-
-
             var foundEntities = DBContext.Current.RetrieveEntities<PlaylistMediaMetadata>($"MediaUid='{mediaUid.ToString()}' and PlaylistUid='{playlistUid.ToString()}'");
 
             if (foundEntities.Count == 0)
@@ -67,6 +74,20 @@ namespace MediaLibraryLegacy
                 Size = size
             };
 
+            DBContext.Current.Save(newEntity);
+        }
+
+
+
+        public static void AddImageEditorMetadata(Guid mediaUid, int number, double totalSeconds)
+        {
+            var newEntity = new ImageEditorMetadata()
+            {
+                MediaUid = mediaUid,
+                DateStamp = DateTime.UtcNow,
+                TotalSeconds = totalSeconds,
+                Number = number
+            };
             DBContext.Current.Save(newEntity);
         }
 
