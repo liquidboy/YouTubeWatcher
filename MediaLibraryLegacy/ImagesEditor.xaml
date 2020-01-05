@@ -105,7 +105,7 @@
                         <Button Content="📷 Take Snapshot" Click="TakeSnapshot" FontSize="24" CornerRadius="5"></Button>
                     </StackPanel>
                     <Grid Grid.Row="2" Grid.Column="1" >
-                        <localControls:ImageEditorTile x:Name="tileTest"></localControls:ImageEditorTile>
+                        <localControls:ImageEditorTile Width="250" Height="150" x:Name="tileTest" HorizontalAlignment="Left" ></localControls:ImageEditorTile>
                     </Grid>
                 </Grid>
             </Grid>

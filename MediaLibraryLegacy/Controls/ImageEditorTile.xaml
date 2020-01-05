@@ -30,9 +30,9 @@
     <Grid x:Name="layoutRoot">
         <controls:RotatorTile 
             x:Name="tileTest"
-            Height="150"
-            Width="250"
             Background="Black"
+            Width="{x:Bind Width}"
+            Height="{x:Bind Height}"
             RotationDelay="0:0:3"
             ExtraRandomDuration="0:0:1"
             Direction="Left"
