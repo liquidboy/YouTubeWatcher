@@ -118,6 +118,25 @@ namespace MediaLibraryLegacy
                 }
             }
         }
+
+        private void DeleteSnapshot(object sender, RoutedEventArgs e)
+        {
+            if (((FrameworkElement)sender).DataContext is ViewImageEditorMetadata)
+            {
+                var viewImageEditorMetadata = (ViewImageEditorMetadata)((FrameworkElement)sender).DataContext;
+                snapshots.Remove(viewImageEditorMetadata);
+                UpdateSnapshotNumbers();
+            }
+        }
+
+        private void UpdateSnapshotNumbers() {
+            for (int i = 0; i < snapshots.Count; i++)
+            {
+                var snapshot = snapshots[i];
+                snapshot.Number = i + 1;
+                snapshots[i] = snapshot;
+            }
+        }
     }
 }
 

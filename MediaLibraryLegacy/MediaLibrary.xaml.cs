@@ -129,17 +129,17 @@ namespace MediaLibraryLegacy
             if (mediaPathFolder != null) {
 
                 // get extra content folder if it exists & delete it
-                await FileFolderHelper.TryDeleteFolder(yid, mediaPathFolder);
+                await StorageHelper.TryDeleteFolder(yid, mediaPathFolder);
                 
                 // delete root images
-                await FileFolderHelper.TryDeleteFile($"{yid}-high.jpg", mediaPathFolder);
-                await FileFolderHelper.TryDeleteFile($"{yid}-medium.jpg", mediaPathFolder);
-                await FileFolderHelper.TryDeleteFile($"{yid}-low.jpg", mediaPathFolder);
-                await FileFolderHelper.TryDeleteFile($"{yid}-max.jpg", mediaPathFolder);
-                await FileFolderHelper.TryDeleteFile($"{yid}-standard.jpg", mediaPathFolder);
+                await StorageHelper.TryDeleteFile($"{yid}-high.jpg", mediaPathFolder);
+                await StorageHelper.TryDeleteFile($"{yid}-medium.jpg", mediaPathFolder);
+                await StorageHelper.TryDeleteFile($"{yid}-low.jpg", mediaPathFolder);
+                await StorageHelper.TryDeleteFile($"{yid}-max.jpg", mediaPathFolder);
+                await StorageHelper.TryDeleteFile($"{yid}-standard.jpg", mediaPathFolder);
 
                 // delete root mp3/mp4
-                await FileFolderHelper.TryDeleteFile($"{yid}.{fileType}", mediaPathFolder);
+                await StorageHelper.TryDeleteFile($"{yid}.{fileType}", mediaPathFolder);
             }
 
             // delete DB data

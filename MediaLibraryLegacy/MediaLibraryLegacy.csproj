@@ -152,7 +152,7 @@
     </Compile>
     <Compile Include="Entities\ViewMediaMetadata.cs" />
     <Compile Include="Converters.cs" />
-    <Compile Include="FileFolderHelper.cs" />
+    <Compile Include="StorageHelper.cs" />
     <Compile Include="WindowHelper.cs" />
     <Compile Include="EntitiesHelper.cs" />
     <Compile Include="XamlHelper.cs" />

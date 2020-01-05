@@ -152,35 +152,17 @@ namespace MediaLibraryLegacy
         private async Task DownloadThumbnails(VideoDetails videoDetails)
         {
             if (videoDetails == null) return;
-            await DownloadImageAsync($"{videoDetails.id}-low", new Uri(videoDetails.thumbnails.LowResUrl));
-            //await DownloadImageAsync($"{videoDetails.id}-medium", new Uri(videoDetails.thumbnails.MediumResUrl));
-            await DownloadImageAsync($"{videoDetails.id}-standard", new Uri(videoDetails.thumbnails.StandardResUrl));
-            await DownloadImageAsync($"{videoDetails.id}-high", new Uri(videoDetails.thumbnails.HighResUrl));
-            await DownloadImageAsync($"{videoDetails.id}-max", new Uri(videoDetails.thumbnails.MaxResUrl));
+            await StorageHelper.DownloadImageAsync($"{videoDetails.id}-low", new Uri(videoDetails.thumbnails.LowResUrl), mediaPath);
+            //await StorageHelper.DownloadImageAsync($"{videoDetails.id}-medium", new Uri(videoDetails.thumbnails.MediumResUrl), mediaPath);
+            await StorageHelper.DownloadImageAsync($"{videoDetails.id}-standard", new Uri(videoDetails.thumbnails.StandardResUrl), mediaPath);
+            await StorageHelper.DownloadImageAsync($"{videoDetails.id}-high", new Uri(videoDetails.thumbnails.HighResUrl), mediaPath);
+            await StorageHelper.DownloadImageAsync($"{videoDetails.id}-max", new Uri(videoDetails.thumbnails.MaxResUrl), mediaPath);
         }
 
         private async Task DownloadMediumThumbnail(VideoDetails videoDetails)
         {
             if (videoDetails == null) return;
-            await DownloadImageAsync($"{videoDetails.id}-medium", new Uri(videoDetails.thumbnails.MediumResUrl));
-        }
-
-        private async Task DownloadImageAsync(string fileName, Uri uri)
-        {
-            try
-            {
-                using (var httpClient = new System.Net.Http.HttpClient()) {
-                    // Get the file extension
-                    var uriWithoutQuery = uri.GetLeftPart(UriPartial.Path);
-                    var fileExtension = System.IO.Path.GetExtension(uriWithoutQuery);
-
-                    // Download the image and write to the file
-                    var path = System.IO.Path.Combine(mediaPath, $"{fileName}{fileExtension}");
-                    var imageBytes = await httpClient.GetByteArrayAsync(uri);
-                    await File.WriteAllBytesAsync(path, imageBytes);
-                }
-            }
-            catch { }
+            await StorageHelper.DownloadImageAsync($"{videoDetails.id}-medium", new Uri(videoDetails.thumbnails.MediumResUrl), mediaPath);
         }
 
         private bool IsValidUrl(string ytUrl)
