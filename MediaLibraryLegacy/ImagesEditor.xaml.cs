@@ -178,7 +178,7 @@ namespace MediaLibraryLegacy
 
                     // save each snapshot as an image into the new folder
                     foreach (var snapshot in snapshots) {
-                        var newSnapshotFile = await yidFolder.CreateFileAsync($"{viewMediaMetadata.YID}-{snapshot.Number}.png");
+                        var newSnapshotFile = await yidFolder.CreateFileAsync($"{viewMediaMetadata.YID}-{snapshot.Number}.jpg");
 
                         SaveSoftwareBitmapToFile(snapshot.Bitmap, newSnapshotFile);
                     }
