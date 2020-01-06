@@ -15,7 +15,7 @@
             <Grid Width="180" Height="120">
                 <ListBox Background="Transparent" SelectionChanged="ExtraToolsSelected">
                     <ListBoxItem IsEnabled="True">Delete Media</ListBoxItem>
-                    <ListBoxItem IsEnabled="False">Open Images Editor</ListBoxItem>
+                    <ListBoxItem IsEnabled="True">Open Images Editor</ListBoxItem>
                     <ListBoxItem IsEnabled="False">Pin to Start</ListBoxItem>
                     <ListBoxItem IsEnabled="False">Open in YouTube</ListBoxItem>
                     <ListBoxItem IsEnabled="False">Copy URL to Clipboard</ListBoxItem>
@@ -44,7 +44,10 @@
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Orientation= "Vertical" Margin ="0,0,0,20">
-                                <Image Width="242" Height="136" Stretch="UniformToFill" Margin="5" Tag="{Binding YID}" Source="{Binding ThumbUri}" ></Image>
+                                <Grid x:Name="grdImageTile" Width="242" Height="136" PointerEntered="ShowTile" PointerExited="RemoveTile" Margin="5" >
+                                    <Image Stretch="UniformToFill" Tag="{Binding YID}" Source="{Binding ThumbUri}" ></Image>
+                                </Grid>
+                               
                                 <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
                                     <TextBlock Text="{Binding Quality}" Foreground="Gray"></TextBlock>
                                     <TextBlock Text="{Binding MediaType}" Margin="10,0,0,0" Foreground="Gray"></TextBlock>

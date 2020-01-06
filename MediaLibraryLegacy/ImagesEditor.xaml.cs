@@ -223,12 +223,12 @@ namespace MediaLibraryLegacy
                 var tvi = (TabViewItem)e.AddedItems[0];
                 switch (tvi.Header)
                 {
-                    case "Image Editor":
+                    case "Tile Editor":
                         grdImageEditor.Visibility = Visibility.Visible;
                         grdMediaEditor.Visibility = Visibility.Collapsed;
                         mePlayer.Pause();
                         break;
-                    case "Video Editor":
+                    case "Snapshots":
                         grdImageEditor.Visibility = Visibility.Collapsed;
                         grdMediaEditor.Visibility = Visibility.Visible;
                         break;

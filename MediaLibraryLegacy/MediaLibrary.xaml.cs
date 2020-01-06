@@ -1,4 +1,6 @@
-﻿using SharedCode.SQLite;
+﻿using MediaLibraryLegacy.Controls;
+using Microsoft.Toolkit.Uwp.UI.Controls;
+using SharedCode.SQLite;
 using System;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
@@ -144,6 +146,28 @@ namespace MediaLibraryLegacy
 
             // delete DB data
             EntitiesHelper.DeleteAllByYID(yid);
+        }
+
+        private void ShowTile(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
+        {
+            var grdContainer = (Grid)sender;
+            if (grdContainer.Children.Count == 1 && grdContainer.DataContext is ViewMediaMetadata) {
+                var viewMediaMetadata = (ViewMediaMetadata)grdContainer.DataContext;
+                var newTile = new ImageEditorTile() { Width = grdContainer.Width, Height = grdContainer.Height, Direction = RotatorTile.RotateDirection.Left };
+                grdContainer.Children.Add(newTile);
+                newTile.InitialSetup(viewMediaMetadata);
+            }
+        }
+
+        private void RemoveTile(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
+        {
+            var grdContainer = (Grid)sender;
+            if (grdContainer.Children.Count > 1)
+            {
+                var lastChild = grdContainer.Children[grdContainer.Children.Count - 1];
+                grdContainer.Children.Remove(lastChild);
+            }
+            
         }
     }
 

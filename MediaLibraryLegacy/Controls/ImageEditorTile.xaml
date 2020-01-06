@@ -33,7 +33,7 @@
             Background="Black"
             Width="{x:Bind Width}"
             Height="{x:Bind Height}"
-            RotationDelay="0:0:3"
+            RotationDelay="0:0:1.5"
             ExtraRandomDuration="0:0:1"
             Direction="{x:Bind Direction}"
             HorizontalAlignment="Left" 
