@@ -125,6 +125,9 @@
     <Compile Include="Controls\TextblockMarquee.xaml.cs">
       <DependentUpon>TextblockMarquee.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\TileOnHover.xaml.cs">
+      <DependentUpon>TileOnHover.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Entities\ViewImageEditorMetadata.cs" />
     <Compile Include="Entities\ViewRotatingTile.cs" />
     <Compile Include="Entities\ViewPlaylistMetadata.cs" />
@@ -194,6 +197,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\TextblockMarquee.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\TileOnHover.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
