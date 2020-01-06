@@ -310,6 +310,8 @@ namespace MediaLibraryLegacy
                             break;
                         }
                     }
+
+                    SendSystemNotification("Snapshot updated!");
                 }
             }
         }
