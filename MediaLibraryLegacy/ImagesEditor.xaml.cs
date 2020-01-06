@@ -143,6 +143,8 @@ namespace MediaLibraryLegacy
             newSnapshot.Position = new TimeSpan(pos.Days, pos.Hours, pos.Minutes, pos.Seconds); ;
 
             snapshots.Add(newSnapshot);
+
+            SendSystemNotification("Snapshot taken!");
         }
 
         private async void SaveSoftwareBitmapToFile(SoftwareBitmap softwareBitmap, StorageFile outputFile)
@@ -223,7 +225,7 @@ namespace MediaLibraryLegacy
                 var tvi = (TabViewItem)e.AddedItems[0];
                 switch (tvi.Header)
                 {
-                    case "Tile Editor":
+                    case "Image Editor":
                         grdImageEditor.Visibility = Visibility.Visible;
                         grdMediaEditor.Visibility = Visibility.Collapsed;
                         mePlayer.Pause();
@@ -240,6 +242,8 @@ namespace MediaLibraryLegacy
         {
             if (DataContext is ViewMediaMetadata)
             {
+                SendSystemNotification("Saving all snapshots ...");
+
                 var viewMediaMetadata = (ViewMediaMetadata)DataContext;
 
                 var mediaPathFolder = await StorageFolder.GetFolderFromPathAsync(App.mediaPath);
@@ -263,9 +267,13 @@ namespace MediaLibraryLegacy
                         // create DB record for each snapshot    
                         EntitiesHelper.AddImageEditorMetadata(viewMediaMetadata.UniqueId, snapshot.Number, snapshot.Position.TotalSeconds);
                     }
+
+                    SendSystemNotification("Snapshots saved!");
                 }
             }
         }
+
+        private void SendSystemNotification(string message, int duration = 2000) => systemNotifications.Show(message, duration);
 
         private void SnapshotSelected(object sender, PointerRoutedEventArgs e)
         {

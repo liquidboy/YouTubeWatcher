@@ -67,7 +67,7 @@
                         </Grid>
                     </Border>
                     <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,0">
-                        <Button Content="📁 Save Snapshots for Tile" Click="SaveSnapshots" FontSize="24" CornerRadius="5"></Button>
+                        <Button Content="📁 Save All Images" Click="SaveSnapshots" FontSize="24" CornerRadius="5"></Button>
                     </StackPanel>
                 </Grid>
             </Grid>
@@ -112,7 +112,7 @@
 
             <!-- TABS -->
             <controls:TabView x:Name="tvMain" HorizontalAlignment="Center" VerticalAlignment="Top"  SelectionChanged="TabChanged" Grid.Column="1" Margin="0,20,0,0" >
-                <controls:TabViewItem Header="Tile Editor"></controls:TabViewItem>
+                <controls:TabViewItem Header="Image Editor"></controls:TabViewItem>
                 <controls:TabViewItem Header="Snapshots" IsSelected="True"></controls:TabViewItem>
             </controls:TabView>
 
@@ -125,6 +125,8 @@
                 </Rectangle.Fill>
             </Rectangle>
 
+            <!-- Notifications -->
+            <controls:InAppNotification x:Name="systemNotifications" Grid.Column="1" StackMode="QueueBehind" ShowDismissButton="True" />
 
         </Grid>
         <Grid Grid.Row="1" Background="WhiteSmoke"></Grid>
