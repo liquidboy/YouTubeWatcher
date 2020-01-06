@@ -45,8 +45,6 @@
                 </ScrollViewer>
             </Border>
 
-
-
             <!-- Image Editor -->
             <Grid x:Name="grdImageEditor" Grid.Column="1" Background="#FFE6E6E6" Visibility="Collapsed">
                 <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
