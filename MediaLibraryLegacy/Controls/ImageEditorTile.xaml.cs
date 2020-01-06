@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using static Microsoft.Toolkit.Uwp.UI.Controls.RotatorTile;
 
 namespace MediaLibraryLegacy.Controls
 {
@@ -39,5 +40,18 @@ namespace MediaLibraryLegacy.Controls
             }
             tileTest.Visibility = (orderedItems.Count() > 0) ? Visibility.Visible : Visibility.Collapsed;
         }
+
+
+
+        public RotateDirection Direction
+        {
+            get { return (RotateDirection)GetValue(DirectionProperty); }
+            set { SetValue(DirectionProperty, value); }
+        }
+
+        public static readonly DependencyProperty DirectionProperty =
+            DependencyProperty.Register("Direction", typeof(RotateDirection), typeof(ImageEditorTile), new PropertyMetadata(0));
+
+
     }
 }

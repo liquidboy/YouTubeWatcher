@@ -35,7 +35,7 @@
             Height="{x:Bind Height}"
             RotationDelay="0:0:3"
             ExtraRandomDuration="0:0:1"
-            Direction="Left"
+            Direction="{x:Bind Direction}"
             HorizontalAlignment="Left" 
             VerticalAlignment="Bottom"
             ItemTemplate="{StaticResource PhotoTemplate}"

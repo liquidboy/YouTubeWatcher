@@ -1,4 +1,5 @@
-﻿using Microsoft.Toolkit.Uwp.UI.Controls;
+﻿using MediaLibraryLegacy.Controls;
+using Microsoft.Toolkit.Uwp.UI.Controls;
 using SharedCode.SQLite;
 using System;
 using System.Collections.ObjectModel;
@@ -30,8 +31,18 @@ namespace MediaLibraryLegacy
             BindDatasources();
             LoadVideo();
             LoadImageEditorMetadata();
-            tileTest.InitialSetup((ViewMediaMetadata)DataContext);
+            // SetupTestTiles();
         }
+
+        //private void SetupTestTiles() {
+        //    var tileTest1 = new ImageEditorTile() { Width = 250, Height = 150, Direction = RotatorTile.RotateDirection.Left };
+        //    spTestTiles.Children.Add(tileTest1);
+        //    tileTest1.InitialSetup((ViewMediaMetadata)DataContext);
+
+        //    var tileTest2 = new ImageEditorTile() { Width = 150, Height = 150, Direction = RotatorTile.RotateDirection.Up, Margin = new Thickness(20,0,0,0) };
+        //    spTestTiles.Children.Add(tileTest2);
+        //    tileTest2.InitialSetup((ViewMediaMetadata)DataContext);
+        //}
 
         private void BindDatasources() {
             snapshots = new ObservableCollection<ViewImageEditorMetadata>();
