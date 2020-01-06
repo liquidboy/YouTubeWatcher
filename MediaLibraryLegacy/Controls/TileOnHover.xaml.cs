@@ -29,7 +29,7 @@ namespace MediaLibraryLegacy.Controls
             if (grdContainer.Children.Count == 1 && grdContainer.DataContext is ViewMediaMetadata)
             {
                 var viewMediaMetadata = (ViewMediaMetadata)grdContainer.DataContext;
-                var newTile = new ImageEditorTile() { Width = grdContainer.Width, Height = grdContainer.Height, Direction = RotatorTile.RotateDirection.Left };
+                var newTile = new SnapshotsTile() { Width = grdContainer.Width, Height = grdContainer.Height, Direction = RotatorTile.RotateDirection.Left };
                 grdContainer.Children.Add(newTile);
                 newTile.InitialSetup(viewMediaMetadata);
             }

@@ -8,11 +8,11 @@ using static Microsoft.Toolkit.Uwp.UI.Controls.RotatorTile;
 
 namespace MediaLibraryLegacy.Controls
 {
-    public sealed partial class ImageEditorTile : UserControl
+    public sealed partial class SnapshotsTile : UserControl
     {
         private ObservableCollection<ViewRotatingTile> tileImages;
 
-        public ImageEditorTile()
+        public SnapshotsTile()
         {
             this.InitializeComponent();
             tileImages = new ObservableCollection<ViewRotatingTile>();
@@ -50,7 +50,7 @@ namespace MediaLibraryLegacy.Controls
         }
 
         public static readonly DependencyProperty DirectionProperty =
-            DependencyProperty.Register("Direction", typeof(RotateDirection), typeof(ImageEditorTile), new PropertyMetadata(0));
+            DependencyProperty.Register("Direction", typeof(RotateDirection), typeof(SnapshotsTile), new PropertyMetadata(0));
 
 
     }
