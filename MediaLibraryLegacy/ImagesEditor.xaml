@@ -60,7 +60,7 @@
                         <ColumnDefinition Width="80"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
                     <controls:ImageCropper Grid.Row="1" Grid.Column="1"  x:Name="imgCropper" Background="LightGray"
-                           CropShape="Rectangular" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                           CropShape="Rectangular" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" AspectRatio="1.78"
                            ThumbPlacement="Corners" Source="{Binding Bitmap, Converter={StaticResource SoftwareBitmapToWriteableBitmapConverter}}" />
 
                     <!--<Border Grid.Row="1" Grid.Column="1" BorderThickness="1" BorderBrush="LightGray" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="LightGray">
@@ -70,7 +70,8 @@
                         </Grid>
                     </Border>-->
                     <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,0">
-                        <Button Content="📁 Save All Images" Click="SaveSnapshots" FontSize="24" CornerRadius="5"></Button>
+                        <Button Content="📁 Save Edit" Click="SaveEdit" FontSize="24" CornerRadius="5"></Button>
+                        <Button Content="📁 Save All Images" Click="SaveSnapshots" FontSize="24" CornerRadius="5" Margin="10,0,0,0"></Button>
                     </StackPanel>
                 </Grid>
             </Grid>

@@ -282,6 +282,37 @@ namespace MediaLibraryLegacy
 
             tvMain.SelectedIndex = 0;
         }
+
+        private async void SaveEdit(object sender, RoutedEventArgs e)
+        {
+            if (grdImageEditor.DataContext != null && grdImageEditor.DataContext is ViewImageEditorMetadata) {
+                using (InMemoryRandomAccessStream stream = new InMemoryRandomAccessStream())
+                {
+                    // get bits from edited image
+                    await imgCropper.SaveAsync(stream, BitmapFileFormat.Jpeg, true);
+                    BitmapDecoder decoder = await BitmapDecoder.CreateAsync(stream);
+                    var editedBitmap = await decoder.GetSoftwareBitmapAsync();
+
+                    // create bitmaps for persisting in models
+                    var source = new SoftwareBitmapSource();
+                    await source.SetBitmapAsync(FixBitmapForBGRA8(editedBitmap));
+
+                    // store bitmap in models
+                    var currentSelectedSnapshot = (ViewImageEditorMetadata)grdImageEditor.DataContext;
+                    currentSelectedSnapshot.Bitmap = editedBitmap;
+                    currentSelectedSnapshot.Source = source;   
+
+                    // force col to be updated
+                    for (int i = 0; i < snapshots.Count() - 1; i++)
+                    {
+                        if (snapshots[i].Number == currentSelectedSnapshot.Number) {
+                            snapshots[i] = currentSelectedSnapshot;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
     }
 }
 
