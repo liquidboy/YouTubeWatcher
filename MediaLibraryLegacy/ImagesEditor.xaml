@@ -13,6 +13,7 @@
     d:DesignWidth="1200">
     <UserControl.Resources>
         <localConverters:TimeSpanFormat x:Key="TimeSpanFormatConverter" StringFormat="H\:mm\:ss\:F"></localConverters:TimeSpanFormat>
+        <localConverters:SoftwareBitmapToWriteableBitmap x:Key="SoftwareBitmapToWriteableBitmapConverter"></localConverters:SoftwareBitmapToWriteableBitmap>
     </UserControl.Resources>
     <Grid x:Name="layoutRoot">
         <Grid.RowDefinitions>
@@ -58,12 +59,16 @@
                         <ColumnDefinition></ColumnDefinition>
                         <ColumnDefinition Width="80"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
-                    <Border Grid.Row="1" Grid.Column="1" BorderThickness="1" BorderBrush="LightGray" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="LightGray">
+                    <controls:ImageCropper Grid.Row="1" Grid.Column="1"  x:Name="imgCropper" Background="LightGray"
+                           CropShape="Rectangular" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                           ThumbPlacement="Corners" Source="{Binding Bitmap, Converter={StaticResource SoftwareBitmapToWriteableBitmapConverter}}" />
+
+                    <!--<Border Grid.Row="1" Grid.Column="1" BorderThickness="1" BorderBrush="LightGray" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="LightGray">
                         <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                            <Image x:Name="imgCurrentEditing" Source="{Binding Source}"></Image>
-                            <!--<StackPanel x:Name="spTestTiles" Orientation="Horizontal" HorizontalAlignment="Center" />-->
+                            <Image x:Name="imgCurrentEditing" Source="{Binding Bitmap}"></Image>
+                            --><!--<StackPanel x:Name="spTestTiles" Orientation="Horizontal" HorizontalAlignment="Center" />--><!--
                         </Grid>
-                    </Border>
+                    </Border>-->
                     <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,0">
                         <Button Content="📁 Save All Images" Click="SaveSnapshots" FontSize="24" CornerRadius="5"></Button>
                     </StackPanel>

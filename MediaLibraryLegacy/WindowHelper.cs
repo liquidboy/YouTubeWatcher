@@ -37,7 +37,6 @@ namespace MediaLibraryLegacy
                 
                 windowContent = null;
                 appWindow = null;
-                
             };
 
             await appWindow.TryShowAsync();
