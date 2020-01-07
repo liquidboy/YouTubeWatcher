@@ -19,9 +19,15 @@ namespace MediaLibraryLegacy.Controls
             tileTest.ItemsSource = tileImages;
         }
 
-        public void InitialSetup(ViewMediaMetadata viewMediaMetadata)
-        {
-            LoadThumbnails(viewMediaMetadata);
+        private void layoutRoot_Loaded(object sender, RoutedEventArgs e) => Refresh();
+
+        public void InitialSetup(ViewMediaMetadata viewMediaMetadata) => LoadThumbnails(viewMediaMetadata);
+
+        public void Refresh() {
+            if (layoutRoot.Children.Count == 1 && layoutRoot.DataContext is ViewMediaMetadata)
+            {
+                InitialSetup((ViewMediaMetadata)layoutRoot.DataContext);
+            }
         }
 
         private void LoadThumbnails(ViewMediaMetadata viewMediaMetadata)
@@ -41,8 +47,6 @@ namespace MediaLibraryLegacy.Controls
             tileTest.Visibility = (orderedItems.Count() > 0) ? Visibility.Visible : Visibility.Collapsed;
         }
 
-
-
         public RotateDirection Direction
         {
             get { return (RotateDirection)GetValue(DirectionProperty); }
@@ -51,7 +55,5 @@ namespace MediaLibraryLegacy.Controls
 
         public static readonly DependencyProperty DirectionProperty =
             DependencyProperty.Register("Direction", typeof(RotateDirection), typeof(SnapshotsTile), new PropertyMetadata(0));
-
-
     }
 }

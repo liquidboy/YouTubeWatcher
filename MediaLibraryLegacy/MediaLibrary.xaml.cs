@@ -107,7 +107,7 @@ namespace MediaLibraryLegacy
                         await DeleteMedia(viewMediaMetadata.YID, viewMediaMetadata.MediaType);
                         OnMediaDeleted?.Invoke(null, null);
                         break;
-                    case "Open Images Editor": OpenImagesEditor(viewMediaMetadata); break;
+                    case "Open LiveTile Editor": OpenImagesEditor(viewMediaMetadata); break;
                     case "Pin to Start": break;
                     case "Open in YouTube": break;
                     case "Copy URL to Clipboard": break;

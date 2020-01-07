@@ -276,8 +276,16 @@ namespace MediaLibraryLegacy
                     }
 
                     SendSystemNotification("Snapshots saved!");
+
+                    ForceDemoTilesUpdate();
                 }
             }
+        }
+
+        private void ForceDemoTilesUpdate() {
+            tile1.Refresh();
+            tile2.Refresh();
+            tile3.Refresh();
         }
 
         private void SendSystemNotification(string message, int duration = 2000) => systemNotifications.Show(message, duration);

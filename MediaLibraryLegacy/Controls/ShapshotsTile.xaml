@@ -27,7 +27,7 @@
             </Grid>
         </DataTemplate>
     </UserControl.Resources>
-    <Grid x:Name="layoutRoot">
+    <Grid x:Name="layoutRoot" Loaded="layoutRoot_Loaded">
         <controls:RotatorTile 
             x:Name="tileTest"
             Background="Black"
