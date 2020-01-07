@@ -66,6 +66,7 @@ namespace MediaLibraryLegacy
         private void OnPlaylistAdded(object sender, EventArgs e)
         {
             viewTaskbar.UpdateStatistics();
+            SendSystemNotification("Your new playlist was created!");
         }
 
         private void OnShowYoutube(object sender, EventArgs e)
@@ -79,6 +80,9 @@ namespace MediaLibraryLegacy
             HideAllViews();
             viewMediaLibrary.Show();
             viewTaskbar.UpdateStatistics();
+            SendSystemNotification("Media has been removed!");
         }
+
+        private void SendSystemNotification(string message, int duration = 2000) => systemNotifications.Show(message, duration);
     }
 }

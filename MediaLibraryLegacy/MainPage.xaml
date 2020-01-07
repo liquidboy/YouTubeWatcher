@@ -3,6 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:MediaLibraryLegacy"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
@@ -14,5 +15,6 @@
         <local:YoutubePlayer x:Name="viewYoutubePlayer" Margin="0,0,0,40" OnMediaChanged="OnMediaChanged"></local:YoutubePlayer>
         <local:MediaPlayer x:Name="viewMediaPlayer" Margin="0,0,30,50" ></local:MediaPlayer>
         <local:Taskbar x:Name="viewTaskbar" HorizontalAlignment="Stretch" OnShowLibrary="OnShowLibrary" OnShowPlaylist="OnShowPlaylist" OnShowYoutube="OnShowYoutube"></local:Taskbar>
+        <controls:InAppNotification x:Name="systemNotifications" StackMode="QueueBehind" ShowDismissButton="True" />
     </Grid>
 </Page>
