@@ -222,6 +222,7 @@ namespace MediaLibraryLegacy
         {
             if (e.AddedItems.Count > 0)
             {
+                ClearDemoTiles();
                 var tvi = (TabViewItem)e.AddedItems[0];
                 switch (tvi.Header)
                 {
@@ -237,6 +238,7 @@ namespace MediaLibraryLegacy
                         grdMediaEditor.Visibility = Visibility.Visible;
                         break;
                     case "Tiles":
+                        CreateDemoTiles();
                         grdImageEditor.Visibility = Visibility.Collapsed;
                         grdMediaEditor.Visibility = Visibility.Collapsed;
                         grdTileEditor.Visibility = Visibility.Visible;
@@ -250,6 +252,7 @@ namespace MediaLibraryLegacy
             if (DataContext is ViewMediaMetadata)
             {
                 SendSystemNotification("Saving all snapshots ...");
+                ClearDemoTiles();
 
                 var viewMediaMetadata = (ViewMediaMetadata)DataContext;
 
@@ -276,16 +279,27 @@ namespace MediaLibraryLegacy
                     }
 
                     SendSystemNotification("Snapshots saved!");
-
-                    ForceDemoTilesUpdate();
+                    CreateDemoTiles();
                 }
             }
         }
+        private void ClearDemoTiles() => spTilesDemo.Children.Clear();
+        private void CreateDemoTiles() {
+            //<localControls:SnapshotsTile x:Name="tile3" Width="250" Height="250" Direction="Down"></localControls:SnapshotsTile>
+            //                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+            //                        <localControls:SnapshotsTile x:Name="tile1" Width="242" Height="136" Margin="10" Direction="Left"></localControls:SnapshotsTile>
+            //                        <localControls:SnapshotsTile x:Name="tile2" Width="136" Height="136" Margin="10" Direction="Up"></localControls:SnapshotsTile>
+            //                    </StackPanel>
 
-        private void ForceDemoTilesUpdate() {
-            tile1.Refresh();
-            tile2.Refresh();
-            tile3.Refresh();
+            var tile1 = new SnapshotsTile() { Width = 250, Height = 250, Direction = RotatorTile.RotateDirection.Down };
+            spTilesDemo.Children.Add(tile1);
+            var sp = new StackPanel() { Orientation = Orientation.Horizontal, HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment.Center };
+            var tile2 = new SnapshotsTile() { Width = 250, Height = 140, Direction = RotatorTile.RotateDirection.Left, Margin = new Thickness(10) };
+            sp.Children.Add(tile2);
+            var tile3 = new SnapshotsTile() { Width = 140, Height = 140, Direction = RotatorTile.RotateDirection.Up, Margin= new Thickness(10)};
+            sp.Children.Add(tile3);
+            spTilesDemo.Children.Add(sp);
+
         }
 
         private void SendSystemNotification(string message, int duration = 2000) => systemNotifications.Show(message, duration);

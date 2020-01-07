@@ -128,12 +128,12 @@
                         <ColumnDefinition Width="80"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
                     <Grid Grid.Column="1" Grid.Row="1">
-                        <StackPanel Orientation="Vertical">
-                            <localControls:SnapshotsTile x:Name="tile3" Width="250" Height="250" Direction="Down"></localControls:SnapshotsTile>
+                        <StackPanel x:Name="spTilesDemo" Orientation="Vertical">
+                            <!--<localControls:SnapshotsTile x:Name="tile3" Width="250" Height="250" Direction="Down"></localControls:SnapshotsTile>
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                                 <localControls:SnapshotsTile x:Name="tile1" Width="242" Height="136" Margin="10" Direction="Left"></localControls:SnapshotsTile>
                                 <localControls:SnapshotsTile x:Name="tile2" Width="136" Height="136" Margin="10" Direction="Up"></localControls:SnapshotsTile>
-                            </StackPanel>
+                            </StackPanel>-->
                         </StackPanel>
                     </Grid>
                     <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,0">
