@@ -59,7 +59,7 @@
                         <ColumnDefinition></ColumnDefinition>
                         <ColumnDefinition Width="80"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
-                    <controls:ImageCropper Grid.Row="1" Grid.Column="1"  x:Name="imgCropper" Background="LightGray"
+                    <controls:ImageCropper Grid.Row="1" Grid.Column="1"  x:Name="imgCropper" Background="LightGray" MinCroppedPixelLength="200"
                            CropShape="Rectangular" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" AspectRatio="1.78"
                            ThumbPlacement="Corners" Source="{Binding Bitmap, Converter={StaticResource SoftwareBitmapToWriteableBitmapConverter}}" />
 
@@ -71,7 +71,6 @@
                     </Border>-->
                     <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,0">
                         <Button Content="Save your edits" Click="SaveEdit" FontSize="24" CornerRadius="5"></Button>
-                        <Button Content="📁 Generate Tile snapshots" Click="SaveSnapshots" FontSize="24" CornerRadius="5" Margin="10,0,0,0"></Button>
                     </StackPanel>
                 </Grid>
             </Grid>
@@ -114,10 +113,33 @@
                 </Grid>
             </Grid>
 
+            
+            <!-- Media Editor -->
+            <Grid x:Name="grdTileEditor" Grid.Column="1" Background="#FFE6E6E6">
+                <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="100"></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition Height="200"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="80"></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition Width="80"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    
+                    <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,0">
+                        <Button Content="📁 Generate Tile from snapshots" Click="SaveSnapshots" FontSize="24" CornerRadius="5" Margin="10,0,0,0"></Button>
+                    </StackPanel>
+                </Grid>
+            </Grid>
+
+
             <!-- TABS -->
             <controls:TabView x:Name="tvMain" HorizontalAlignment="Center" VerticalAlignment="Top"  SelectionChanged="TabChanged" Grid.Column="1" Margin="0,20,0,0" >
-                <controls:TabViewItem Header="Image Editor"></controls:TabViewItem>
-                <controls:TabViewItem Header="Snapshots" IsSelected="True"></controls:TabViewItem>
+                <controls:TabViewItem Header="Take Snapshots" IsSelected="True"></controls:TabViewItem>
+                <controls:TabViewItem Header="Snapshot Editor"></controls:TabViewItem>
+                <controls:TabViewItem Header="Tiles" ></controls:TabViewItem>
             </controls:TabView>
 
             <Rectangle Margin="60,57,60,0" Height="30" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Top">

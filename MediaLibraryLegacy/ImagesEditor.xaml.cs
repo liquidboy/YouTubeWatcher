@@ -225,14 +225,21 @@ namespace MediaLibraryLegacy
                 var tvi = (TabViewItem)e.AddedItems[0];
                 switch (tvi.Header)
                 {
-                    case "Image Editor":
-                        grdImageEditor.Visibility = Visibility.Visible;
+                    case "Snapshot Editor":
                         grdMediaEditor.Visibility = Visibility.Collapsed;
+                        grdTileEditor.Visibility = Visibility.Collapsed;
+                        grdImageEditor.Visibility = Visibility.Visible;
                         mePlayer.Pause();
                         break;
-                    case "Snapshots":
+                    case "Take Snapshots":
                         grdImageEditor.Visibility = Visibility.Collapsed;
+                        grdTileEditor.Visibility = Visibility.Collapsed;
                         grdMediaEditor.Visibility = Visibility.Visible;
+                        break;
+                    case "Tiles":
+                        grdImageEditor.Visibility = Visibility.Collapsed;
+                        grdMediaEditor.Visibility = Visibility.Collapsed;
+                        grdTileEditor.Visibility = Visibility.Visible;
                         break;
                 }
             }
@@ -280,7 +287,7 @@ namespace MediaLibraryLegacy
             var viewImageEditorMetadata = (ViewImageEditorMetadata)((Image)sender).DataContext;
             grdImageEditor.DataContext = viewImageEditorMetadata;
 
-            tvMain.SelectedIndex = 0;
+            tvMain.SelectedIndex = 1;
         }
 
         private async void SaveEdit(object sender, RoutedEventArgs e)
@@ -303,7 +310,7 @@ namespace MediaLibraryLegacy
                     currentSelectedSnapshot.Source = source;   
 
                     // force col to be updated
-                    for (int i = 0; i < snapshots.Count() - 1; i++)
+                    for (int i = 0; i < snapshots.Count(); i++)
                     {
                         if (snapshots[i].Number == currentSelectedSnapshot.Number) {
                             snapshots[i] = currentSelectedSnapshot;
