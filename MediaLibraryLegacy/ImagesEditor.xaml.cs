@@ -31,18 +31,7 @@ namespace MediaLibraryLegacy
             BindDatasources();
             LoadVideo();
             LoadImageEditorMetadata();
-            // SetupTestTiles();
         }
-
-        //private void SetupTestTiles() {
-        //    var tileTest1 = new ImageEditorTile() { Width = 250, Height = 150, Direction = RotatorTile.RotateDirection.Left };
-        //    spTestTiles.Children.Add(tileTest1);
-        //    tileTest1.InitialSetup((ViewMediaMetadata)DataContext);
-
-        //    var tileTest2 = new ImageEditorTile() { Width = 150, Height = 150, Direction = RotatorTile.RotateDirection.Up, Margin = new Thickness(20,0,0,0) };
-        //    spTestTiles.Children.Add(tileTest2);
-        //    tileTest2.InitialSetup((ViewMediaMetadata)DataContext);
-        //}
 
         private void BindDatasources() {
             snapshots = new ObservableCollection<ViewImageEditorMetadata>();
@@ -285,12 +274,6 @@ namespace MediaLibraryLegacy
         }
         private void ClearDemoTiles() => spTilesDemo.Children.Clear();
         private void CreateDemoTiles() {
-            //<localControls:SnapshotsTile x:Name="tile3" Width="250" Height="250" Direction="Down"></localControls:SnapshotsTile>
-            //                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-            //                        <localControls:SnapshotsTile x:Name="tile1" Width="242" Height="136" Margin="10" Direction="Left"></localControls:SnapshotsTile>
-            //                        <localControls:SnapshotsTile x:Name="tile2" Width="136" Height="136" Margin="10" Direction="Up"></localControls:SnapshotsTile>
-            //                    </StackPanel>
-
             var tile1 = new SnapshotsTile() { Width = 250, Height = 250, Direction = RotatorTile.RotateDirection.Down };
             spTilesDemo.Children.Add(tile1);
             var sp = new StackPanel() { Orientation = Orientation.Horizontal, HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment.Center };
