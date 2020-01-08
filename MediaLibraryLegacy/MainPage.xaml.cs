@@ -40,10 +40,7 @@ namespace MediaLibraryLegacy
             viewMediaPlayer.ShowHideMediaPlayer(true, e.ViewMediaMetadata.Title);
         }
 
-        private void OnMediaChanged(object sender, MediaChangedEventArgs e)
-        {
-            viewTaskbar.MediaChanged(e.MediaUri);
-        }
+        private void OnMediaChanged(object sender, MediaChangedEventArgs e) => viewTaskbar.MediaChanged(e.MediaUri);
 
         private void OnShowLibrary(object sender, EventArgs e)
         {
@@ -84,5 +81,11 @@ namespace MediaLibraryLegacy
         }
 
         private void SendSystemNotification(string message, int duration = 2000) => systemNotifications.Show(message, duration);
+
+        private void OnOpenUrl(object sender, LaunchUrlEventArgs e) => viewYoutubePlayer.LoadUri(new Uri(e.Url));
+
+        private void OnMediaAddedToPlaylist(object sender, EventArgs e) => SendSystemNotification("Media has been added to your playlist!");
+
+        private void OnUrlCopiedToClipboard(object sender, EventArgs e) => SendSystemNotification("Media Url has been copied to your clipboard");
     }
 }

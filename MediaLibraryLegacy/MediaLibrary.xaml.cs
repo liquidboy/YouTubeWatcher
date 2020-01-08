@@ -4,6 +4,7 @@ using SharedCode.SQLite;
 using System;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
+using Windows.ApplicationModel.DataTransfer;
 using Windows.Storage;
 using Windows.System;
 using Windows.UI.WindowManagement;
@@ -21,6 +22,9 @@ namespace MediaLibraryLegacy
 
         public event EventHandler<PlayMediaEventArgs> OnPlayMedia;
         public event EventHandler OnMediaDeleted;
+        public event EventHandler OnMediaAddedToPlaylist;
+        public event EventHandler OnUrlCopiedToClipboard;
+        public event EventHandler<LaunchUrlEventArgs> OnOpenUrl;
 
         public MediaLibrary()
         {
@@ -91,6 +95,7 @@ namespace MediaLibraryLegacy
                     var playlistSelectedEventArgs = (PlaylistSelectedEventArgs)e;
                     var viewMediaMetadata = (ViewMediaMetadata)uie.DataContext;
                     EntitiesHelper.AddPlaylistMediaMetadata(viewMediaMetadata.UniqueId, playlistSelectedEventArgs.SelectedPlaylist.UniqueId);
+                    OnMediaAddedToPlaylist?.Invoke(null, null);
                 }
             }
         }
@@ -109,14 +114,21 @@ namespace MediaLibraryLegacy
                         break;
                     case "Open LiveTile Editor": OpenImagesEditor(viewMediaMetadata); break;
                     case "Pin to Start": break;
-                    case "Open in YouTube": break;
-                    case "Copy URL to Clipboard": break;
+                    case "Open in YouTube": OnOpenUrl.Invoke(null, new LaunchUrlEventArgs() { Url = $"{App.youtubeHomeUrl}/watch?v={viewMediaMetadata.YID}" }); break;
+                    case "Copy URL to Clipboard": CopyUrlToClipboard($"{App.youtubeHomeUrl}/watch?v={viewMediaMetadata.YID}"); break;
                 }
             }
             if (sender is ListBox) {
                 ((ListBox)sender).SelectedIndex = -1;
             }
             XamlHelper.CloseFlyout(sender);
+        }
+
+        private void CopyUrlToClipboard(string url) {
+            var dataPackage = new DataPackage();
+            dataPackage.SetText(url);
+            Clipboard.SetContent(dataPackage);
+            OnUrlCopiedToClipboard?.Invoke(null, null);
         }
 
         private void OpenImagesEditor(object viewModel) {
@@ -153,6 +165,12 @@ namespace MediaLibraryLegacy
     public class PlayMediaEventArgs : EventArgs {
         public ViewMediaMetadata ViewMediaMetadata { get; set; }
     }
+
+    public class LaunchUrlEventArgs : EventArgs
+    {
+        public string Url { get; set; }
+    }
+    
 }
 
 // https://docs.microsoft.com/en-us/windows/uwp/design/layout/app-window

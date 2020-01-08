@@ -18,8 +18,8 @@
                     <ListBoxItem IsEnabled="True">Delete Media</ListBoxItem>
                     <ListBoxItem IsEnabled="True">Open LiveTile Editor</ListBoxItem>
                     <ListBoxItem IsEnabled="False">Pin to Start</ListBoxItem>
-                    <ListBoxItem IsEnabled="False">Open in YouTube</ListBoxItem>
-                    <ListBoxItem IsEnabled="False">Copy URL to Clipboard</ListBoxItem>
+                    <ListBoxItem IsEnabled="True">Open in YouTube</ListBoxItem>
+                    <ListBoxItem IsEnabled="True">Copy URL to Clipboard</ListBoxItem>
                 </ListBox>
             </Grid>
         </Flyout>
