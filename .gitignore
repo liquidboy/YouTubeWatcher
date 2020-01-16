@@ -4,3 +4,5 @@
 /YoutubeWatcher/.vs/*
 /*/bin/*
 /*/obj/*
+/SharedCodeNative/x64/*
+/x64/*
