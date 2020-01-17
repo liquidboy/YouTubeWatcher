@@ -9,7 +9,15 @@
     d:DesignHeight="300"
     d:DesignWidth="400">
 
-    <Grid x:Name="layoutRoot">
+    <Grid x:Name="layoutRoot" Background="LightGray">
+        <Grid x:Name="renderSurface" Background="LightGray" Margin="0,0,0,50"></Grid>
 
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom">
+            <Button x:Name="butDefault" Content="default" Click="butChangeEffect"></Button>
+            <Button x:Name="butExposure" Content="exposure" Click="butChangeEffect"></Button>
+            <Button x:Name="butGrayScale" Content="grayscale" Click="butChangeEffect"></Button>
+
+            <Button x:Name="butSave" Content="save" Click="butSave_Click" Margin="10,0,0,0"></Button>
+        </StackPanel>
     </Grid>
 </UserControl>

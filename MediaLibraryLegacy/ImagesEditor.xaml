@@ -77,7 +77,7 @@
             
             <!-- Stylize Snapshot -->
             <Grid x:Name="grdStylizeSnapshot" Grid.Column="1" Background="#FFE6E6E6" Visibility="Collapsed">
-                <localControls:StylizeImage x:Name="ctlStyleizeImage"></localControls:StylizeImage>
+                <localControls:StylizeImage x:Name="ctlStyleizeImage" Margin="80,100,80,100"></localControls:StylizeImage>
             </Grid>
 
             <!-- Media Editor -->

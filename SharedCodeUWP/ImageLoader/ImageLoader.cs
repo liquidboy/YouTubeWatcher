@@ -84,7 +84,7 @@ namespace SharedCodeUWP.ImageLoader
 
         static public void Initialize(Compositor compositor)
         {
-            Debug.Assert(!_intialized);
+            //Debug.Assert(!_intialized);
 
             if (!_intialized)
             {
