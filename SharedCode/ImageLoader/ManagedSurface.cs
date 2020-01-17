@@ -8,82 +8,82 @@ using Windows.UI.Composition;
 
 namespace SharedCode.ImageLoader
 {
-    //public class ManagedSurface
-    //{
-    //    private CompositionDrawingSurface _surface;
-    //    private IContentDrawer _drawer;
-    //    private CompositionSurfaceBrush _brush;
+    public class ManagedSurface
+    {
+        private CompositionDrawingSurface _surface;
+        private IContentDrawer _drawer;
+        private CompositionSurfaceBrush _brush;
 
-    //    public ManagedSurface(CompositionDrawingSurface surface)
-    //    {
-    //        Debug.Assert(surface != null);
-    //        _surface = surface;
+        public ManagedSurface(CompositionDrawingSurface surface)
+        {
+            Debug.Assert(surface != null);
+            _surface = surface;
 
-    //        ImageLoader.Instance.RegisterSurface(this);
-    //    }
+            ImageLoader.Instance.RegisterSurface(this);
+        }
 
-    //    public void Dispose()
-    //    {
-    //        if (_surface != null)
-    //        {
-    //            _surface.Dispose();
-    //            _surface = null;
-    //        }
+        public void Dispose()
+        {
+            if (_surface != null)
+            {
+                _surface.Dispose();
+                _surface = null;
+            }
 
-    //        if (_brush != null)
-    //        {
-    //            _brush.Dispose();
-    //            _brush = null;
-    //        }
+            if (_brush != null)
+            {
+                _brush.Dispose();
+                _brush = null;
+            }
 
-    //        _drawer = null;
+            _drawer = null;
 
-    //        ImageLoader.Instance.UnregisterSurface(this);
-    //    }
+            ImageLoader.Instance.UnregisterSurface(this);
+        }
 
-    //    public CompositionDrawingSurface Surface
-    //    {
-    //        get { return _surface; }
-    //    }
+        public CompositionDrawingSurface Surface
+        {
+            get { return _surface; }
+        }
 
-    //    public CompositionSurfaceBrush Brush
-    //    {
-    //        get
-    //        {
-    //            if (_brush == null)
-    //            {
-    //                _brush = _surface.Compositor.CreateSurfaceBrush(_surface);
-    //            }
+        public CompositionSurfaceBrush Brush
+        {
+            get
+            {
+                if (_brush == null)
+                {
+                    _brush = _surface.Compositor.CreateSurfaceBrush(_surface);
+                }
 
-    //            return _brush;
-    //        }
-    //    }
+                return _brush;
+            }
+        }
 
-    //    public Size Size
-    //    {
-    //        get
-    //        {
-    //            return (_surface != null) ? _surface.Size : Size.Empty;
-    //        }
-    //    }
+        public Size Size
+        {
+            get
+            {
+                return (_surface != null) ? _surface.Size : Size.Empty;
+            }
+        }
 
-    //    public async Task Draw(CompositionGraphicsDevice device, Object drawingLock, IContentDrawer drawer)
-    //    {
-    //        Debug.Assert(_surface != null);
+        public async Task Draw(CompositionGraphicsDevice device, Object drawingLock, IContentDrawer drawer)
+        {
+            Debug.Assert(_surface != null);
 
-    //        _drawer = drawer;
-    //        await _drawer.Draw(device, drawingLock, _surface, _surface.Size);
-    //    }
+            _drawer = drawer;
+            await _drawer.Draw(device, drawingLock, _surface, _surface.Size);
+        }
 
-    //    public async void OnDeviceReplaced(object sender, object e)
-    //    {
-    //        DeviceReplacedEventArgs args = (DeviceReplacedEventArgs)e;
-    //        await ReloadContent(args.GraphicsDevce, args.DrawingLock);
-    //    }
+        public async void OnDeviceReplaced(object sender, object e)
+        {
+            DeviceReplacedEventArgs args = (DeviceReplacedEventArgs)e;
+            await ReloadContent(args.GraphicsDevce, args.DrawingLock);
+        }
 
-    //    private async Task ReloadContent(CompositionGraphicsDevice device, Object drawingLock)
-    //    {
-    //        await _drawer.Draw(device, drawingLock, _surface, _surface.Size);
-    //    }
-    //}
+        private async Task ReloadContent(CompositionGraphicsDevice device, Object drawingLock)
+        {
+            await _drawer.Draw(device, drawingLock, _surface, _surface.Size);
+        }
+    }
 }
