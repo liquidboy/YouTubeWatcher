@@ -5,7 +5,7 @@ using Windows.UI.Composition;
 
 using Microsoft.Graphics.Canvas;
 
-namespace SharedCode.ImageLoader
+namespace SharedCodeUWP.ImageLoader
 {
     public interface IContentDrawer
     {

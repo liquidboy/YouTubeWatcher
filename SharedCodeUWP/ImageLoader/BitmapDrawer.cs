@@ -11,7 +11,7 @@ using Windows.Graphics.Imaging;
 using Windows.Storage.Streams;
 
 
-namespace SharedCode.ImageLoader
+namespace SharedCodeUWP.ImageLoader
 {
     public class BitmapDrawer : IContentDrawer
     {

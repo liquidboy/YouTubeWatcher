@@ -6,7 +6,7 @@ using Windows.Foundation;
 using Windows.UI.Composition;
 
 
-namespace SharedCode.ImageLoader
+namespace SharedCodeUWP.ImageLoader
 {
     public class ManagedSurface
     {
