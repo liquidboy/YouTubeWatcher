@@ -254,6 +254,10 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SharedCodeUWP\SharedCodeUWP.csproj">
+      <Project>{15f239ef-9b0a-4c16-b21d-88a0a3a2aebd}</Project>
+      <Name>SharedCodeUWP</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SharedCode\SharedCode.csproj">
       <Project>{FCCACC35-4ABC-4D30-BFF4-5844E578B2F3}</Project>
       <Name>SharedCode</Name>

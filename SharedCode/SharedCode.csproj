@@ -7,19 +7,8 @@
   <ItemGroup>
     <PackageReference Include="sqlite-net-pcl" Version="1.7.302-beta" />
     <PackageReference Include="System.Runtime.WindowsRuntime" Version="4.7.0" />
-    <PackageReference Include="Win2D.uwp" Version="1.24.0" />
     <PackageReference Include="YoutubeExplode" Version="4.7.12" />
     <PackageReference Include="YoutubeExplode.Converter" Version="1.4.3" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\SharedCodeNative\SharedCodeNative.vcxproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="Windows.Foundation.UniversalApiContract">
-      <HintPath>C:\Program Files (x86)\Windows Kits\10\References\10.0.19041.0\Windows.Foundation.UniversalApiContract\10.0.0.0\Windows.Foundation.UniversalApiContract.winmd</HintPath>
-    </Reference>
   </ItemGroup>
 
 </Project>

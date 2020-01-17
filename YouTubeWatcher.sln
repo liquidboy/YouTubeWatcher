@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VideoEffects", "VideoEffect
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SharedCodeNative", "SharedCodeNative\SharedCodeNative.vcxproj", "{5E747E46-EBE0-4798-815C-A659671A23A4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharedCodeUWP", "SharedCodeUWP\SharedCodeUWP.csproj", "{15F239EF-9B0A-4C16-B21D-88A0A3A2AEBD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -109,6 +111,26 @@ Global
 		{5E747E46-EBE0-4798-815C-A659671A23A4}.Release|x64.Build.0 = Release|x64
 		{5E747E46-EBE0-4798-815C-A659671A23A4}.Release|x86.ActiveCfg = Release|Win32
 		{5E747E46-EBE0-4798-815C-A659671A23A4}.Release|x86.Build.0 = Release|Win32
+		{15F239EF-9B0A-4C16-B21D-88A0A3A2AEBD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15F239EF-9B0A-4C16-B21D-88A0A3A2AEBD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15F239EF-9B0A-4C16-B21D-88A0A3A2AEBD}.Debug|ARM.ActiveCfg = Debug|ARM
+		{15F239EF-9B0A-4C16-B21D-88A0A3A2AEBD}.Debug|ARM.Build.0 = Debug|ARM
+		{15F239EF-9B0A-4C16-B21D-88A0A3A2AEBD}.Debug|ARM64.ActiveCfg = Debug|ARM64
+		{15F239EF-9B0A-4C16-B21D-88A0A3A2AEBD}.Debug|ARM64.Build.0 = Debug|ARM64
+		{15F239EF-9B0A-4C16-B21D-88A0A3A2AEBD}.Debug|x64.ActiveCfg = Debug|x64
+		{15F239EF-9B0A-4C16-B21D-88A0A3A2AEBD}.Debug|x64.Build.0 = Debug|x64
+		{15F239EF-9B0A-4C16-B21D-88A0A3A2AEBD}.Debug|x86.ActiveCfg = Debug|x86
+		{15F239EF-9B0A-4C16-B21D-88A0A3A2AEBD}.Debug|x86.Build.0 = Debug|x86
+		{15F239EF-9B0A-4C16-B21D-88A0A3A2AEBD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15F239EF-9B0A-4C16-B21D-88A0A3A2AEBD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{15F239EF-9B0A-4C16-B21D-88A0A3A2AEBD}.Release|ARM.ActiveCfg = Release|ARM
+		{15F239EF-9B0A-4C16-B21D-88A0A3A2AEBD}.Release|ARM.Build.0 = Release|ARM
+		{15F239EF-9B0A-4C16-B21D-88A0A3A2AEBD}.Release|ARM64.ActiveCfg = Release|ARM64
+		{15F239EF-9B0A-4C16-B21D-88A0A3A2AEBD}.Release|ARM64.Build.0 = Release|ARM64
+		{15F239EF-9B0A-4C16-B21D-88A0A3A2AEBD}.Release|x64.ActiveCfg = Release|x64
+		{15F239EF-9B0A-4C16-B21D-88A0A3A2AEBD}.Release|x64.Build.0 = Release|x64
+		{15F239EF-9B0A-4C16-B21D-88A0A3A2AEBD}.Release|x86.ActiveCfg = Release|x86
+		{15F239EF-9B0A-4C16-B21D-88A0A3A2AEBD}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
