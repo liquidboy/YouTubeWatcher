@@ -212,22 +212,35 @@ namespace MediaLibraryLegacy
             if (e.AddedItems.Count > 0)
             {
                 ClearDemoTiles();
+                ctlStyleizeImage.UnloadImage();
                 var tvi = (TabViewItem)e.AddedItems[0];
                 switch (tvi.Header)
                 {
-                    case "Snapshot Editor":
+                    case "Resize Snapshot":
+                        mePlayer.Pause();
+                        grdStylizeSnapshot.Visibility = Visibility.Collapsed;
                         grdMediaEditor.Visibility = Visibility.Collapsed;
                         grdTileEditor.Visibility = Visibility.Collapsed;
                         grdImageEditor.Visibility = Visibility.Visible;
+                        break;
+                    case "Stylize Snapshot":
                         mePlayer.Pause();
+                        grdMediaEditor.Visibility = Visibility.Collapsed;
+                        grdTileEditor.Visibility = Visibility.Collapsed;
+                        grdImageEditor.Visibility = Visibility.Collapsed;
+                        grdStylizeSnapshot.Visibility = Visibility.Visible;
+                        ctlStyleizeImage.LoadImage();
                         break;
                     case "Take Snapshots":
+                        grdStylizeSnapshot.Visibility = Visibility.Collapsed;
                         grdImageEditor.Visibility = Visibility.Collapsed;
                         grdTileEditor.Visibility = Visibility.Collapsed;
                         grdMediaEditor.Visibility = Visibility.Visible;
                         break;
                     case "Tiles":
+                        mePlayer.Pause();
                         CreateDemoTiles();
+                        grdStylizeSnapshot.Visibility = Visibility.Collapsed;
                         grdImageEditor.Visibility = Visibility.Collapsed;
                         grdMediaEditor.Visibility = Visibility.Collapsed;
                         grdTileEditor.Visibility = Visibility.Visible;
@@ -291,6 +304,7 @@ namespace MediaLibraryLegacy
         {
             var viewImageEditorMetadata = (ViewImageEditorMetadata)((Image)sender).DataContext;
             grdImageEditor.DataContext = viewImageEditorMetadata;
+            ctlStyleizeImage.DataContext = viewImageEditorMetadata;
 
             tvMain.SelectedIndex = 1;
         }

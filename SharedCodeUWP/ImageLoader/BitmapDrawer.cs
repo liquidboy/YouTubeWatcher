@@ -18,6 +18,7 @@ namespace SharedCodeUWP.ImageLoader
         Uri _uri;
         LoadTimeEffectHandler _handler;
         StorageFile _file;
+        SoftwareBitmap _softwareBitmap;
 
         public BitmapDrawer(Uri uri, LoadTimeEffectHandler handler)
         {
@@ -28,6 +29,11 @@ namespace SharedCodeUWP.ImageLoader
         public BitmapDrawer(StorageFile file, LoadTimeEffectHandler handler)
         {
             _file = file;
+            _handler = handler;
+        }
+        public BitmapDrawer(SoftwareBitmap softwareBitmap, LoadTimeEffectHandler handler)
+        {
+            _softwareBitmap = softwareBitmap;
             _handler = handler;
         }
 
@@ -56,7 +62,11 @@ namespace SharedCodeUWP.ImageLoader
             var canvasDevice = CanvasComposition.GetCanvasDevice(device);
 
             CanvasBitmap canvasBitmap;
-            if (_file != null)
+            if (_softwareBitmap != null) 
+            {
+                canvasBitmap = CanvasBitmap.CreateFromSoftwareBitmap(canvasDevice, _softwareBitmap);
+            }
+            else if (_file != null)
             {
                 SoftwareBitmap softwareBitmap = await LoadFromFile(_file);
                 canvasBitmap = CanvasBitmap.CreateFromSoftwareBitmap(canvasDevice, softwareBitmap);

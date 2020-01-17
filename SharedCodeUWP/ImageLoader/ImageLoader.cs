@@ -14,6 +14,7 @@ using Microsoft.Graphics.Canvas.UI.Composition;
 using SharedCodeNative;
 using Windows.Storage;
 using SharedCodeUWP.ImageLoader;
+using Windows.Graphics.Imaging;
 
 namespace SharedCodeUWP.ImageLoader
 {
@@ -140,6 +141,15 @@ namespace SharedCodeUWP.ImageLoader
             ManagedSurface surface = new ManagedSurface(CreateSurface(size));
 
             var ignored = surface.Draw(_graphicsDevice, _drawingLock, new BitmapDrawer(file, handler));
+
+            return surface;
+        }
+
+        public ManagedSurface LoadFromSoftwareBitmap(SoftwareBitmap softwareBitmap, Size size, LoadTimeEffectHandler handler)
+        {
+            ManagedSurface surface = new ManagedSurface(CreateSurface(size));
+
+            var ignored = surface.Draw(_graphicsDevice, _drawingLock, new BitmapDrawer(softwareBitmap, handler));
 
             return surface;
         }

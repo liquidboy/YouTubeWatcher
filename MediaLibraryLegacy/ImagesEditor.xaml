@@ -46,7 +46,7 @@
                 </ScrollViewer>
             </Border>
 
-            <!-- Image Editor -->
+            <!-- Resize Snapshot -->
             <Grid x:Name="grdImageEditor" Grid.Column="1" Background="#FFE6E6E6" Visibility="Collapsed">
                 <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                     <Grid.RowDefinitions>
@@ -73,6 +73,11 @@
                         <Button Content="Save your edits" Click="SaveEdit" FontSize="24" CornerRadius="5"></Button>
                     </StackPanel>
                 </Grid>
+            </Grid>
+            
+            <!-- Stylize Snapshot -->
+            <Grid x:Name="grdStylizeSnapshot" Grid.Column="1" Background="#FFE6E6E6" Visibility="Collapsed">
+                <localControls:StylizeImage x:Name="ctlStyleizeImage"></localControls:StylizeImage>
             </Grid>
 
             <!-- Media Editor -->
@@ -146,7 +151,8 @@
             <!-- TABS -->
             <controls:TabView x:Name="tvMain" HorizontalAlignment="Center" VerticalAlignment="Top"  SelectionChanged="TabChanged" Grid.Column="1" Margin="0,20,0,0" >
                 <controls:TabViewItem Header="Take Snapshots" IsSelected="True"></controls:TabViewItem>
-                <controls:TabViewItem Header="Snapshot Editor"></controls:TabViewItem>
+                <controls:TabViewItem Header="Resize Snapshot"></controls:TabViewItem>
+                <controls:TabViewItem Header="Stylize Snapshot"></controls:TabViewItem>
                 <controls:TabViewItem Header="Tiles" ></controls:TabViewItem>
             </controls:TabView>
 

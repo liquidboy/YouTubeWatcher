@@ -122,6 +122,9 @@
     <Compile Include="Controls\ShapshotsTile.xaml.cs">
       <DependentUpon>ShapshotsTile.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\StylizeImage.xaml.cs">
+      <DependentUpon>StylizeImage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\TextblockMarquee.xaml.cs">
       <DependentUpon>TextblockMarquee.xaml</DependentUpon>
     </Compile>
@@ -194,6 +197,10 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Page Include="Controls\ShapshotsTile.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\StylizeImage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
