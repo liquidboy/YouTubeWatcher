@@ -48,8 +48,8 @@ namespace MediaLibraryLegacy
             {
                 if (rootFrame.Content == null)
                 {
-                    //rootFrame.Navigate(typeof(MainPage), e.Arguments);
-                    rootFrame.Navigate(typeof(TestPage), e.Arguments);
+                    rootFrame.Navigate(typeof(MainPage), e.Arguments);
+                    //rootFrame.Navigate(typeof(TestPage), e.Arguments);
                 }
                 Window.Current.Activate();
             }
