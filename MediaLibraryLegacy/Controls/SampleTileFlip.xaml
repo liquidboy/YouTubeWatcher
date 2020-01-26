@@ -1,0 +1,117 @@
+﻿<UserControl
+    x:Class="MediaLibraryLegacy.Controls.SampleTileFlip"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MediaLibraryLegacy.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="400"
+    d:DesignWidth="400">
+    <UserControl.Resources>
+        <Storyboard x:Name="sbMain400" Completed="sbMain_Completed">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="image2" Storyboard.TargetProperty="(UIElement.Projection).(PlaneProjection.RotationX)">
+                <EasingDoubleKeyFrame KeyTime="00:00:00.6000000" Value="-79"/>
+                <EasingDoubleKeyFrame KeyTime="00:00:00.8000000" Value="-77"/>
+                <EasingDoubleKeyFrame KeyTime="00:00:01" Value="-74.2"/>
+                <EasingDoubleKeyFrame KeyTime="00:00:01.2000000" Value="-70.2"/>
+                <EasingDoubleKeyFrame KeyTime="00:00:01.4000000" Value="-64.7"/>
+                <EasingDoubleKeyFrame KeyTime="00:00:01.6000000" Value="-57.2"/>
+                <EasingDoubleKeyFrame KeyTime="00:00:01.8000000" Value="-46.2"/>
+                <EasingDoubleKeyFrame KeyTime="00:00:02" Value="0"/>
+                <EasingDoubleKeyFrame KeyTime="00:00:05" Value="0"/>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="image2" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleX)">
+                <EasingDoubleKeyFrame KeyTime="00:00:00.6000000" Value="0.65"/>
+                <EasingDoubleKeyFrame KeyTime="00:00:01" Value="0.67"/>
+                <EasingDoubleKeyFrame KeyTime="00:00:01.2000000" Value="0.69"/>
+                <EasingDoubleKeyFrame KeyTime="00:00:01.4000000" Value="0.72"/>
+                <EasingDoubleKeyFrame KeyTime="00:00:01.6000000" Value="0.74"/>
+                <EasingDoubleKeyFrame KeyTime="00:00:01.8000000" Value="0.78"/>
+                <EasingDoubleKeyFrame KeyTime="00:00:02" Value="1"/>
+                <EasingDoubleKeyFrame KeyTime="00:00:05" Value="1"/>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="image1" Storyboard.TargetProperty="(UIElement.Projection).(PlaneProjection.RotationX)">
+                <EasingDoubleKeyFrame KeyTime="00:00:02" Value="78.5"/>
+                <EasingDoubleKeyFrame KeyTime="00:00:05" Value="78.5"/>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="image1" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleX)">
+                <EasingDoubleKeyFrame KeyTime="00:00:02" Value="0.65"/>
+                <EasingDoubleKeyFrame KeyTime="00:00:05" Value="0.65"/>
+            </DoubleAnimationUsingKeyFrames>
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="image2" Storyboard.TargetProperty="(Canvas.ZIndex)">
+                <DiscreteObjectKeyFrame KeyTime="00:00:01">
+                    <DiscreteObjectKeyFrame.Value>
+                        <x:Int32>1</x:Int32>
+                    </DiscreteObjectKeyFrame.Value>
+                </DiscreteObjectKeyFrame>
+            </ObjectAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Name="sbMain200" Completed="sbMain_Completed">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="image2" Storyboard.TargetProperty="(UIElement.Projection).(PlaneProjection.RotationX)">
+                <EasingDoubleKeyFrame KeyTime="00:00:00" Value="-84"/>
+                <EasingDoubleKeyFrame KeyTime="00:00:00.6000000" Value="-81.8"/>
+                <EasingDoubleKeyFrame KeyTime="00:00:00.8000000" Value="-78.7"/>
+                <EasingDoubleKeyFrame KeyTime="00:00:01" Value="-74.4"/>
+                <EasingDoubleKeyFrame KeyTime="00:00:01.2000000" Value="-68.5"/>
+                <EasingDoubleKeyFrame KeyTime="00:00:01.4000000" Value="-61.4"/>
+                <EasingDoubleKeyFrame KeyTime="00:00:01.6000000" Value="-52.2"/>
+                <EasingDoubleKeyFrame KeyTime="00:00:01.8000000" Value="-39.7"/>
+                <EasingDoubleKeyFrame KeyTime="00:00:02" Value="0"/>
+                <EasingDoubleKeyFrame KeyTime="00:00:05" Value="0"/>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="image2" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleX)">
+                <EasingDoubleKeyFrame KeyTime="00:00:00" Value="0.8"/>
+                <EasingDoubleKeyFrame KeyTime="00:00:00.6000000" Value="0.83"/>
+                <EasingDoubleKeyFrame KeyTime="00:00:01" Value="0.83"/>
+                <EasingDoubleKeyFrame KeyTime="00:00:01.2000000" Value="0.84"/>
+                <EasingDoubleKeyFrame KeyTime="00:00:01.4000000" Value="0.85"/>
+                <EasingDoubleKeyFrame KeyTime="00:00:01.6000000" Value="0.86"/>
+                <EasingDoubleKeyFrame KeyTime="00:00:01.8000000" Value="0.88"/>
+                <EasingDoubleKeyFrame KeyTime="00:00:02" Value="1"/>
+                <EasingDoubleKeyFrame KeyTime="00:00:05" Value="1"/>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="image1" Storyboard.TargetProperty="(UIElement.Projection).(PlaneProjection.RotationX)">
+                <EasingDoubleKeyFrame KeyTime="00:00:02" Value="84"/>
+                <EasingDoubleKeyFrame KeyTime="00:00:05" Value="84"/>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="image1" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleX)">
+                <EasingDoubleKeyFrame KeyTime="00:00:02" Value="0.8"/>
+                <EasingDoubleKeyFrame KeyTime="00:00:05" Value="0.8"/>
+            </DoubleAnimationUsingKeyFrames>
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="image2" Storyboard.TargetProperty="(Canvas.ZIndex)">
+                <DiscreteObjectKeyFrame KeyTime="00:00:01">
+                    <DiscreteObjectKeyFrame.Value>
+                        <x:Int32>1</x:Int32>
+                    </DiscreteObjectKeyFrame.Value>
+                </DiscreteObjectKeyFrame>
+            </ObjectAnimationUsingKeyFrames>
+        </Storyboard>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Image x:Name="image2" Width="{x:Bind TileWidth, Mode=OneWay}" Height="{x:Bind TileHeight, Mode=OneWay}" RenderTransformOrigin="0.5,0.5" Stretch="UniformToFill">
+                <Image.RenderTransform>
+                    <CompositeTransform TranslateX="0" ScaleY="1" ScaleX="0.65"/>
+                </Image.RenderTransform>
+                <Image.Projection>
+                    <PlaneProjection RotationZ="0" RotationX="-79" CenterOfRotationY="0" CenterOfRotationZ="0"/>
+                </Image.Projection>
+            </Image>
+            <Image x:Name="image1" Width="{x:Bind TileWidth, Mode=OneWay}" Height="{x:Bind TileHeight, Mode=OneWay}" RenderTransformOrigin="0.5,0.5" Stretch="UniformToFill">
+                <Image.RenderTransform>
+                    <CompositeTransform TranslateX="0" ScaleX="1"/>
+                </Image.RenderTransform>
+                <Image.Projection>
+                    <PlaneProjection RotationZ="0" RotationX="0" CenterOfRotationY="1"/>
+                </Image.Projection>
+            </Image>
+        </Grid>
+
+        <Rectangle Fill="Black" d:IsHidden="True" Visibility="Collapsed"></Rectangle>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,20">
+            <Button x:Name="butToggleSize" Content="Resize" Click="butToggleSize_Click"></Button>
+        </StackPanel>
+    </Grid>
+</UserControl>

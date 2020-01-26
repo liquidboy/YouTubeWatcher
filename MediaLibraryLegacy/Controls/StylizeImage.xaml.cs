@@ -17,6 +17,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Hosting;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 
 namespace MediaLibraryLegacy.Controls
@@ -142,6 +143,12 @@ namespace MediaLibraryLegacy.Controls
                 (float)newHeight);
         }
 
+        private void SaveVisualToFile() {
+            // 
+
+
+        }
+
         private void butChangeEffect(object sender, RoutedEventArgs e)
         {
             var but = (Button)sender;
@@ -160,3 +167,7 @@ namespace MediaLibraryLegacy.Controls
         }
     }
 }
+
+
+// fast vs slow effects
+// https://docs.microsoft.com/en-us/windows/uwp/composition/composition-tailoring

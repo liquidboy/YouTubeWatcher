@@ -119,6 +119,15 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\SampleTileFlip3.xaml.cs">
+      <DependentUpon>SampleTileFlip3.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\SampleTileFlip2.xaml.cs">
+      <DependentUpon>SampleTileFlip2.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\SampleTileFlip.xaml.cs">
+      <DependentUpon>SampleTileFlip.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ShapshotsTile.xaml.cs">
       <DependentUpon>ShapshotsTile.xaml</DependentUpon>
     </Compile>
@@ -164,6 +173,9 @@
     <Compile Include="Converters.cs" />
     <Compile Include="StorageHelper.cs" />
     <Compile Include="DesktopHelper.cs" />
+    <Compile Include="TestPage.xaml.cs">
+      <DependentUpon>TestPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WindowHelper.cs" />
     <Compile Include="EntitiesHelper.cs" />
     <Compile Include="XamlHelper.cs" />
@@ -180,6 +192,8 @@
     <None Include="ffmpeg.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <Content Include="Assets\1.jpg" />
+    <Content Include="Assets\2.jpg" />
     <Content Include="Assets\icons8-youtube-480.png" />
     <Content Include="Assets\icons8-youtube-96.png" />
     <Content Include="Properties\Default.rd.xml" />
@@ -196,6 +210,18 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Controls\SampleTileFlip3.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\SampleTileFlip2.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\SampleTileFlip.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\ShapshotsTile.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -241,6 +267,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Taskbar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TestPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
